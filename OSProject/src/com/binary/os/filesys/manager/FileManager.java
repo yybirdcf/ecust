@@ -449,7 +449,7 @@ public class FileManager {
 			return "磁盘空间不足！无法更新目录！保存文件失败！";
 		}
 		
-		return fileName + " 文件保存成功！"; 
+		return fileName + " 文件保存成功！ 文件大小为" + file.getSize() + "字节"; 
 	}
 	
 	//改变文件属性
@@ -955,7 +955,4 @@ public class FileManager {
 	public DiskManager getDisk() {
 		return disk;
 	}
-	
-	
-
 }
