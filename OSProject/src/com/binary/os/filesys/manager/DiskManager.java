@@ -28,7 +28,7 @@ public class DiskManager {
 		sBlock = new SuperBlock(readBlock(0));
 	}
 	
-	public byte[] readBlock(int no){
+	private byte[] readBlock(int no){
 		byte[] content = new byte[BYTE_PER_BLOCK];
 		RandomAccessFile disk = null;
 		try {
@@ -50,7 +50,7 @@ public class DiskManager {
 		return content;
 	}
 	
-	public boolean saveBlock(Block block){
+	private boolean saveBlock(Block block){
 		int no = block.getNo();
 		RandomAccessFile disk = null;
 		try {
@@ -73,7 +73,7 @@ public class DiskManager {
 		return true;
 	}
 
-	public int getAnEmptyBlock(){
+	private int getAnEmptyBlock(){
 		int index;
 		if(sBlock.getEmptyCount()==1){//当前栈中最后一个可分配盘块号
 			index = sBlock.getEmptystack()[0];
@@ -90,7 +90,7 @@ public class DiskManager {
 		return index;
 	}
 	
-	public boolean addAnEmptyBlock(int index){
+	private boolean addAnEmptyBlock(int index){
 		boolean isOK = true;
 		if(index == 0){//0为空闲链结尾
 			return false;
@@ -111,7 +111,7 @@ public class DiskManager {
 		return isOK;
 	}
 	
-	public LinkedList<Integer> getEmptyBlock(int count){
+	private LinkedList<Integer> getEmptyBlock(int count){
 		LinkedList<Integer> indexs = new LinkedList<Integer>();
 		for(int i=0; i<count; i++){
 			int index = getAnEmptyBlock();
@@ -127,13 +127,18 @@ public class DiskManager {
 		return indexs;
 	}
 	
-	public boolean addEmptyBlock(LinkedList<Integer> indexs){
+	private boolean addEmptyBlock(LinkedList<Integer> indexs){
 		while(!indexs.isEmpty()){
 			if(addAnEmptyBlock(indexs.pollLast())==false){//倒着回收块
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	private boolean saveSuperBlock(){
+		sBlock.setModified(false);
+		return saveBlock(sBlock);
 	}
 		
 	public void readFile(SFile file){
@@ -253,7 +258,7 @@ public class DiskManager {
 		}
 		
 		LinkedList<Integer> indexs = getEmptyBlock(scount);//预先获取需要的空闲块
-		if(indexs.size() == 0){
+		if(indexs.size() == 0){//分配所需空闲块失败
 			return false;
 		}
 		
@@ -333,6 +338,24 @@ public class DiskManager {
 		return true;
 	}
 	
+	public boolean saveRoot(RootDirectory root){
+		boolean isOk = true;
+		
+		ByteContainer fileContent = new ByteContainer(root.toByte());
+		
+		Block block = new Block(1, fileContent.poll(BYTE_PER_BLOCK));
+		if(!saveBlock(block)){
+			isOk = false;
+		}
+			
+		block = new Block(2, fileContent.poll(BYTE_PER_BLOCK));
+		if(!saveBlock(block)){
+			isOk = false;
+		}
+
+		return isOk;
+	}
+	
 	public boolean recycleDentry(Dentry dentry){
 		
 		LinkedList<Integer> indexs = new LinkedList<Integer>();//待回收块号队列
@@ -390,29 +413,6 @@ public class DiskManager {
 		}
 		
 		return addEmptyBlock(indexs);
-	}
-
-	public boolean saveSuperBlock(){
-		sBlock.setModified(false);
-		return saveBlock(sBlock);
-	}
-	
-	public boolean saveRoot(RootDirectory root){
-		boolean isOk = true;
-		
-		ByteContainer fileContent = new ByteContainer(root.toByte());
-		
-		Block block = new Block(1, fileContent.poll(BYTE_PER_BLOCK));
-		if(!saveBlock(block)){
-			isOk = false;
-		}
-			
-		block = new Block(2, fileContent.poll(BYTE_PER_BLOCK));
-		if(!saveBlock(block)){
-			isOk = false;
-		}
-
-		return isOk;
 	}
 	
 	public boolean format(){
@@ -501,5 +501,4 @@ public class DiskManager {
 		
 		return usage;
 	}
-
 }
