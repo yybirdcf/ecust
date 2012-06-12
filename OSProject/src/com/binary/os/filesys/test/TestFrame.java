@@ -8,13 +8,9 @@ import java.awt.Dimension;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.Color;
-import javax.swing.JButton;
-
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.manager.FileManager;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

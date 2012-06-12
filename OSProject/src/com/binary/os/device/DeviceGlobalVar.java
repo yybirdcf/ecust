@@ -10,7 +10,9 @@ public class DeviceGlobalVar {
 	public static int ABCTime[][] = {{-1,-1,-1}, {-1,-1}, {-1}};
 	
 	public static final int totalDev[] = {3, 2, 1};
+	@SuppressWarnings("rawtypes")
 	public static LinkedList devWaitList[] = new LinkedList[3];
+	@SuppressWarnings("rawtypes")
 	public static LinkedList processIOTime[] = new LinkedList[3];
 	public static int devCurrPid[][] = {{-1,-1,-1}, {-1,-1}, {-1}};
 	

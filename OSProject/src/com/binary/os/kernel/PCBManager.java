@@ -1,7 +1,6 @@
 package com.binary.os.kernel;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class PCBManager {
 
