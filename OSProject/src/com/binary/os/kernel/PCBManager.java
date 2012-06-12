@@ -5,54 +5,55 @@ import java.util.Queue;
 
 public class PCBManager {
 
-	public static int PCBNUM = 0;
-	public static PCB[] pcbs = new PCB[10];
+	public static Queue<Integer> emptyQueue = new LinkedList<Integer>();
+	public static Queue<Integer> readyQueue = new LinkedList<Integer>();
+	public static Queue<Integer> blockQueue = new LinkedList<Integer>();
 	
-	public static Queue<PCB> emptyQueue = new LinkedList<PCB>();
-	public static Queue<PCB> readyQueue = new LinkedList<PCB>();
-	public static Queue<PCB> blockQueue = new LinkedList<PCB>();
-	
-	public static int PCBNOW = 0;
-	
-	public static void addToEmpty(PCB p){
+	public static void addToEmpty(int pid){
 		if(emptyQueue.size() < 10){
-			emptyQueue.add(p);
+			emptyQueue.add(pid);
 		}
 	}
 	
-	public static void addToReady(PCB p){
+	public static void addToReady(int pid){
 		if(readyQueue.size() < 10){
-			readyQueue.add(p);
+			readyQueue.add(pid);
 		}
 	}
 	
-	public static void addToBlock(PCB p){
+	public static void addToBlock(int pid){
 		if(blockQueue.size() < 10){
-			blockQueue.add(p);
+			blockQueue.add(pid);
 		}
 	}
 	
-	public static PCB removeFromEmpty(){
-		PCB p = null;
+	public static int removeFromEmpty(){
+		int pid = 0;
 		if(emptyQueue.size() > 0){
-			p = emptyQueue.poll();
+			pid = emptyQueue.poll();
 		}
-		return p;
+		return pid;
 	}
 	
-	public static PCB removeFromReady(){
-		PCB p = null;
+	public static int removeFromReady(){
+		int pid = 0;
 		if(readyQueue.size() > 0){
-			p = readyQueue.poll();
+			pid = readyQueue.poll();
 		}
-		return p;
+		return pid;
 	}
 	
-	public static PCB removeFromBlock(){
-		PCB p = null;
+	public static int removeFromBlock(){
+		int pid = 0;
 		if(blockQueue.size() > 0){
-			p = blockQueue.poll();
+			pid = blockQueue.poll();
 		}
-		return p;
+		return pid;
+	}
+	
+	public static void clearQueue(){
+		emptyQueue.clear();
+		readyQueue.clear();
+		blockQueue.clear();
 	}
 }
