@@ -2,37 +2,113 @@ package com.binary.os.filesys.manager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-//import java.util.Stack;
 
+import javax.swing.JOptionPane;
+import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.dentries.RootDirectory;
 import com.binary.os.filesys.dentries.SFile;
+import com.binary.os.kernel.ProcessManager;
+import com.binary.os.views.EditTextDialog;
+import com.binary.os.views.ShowTextDialog;
 
 public class FileManager {
 	
 	public static int BYTE_PER_BLOCK = 128;
 
 	private DiskManager disk;
-	
 	private RootDirectory root;
 	private LinkedList<Directory> currentPath;
 	
+	private LinkedList<Directory>[] processFileAddr;
+	
+	@SuppressWarnings("unchecked")
 	public FileManager(){
 		disk = new DiskManager();
 		//初始化根目录
 		root = new RootDirectory();
 		disk.readDirectory(root);
 		currentPath.add(root);
+		processFileAddr = (LinkedList<Directory>[]) new LinkedList[10];
 	}
 	
-	//命令解释器
-//	public String interpret(String command){
-//		String[] words = command.trim().split("\\s+");//拆分成单词
-//		
-//	}
+	
+	//命令解释
+	public String interpret(String commands){
+		Interpreter cmd = new Interpreter(commands);//命令解释器
+		
+		String operation = cmd.getOperat();
+		
+		//创建文件
+		if(operation.equals("create")){
+			return create(cmd.getDirs(), cmd.getFileName());
+		}
+		
+		//拷贝文件
+		if(operation.equals("copy")){
+			return copy(cmd.getSrcDirs(), cmd.getSrcFileName(), cmd.getDesDirs() , cmd.getDesFileName());
+		}
+
+		//删除文件
+		if(operation.equals("delete")){			
+			return delete(cmd.getDirs(), cmd.getFileName());
+		}
+		
+		//移动文件
+		if(operation.equals("move")){	
+			return copy(cmd.getSrcDirs(), cmd.getSrcFileName(), cmd.getDesDirs() , cmd.getDesFileName());
+		}
+		
+		//显示文件
+		if(operation.equals("type")){
+			return type(cmd.getDirs(), cmd.getFileName(), false);
+		}
+		
+		//编辑文件
+		if(operation.equals("edit")){
+			return type(cmd.getDirs(), cmd.getFileName(), true);
+		}
+		
+		//改变文件属性
+		if(operation.equals("change")){
+			return change(cmd.getDirs(), cmd.getFileName(), cmd.getAttrs());
+		}
+		
+		//格式化
+		if(operation.equals("format")){
+			return format();
+		}
+			
+		//创建目录
+		if(operation.equals("makdir")){
+			return makdir(cmd.getDirPath());
+		}
+		
+		//更改当前目录
+		if(operation.equals("chadir")){
+			return makdir(cmd.getDirPath());
+		}
+		
+		//删除空目录
+		if(operation.equals("rdir")){
+			return rdir(cmd.getDirPath());
+		}
+		
+		//删除目录
+		if(operation.equals("deldir")){
+			return deldir(cmd.getDirPath());
+		}
+		
+		//运行文件
+		if(operation.equals("run")){
+			return run(cmd.getDirs(), cmd.getFileName());
+		}
+		
+		return "不是合法的命令！";
+	}
 	
 	//外部调用的时候要确认 创建文件
-	public String create(String[] dirs, String fileName, boolean isOverWrite){
+	public String create(String[] dirs, String fileName){
 		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！文件创建失败！";
@@ -49,8 +125,27 @@ public class FileManager {
 			exten = "";
 		}
 		
-		if(!isOverWrite){//不覆盖
-			if(getCurrentDir().checkName(name, exten) == true){//同名
+		if(getCurrentDir().checkName(name, exten) == true){//同名
+			SFile cFile = getCurrentDir().checkFileName(name, exten);
+			if(cFile == null){
+				return "存在目录与此文件重名！文件创建失败！";
+			}
+			
+			int result = JOptionPane.showConfirmDialog(null, "存在文件重名！是否覆盖？", fileName, JOptionPane.YES_NO_OPTION);
+			if(result == JOptionPane.YES_OPTION){//覆盖
+				getCurrentDir().removeDentry(cFile);//当前目录移除此文件
+				if(saveCurrentDir() == false){//保存当前目录失败
+					getCurrentDir().addDentry(cFile);//放回目录
+					saveCurrentDir();//保存当前目录
+					return "无法更新目录！覆盖文件失败！";
+				}
+				
+				if(disk.recycleDentry(cFile) == false){//回收文件失败
+					getCurrentDir().addDentry(cFile);//放回目录
+					saveCurrentDir();//保存当前目录
+					return "磁盘已满！无法回收文件！覆盖文件失败！";
+				}
+			}else{
 				return "存在重名！文件创建失败！";
 			}
 		}
@@ -115,7 +210,7 @@ public class FileManager {
 			return "目标目录不存在！复制文件失败！";
 		}
 		
-		SFile desFile = sCreate(desFileName);//初始创建目标文件
+		SFile desFile = sCreate(desFileName, false);//初始创建目标文件
 		if(desFile == null){//创建目标文件失败
 			return "无法创建目标文件！复制文件失败！";
 		}
@@ -285,26 +380,26 @@ public class FileManager {
 			return "文件不存在！显示文件失败！";
 		}	
 		
+		disk.readFile(file);//读取文件
+		
 		//是否是为了编辑
 		if(isForEdit){//是为了编辑，要判断属性
 			if(file.getAttribute() == SFile.F_H_R || file.getAttribute() == SFile.F_S_W){//若文件属性是只读的
 				return "文件属性为只读！无法编辑文件！";
 			}
+			new EditTextDialog(fileName, file.toString(), this);//编辑文件
+		}else{
+			new ShowTextDialog(fileName, file.toString());//显示文件
 		}
 		
-		disk.readFile(file);//读取文件
-		
-		return file.toString();//返回文件文本内容
+		return "显示文件成功！";
 	}
 	
-	public String edit(String[] dirs, String fileName, String text){
+	//编辑文件
+	public String edit(String fileName, String text){
 		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！编辑文件失败！";
-		}
-		
-		if(acceDirs(dirs) == false){//进入目录失败
-			return "目录不存在！";
 		}
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
@@ -339,6 +434,7 @@ public class FileManager {
 	
 	//改变文件属性
 	public String change(String[] dirs, String fileName, String[] attrs){
+		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！修改文件属性失败！";
 		}
@@ -362,6 +458,10 @@ public class FileManager {
 		
 		//获得旧属性
 		int oldAttri = file.getAttribute();
+		
+		if(attrs.length == 0){//没有要覆的属性
+			return fileName + " 没有要修改的属性！  当前属性为 " + oldAttri; 
+		}
 		
 		//更改属性
 		for(String attri:attrs){//要更改成的属性队列
@@ -442,58 +542,194 @@ public class FileManager {
 		return "目录检索成功！";
 	}
 	
-//	//删除空目录
-//	public String rdir(String[] dirs){
-//		LinkedList<Directory> oldPath = currentPath;
-//		
-//		if(dirs[0].equals("root:")){//为绝对地址
-//			if(dirs.length ==1){//只有根目录
-//				return "无法删除根目录！";
-//			}
-//			currentPath.clear();//清除当前目录
-//			currentPath.add(root);//设当前目录为root
-//		}
-//		
-//		String sDir = null;
-//		for(int i=0; i<dirs.length-1; i++){//检索到要删除目录的父目录
-//			sDir = dirs[i];
-//			if(sDir.equals("root:")){//忽略root地址
-//				continue;
-//			}
-//			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
-//			if(tDir != null){//存在此名字目录
-//				currentPath.add(tDir);//更新当前目录
-//			}else{//不存在
-//				currentPath = oldPath;//恢复旧当前目录
-//				return "路径不存在！删除目录失败！";
-//			}
-//		}
-//		sDir = dirs[dirs.length-1];//最后一个目录就是要删除的目录
-//		Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
-//		if(tDir != null){//存在此名字目录
-//			if(currentPath.equals(oldPath)){//等于原来当前目录
-//				return "无法删除当前目录！";
-//			}
-//			if(tDir.getSize() != 0){//不是空目录
-//				currentPath = oldPath;//恢复旧当前目录
-//				return "目录" + dirs[dirs.length-1] + "不是空目录！无法删除！";
-//			}
-//			
-//		}else{//不存在
-//			currentDir = oldDir;//恢复旧当前目录
-//			return "路径不存在！删除目录失败！";
-//		}
-//		return true;
-//	}
-//	
-//	public String deldir(){
-//		
-//	}
-//	
-//	public boolean[] getUsage(){
-//		return disk.getUsage();
-//	}
+	//删除空目录
+	public String rdir(String[] dirs){
+		LinkedList<Directory> oldPath = currentPath;
+		
+		//检查是不是根目录
+		if(dirs[0].equals("root:")){//为绝对地址
+			if(dirs.length ==1){//只有根目录
+				return "无法删除根目录！";
+			}
+			currentPath.clear();//清除当前目录
+			currentPath.add(root);//设当前目录为root
+		}
+		
+		//检索路径
+		String sDir = null;
+		for(int i=0; i<dirs.length-1; i++){//检索到要删除目录的父目录
+			sDir = dirs[i];
+			if(sDir.equals("root:")){//忽略root地址
+				continue;
+			}
+			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+			if(tDir != null){//存在此名字目录
+				currentPath.add(tDir);//更新当前目录
+			}else{//不存在
+				currentPath = oldPath;//恢复旧当前目录
+				return "路径不存在！删除目录失败！";
+			}
+		}
+		//获得目录
+		sDir = dirs[dirs.length-1];//最后一个目录就是要删除的目录
+		Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+		
+		//检查目录是否存在
+		if(tDir == null){//目录不存在
+			currentPath = oldPath;//恢复旧当前目录
+			return "目录不存在！删除目录失败！";
+		}
+		
+		//检查是否是当前目录
+		if(currentPath.equals(oldPath)){//等于原来当前目录
+			return "无法删除当前目录！";
+		}
+		
+		//检查是不是空目录
+		if(tDir.getSize() != 0){//不是空目录
+			currentPath = oldPath;//恢复旧当前目录
+			return "目录" + dirs[dirs.length-1] + "不是空目录！无法删除！";
+		}
+		
+		//将目录从父目录删除，并保存父目录
+		getCurrentDir().removeDentry(tDir);//当前目录移除此目录
+		if(saveCurrentDir() == false){//保存当前目录失败
+			getCurrentDir().addDentry(tDir);//放回目录
+			saveCurrentDir();//保存当前目录
+			return "无法更新父目录！删除目录失败！";
+		}
+		
+		//回收目录所占空间
+		if(disk.recycleDentry(tDir) == false){//回收目录失败
+			getCurrentDir().addDentry(tDir);//放回目录
+			saveCurrentDir();//保存当前目录
+			return "磁盘已满！无法回收文件！删除文件失败！";
+		}
+			
+		return sDir + " 目录删除成功！"; 
+	}
 	
+	//删除目录并删除子文件
+	public String deldir(String[] dirs){
+		LinkedList<Directory> oldPath = currentPath;
+		
+		//检查是不是根目录
+		if(dirs[0].equals("root:")){//为绝对地址
+			if(dirs.length ==1){//只有根目录
+				return "无法删除根目录！";
+			}
+			currentPath.clear();//清除当前目录
+			currentPath.add(root);//设当前目录为root
+		}
+		
+		//检索路径
+		String sDir = null;
+		for(int i=0; i<dirs.length-1; i++){//检索到要删除目录的父目录
+			sDir = dirs[i];
+			if(sDir.equals("root:")){//忽略root地址
+				continue;
+			}
+			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+			if(tDir != null){//存在此名字目录
+				currentPath.add(tDir);//更新当前目录
+			}else{//不存在
+				currentPath = oldPath;//恢复旧当前目录
+				return "路径不存在！删除目录失败！";
+			}
+		}
+		//获得目录
+		sDir = dirs[dirs.length-1];//最后一个目录就是要删除的目录
+		Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+		
+		//检查目录是否存在
+		if(tDir == null){//目录不存在
+			currentPath = oldPath;//恢复旧当前目录
+			return "目录不存在！删除目录失败！";
+		}
+		
+		//检查是否是当前目录
+		if(currentPath.equals(oldPath)){//等于原来当前目录
+			return "无法删除当前目录！";
+		}
+		
+		deleSub(tDir);//删除目录及子目录项
+			
+		return sDir + " 目录删除成功！"; 
+	}
+	
+	//执行可执行文件
+	public String run(String[] dirs, String fileName){
+		
+		if(fileName.equals("")){//文件名为空
+			return "文件名为空！运行文件失败！";
+		}
+		
+		if(acceDirs(dirs) == false){//进入目录失败
+			return "目录不存在！";
+		}
+		
+		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
+		String name = stemp[0];//文件名
+		String exten = stemp[1];//后缀
+		if(exten == null){//若无后缀
+			exten = "";
+		}
+		
+		//检查后缀
+		if(exten.equals("exe") == false){//不是可执行文件
+			return "文件不是可执行文件！";
+		}
+		
+		//获取文件
+		SFile file = getCurrentDir().checkFileName(name, exten);
+		if(file == null){
+			return "文件不存在！运行文件失败！";
+		}	
+		
+		disk.readFile(file);//读取文件
+		
+		//创建进程
+		int result = ProcessManager.Create(file.getContent());
+		if(result == -1){
+			return "运行文件失败！无法创建进程！内存空间不足！";
+		}
+		if(result == -2){
+			return "运行文件失败！存在语法错误！";
+		}
+		if(result == -3){
+			return "运行文件失败！无法创建进程！进程数量已为最大！";
+		}
+		
+		processFileAddr[result] = currentPath;//将进程的运行文件的路径保存
+		
+		
+		return "成功运行文件" + fileName + "！ 创建的进程的PID为" + result;
+	}
+	
+	//保存out文件
+	public boolean saveOut(int pid, byte result){
+		LinkedList<Directory> oldPath = currentPath;//保存当前路径
+		
+		LinkedList<Directory> outPath  = processFileAddr[pid];//获得进程对应的路径
+		if(outPath == null){//路径不存在就保存结果失败
+			return false;
+		}
+		
+		currentPath = outPath;
+		
+		SFile outFile = sCreate("out", true);//保存out文件
+		if(outFile == null){
+			return false;
+		}
+		
+		currentPath = oldPath;//恢复当前路径
+		
+		return true;
+	}
+	
+	public boolean[] getUsage(){
+		return disk.getUsage();
+	}
 	
 	//检索目录树，进入目录
 	public boolean acceDirs(String[] dirs){
@@ -548,7 +784,8 @@ public class FileManager {
 		return unCreatedDirs;
 	}
 
-	public SFile sCreate(String fileName){
+	//在当前目录创建文件
+	public SFile sCreate(String fileName, boolean isOverWrite){
 		
 		if(fileName.equals("")){//文件名为空
 			return null;
@@ -563,6 +800,30 @@ public class FileManager {
 		
 		if(getCurrentDir().checkName(name, exten) == true){//同名
 			return null;
+		}
+		
+		if(getCurrentDir().checkName(name, exten) == true){//同名
+			SFile cFile = getCurrentDir().checkFileName(name, exten);
+			if(cFile == null){
+				return null;
+			}
+			
+			if(isOverWrite){//覆盖
+				getCurrentDir().removeDentry(cFile);//当前目录移除此文件
+				if(saveCurrentDir() == false){//保存当前目录失败
+					getCurrentDir().addDentry(cFile);//放回目录
+					saveCurrentDir();//保存当前目录
+					return null;
+				}
+				
+				if(disk.recycleDentry(cFile) == false){//回收文件失败
+					getCurrentDir().addDentry(cFile);//放回目录
+					saveCurrentDir();//保存当前目录
+					return null;
+				}
+			}else{
+				return null;
+			}
 		}
 
 
@@ -593,40 +854,17 @@ public class FileManager {
 		return file;
 	}
 	
-	public Directory sMakdir(String dirName){
-		
-		if(dirName.equals("")){//文件夹名为空
-			return null;
+	//删除目录下的子项
+	public void deleSub(Directory dir){
+		for(Dentry dentry:dir.getDentryList()){//取出所有目录项
+			if(dentry.isFile()){//如果是文件就删除
+				disk.recycleDentry(dentry);
+			}else{//是目录的话递归此方法
+				deleSub((Directory)dentry);
+			}
 		}
-		
-		if(getCurrentDir().checkName(dirName, "") == true){//同名
-			return null;
-		}
-
-		Directory dir = new Directory();
-		if(dir.setName(dirName) == false){//文件夹名
-			return null;
-		}
-		
-		dir.setAttribute(SFile.D_S_W);//文件夹属性初始可显示可写
-		
-
-		
-		if(disk.saveDentry(dir) == false){//保存文件夹
-			return null;
-		}
-		
-		if(getCurrentDir().addDentry(dir) == false){//添加文件夹到目录失败
-			disk.recycleDentry(dir);//回收为文件夹分配的盘块
-			return null;
-		}
-		
-		if(saveCurrentDir() == false){//保存当前目录失败
-			disk.recycleDentry(dir);//回收为文件夹分配的盘块
-			return null;
-		}
-		
-		return dir;
+		dir.getDentryList().clear();//目录清空
+		disk.recycleDentry(dir);//回收目录
 	}
 	
 	public boolean saveCurrentDir(){
@@ -662,5 +900,7 @@ public class FileManager {
 	public DiskManager getDisk() {
 		return disk;
 	}
+	
+	
 
 }
