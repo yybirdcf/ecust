@@ -21,6 +21,7 @@ public class FileManager {
 	private LinkedList<Directory> currentPath;
 	
 	private LinkedList<Directory>[] processFileAddr;
+	private String[] processFileName;
 	
 	@SuppressWarnings("unchecked")
 	public FileManager(){
@@ -28,8 +29,10 @@ public class FileManager {
 		//初始化根目录
 		root = new RootDirectory();
 		disk.readDirectory(root);
+		currentPath = new LinkedList<Directory>();
 		currentPath.add(root);
 		processFileAddr = (LinkedList<Directory>[]) new LinkedList[10];
+		processFileName = new String[10];
 	}
 	
 	
@@ -701,6 +704,7 @@ public class FileManager {
 		}
 		
 		processFileAddr[result] = currentPath;//将进程的运行文件的路径保存
+		processFileName[result] = fileName;//保存文件名
 		
 		
 		return "成功运行文件" + fileName + "！ 创建的进程的PID为" + result;
@@ -719,6 +723,18 @@ public class FileManager {
 		
 		SFile outFile = sCreate("out", true);//保存out文件
 		if(outFile == null){
+			return false;
+		}
+		
+		String text = "执行文件路径为：" + getStringCurrentPath() + "\n结果为：x=" + result;
+		
+		//设置文件文本
+		if(outFile.setText(text) == false){
+			return false;
+		}
+		
+		//保存文件
+		if(disk.saveDentry(outFile) == false){//保存文件失败
 			return false;
 		}
 		

@@ -122,6 +122,10 @@ public class Dentry {
 		this.name = name;
 		return true;
 	}
+	
+	protected void setRootName(String name){
+		this.name = name;
+	}
 
 	public String getExtension() {
 		return extension;
