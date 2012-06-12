@@ -27,7 +27,7 @@ public class SystemMem {
 	}
 	
 	public static boolean dispatch(byte[] data){
-		int blockNum = (int) Math.ceil(data.length / 16);
+		int blockNum = (int) Math.ceil((double)data.length / 16);
 		int count = 0;
 		if(MemGlobalVar.idleBlockNum > blockNum && MemGlobalVar.LimitBlock >= blockNum){
 			for(int i = 0; i < MemGlobalVar.BitMap_y; i++){

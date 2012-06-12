@@ -16,12 +16,12 @@ public class Kernel {
 			Register.loadDataToDataBuffer();
 		}
 		
-		if(GlobalStaticVar.IR.isEmpty() || GlobalStaticVar.IR == null){
+		if(GlobalStaticVar.IR == null){
 			Register.loadDataToIR();
 		}
 			
 		GlobalStaticVar.IR = GlobalStaticVar.DR.poll();
-		Command(new String(GlobalStaticVar.IR));
+		Command(GlobalStaticVar.IR);
 		
 		GlobalStaticVar.IR = null;
 	}
@@ -32,11 +32,14 @@ public class Kernel {
 	}
 	
 	private static void Command(String IR){
+		
+		GlobalStaticVar.PC++;
+		
 		//解释执行指令
 		if(IR.equals("end")){
 			//进程结束
 			//输出结果
-			
+			GlobalStaticVar.fm.saveOut(GlobalStaticVar.PID_NOW, GlobalStaticVar.Result);
 			//清楚进程资源
 			ProcessManager.Destory();
 		}else if(IR.charAt(0) == '!'){

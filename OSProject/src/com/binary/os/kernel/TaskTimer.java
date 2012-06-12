@@ -2,6 +2,7 @@ package com.binary.os.kernel;
 
 import java.util.TimerTask;
 
+import com.binary.os.device.DeviceGlobalVar;
 import com.binary.os.device.IOControl;
 
 public class TaskTimer extends TimerTask {
@@ -22,13 +23,15 @@ public class TaskTimer extends TimerTask {
 				ProcessManager.Schedule();
 				Clock.RELATIVECLOCK = Clock.CLOCKPERIOD * 5;
 				Kernel.CPU();
+				Clock.RELATIVECLOCK -= Clock.CLOCKPERIOD;
 			}
 		}else{
 			Kernel.CPU();
 			Clock.RELATIVECLOCK -= Clock.CLOCKPERIOD;
 		}
 		
-		IOControl.IORun();
+		if(DeviceGlobalVar.NUMOFAPPLYDEVICE > 0)
+			IOControl.IORun();
 	}
 
 }

@@ -6,6 +6,12 @@ import com.binary.os.kernel.ProcessManager;
 public class IOControl {
 
 	public static void ApplyIO(int type,int pid,int time){
+		DeviceGlobalVar.NUMOFAPPLYDEVICE++;
+		if(!Device.allocDevToProcess(type, pid, time))
+			Device.addListItem(type, pid, time);
+	}
+	
+	private static void InnerApplyIO(int type,int pid,int time){
 		if(!Device.allocDevToProcess(type, pid, time))
 			Device.addListItem(type, pid, time);
 	}
@@ -28,12 +34,13 @@ public class IOControl {
 			if(DeviceGlobalVar.ABCTime[0][i] == 0){
 				int pid = DeviceGlobalVar.devCurrPid[0][i];
 				ProcessManager.Wakeup(pid);
+				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 				DeviceGlobalVar.ABCTime[0][i] = -1;
 				DeviceGlobalVar.devCurrPid[0][i] = -1;
 				if(!DeviceGlobalVar.devWaitList[0].isEmpty()){
 					int p = Device.delListItem(0);
 					int time = Device.delProcessTime(0);
-					ApplyIO(0, p, time);
+					InnerApplyIO(0, p, time);
 				}
 			}
 		}
@@ -47,12 +54,13 @@ public class IOControl {
 			if(DeviceGlobalVar.ABCTime[1][i] == 0){
 				int pid = DeviceGlobalVar.devCurrPid[1][i];
 				ProcessManager.Wakeup(pid);
+				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 				DeviceGlobalVar.ABCTime[1][i] = -1;
 				DeviceGlobalVar.devCurrPid[1][i] = -1;
 				if(!DeviceGlobalVar.devWaitList[1].isEmpty()){
 					int p = Device.delListItem(1);
 					int time = Device.delProcessTime(1);
-					ApplyIO(1, p, time);
+					InnerApplyIO(1, p, time);
 				}
 			}
 		}
@@ -65,12 +73,13 @@ public class IOControl {
 		if(DeviceGlobalVar.ABCTime[2][0] == 0){
 			int pid = DeviceGlobalVar.devCurrPid[2][0];
 			ProcessManager.Wakeup(pid);
+			DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 			DeviceGlobalVar.ABCTime[2][0] = -1;
 			DeviceGlobalVar.devCurrPid[2][0] = -1;
 			if(!DeviceGlobalVar.devWaitList[2].isEmpty()){
 				int p = Device.delListItem(2);
 				int time = Device.delProcessTime(2);
-				ApplyIO(2, p, time);
+				InnerApplyIO(2, p, time);
 			}
 		}
 	}
