@@ -35,7 +35,7 @@ public class EditTextDialog extends JDialog{
 		this.setTitle(fileName);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	
-		JTextArea textArea = new JTextArea(text);
+		textArea = new JTextArea(text);
 		textArea.setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD,15)); 
 		textArea.setLineWrap(true);
 		

@@ -42,6 +42,6 @@ public class SFile extends Dentry{
 	public void setContent(byte[] content) {//只截取与size相等的byte[]
 		byte[] temp = new byte[this.getSize()];
 		System.arraycopy(content, 0, temp, 0, this.getSize());
-		super.setContent(content);
+		super.setContent(temp);
 	}
 }

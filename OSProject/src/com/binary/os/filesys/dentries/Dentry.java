@@ -123,6 +123,13 @@ public class Dentry {
 		return true;
 	}
 	
+	public String getFullName(){
+		if(extension.equals("")){
+			return name;
+		}
+		return name + "." + extension;
+	}
+	
 	protected void setRootName(String name){
 		this.name = name;
 	}
