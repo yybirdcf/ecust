@@ -2,7 +2,7 @@ package com.binary.os.filesys.manager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Stack;
+//import java.util.Stack;
 
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.dentries.RootDirectory;
@@ -26,10 +26,10 @@ public class FileManager {
 	}
 	
 	//命令解释器
-	public String interpret(String command){
-		String[] words = command.trim().split("\\s+");//拆分成单词
-		
-	}
+//	public String interpret(String command){
+//		String[] words = command.trim().split("\\s+");//拆分成单词
+//		
+//	}
 	
 	//外部调用的时候要确认 创建文件
 	public String create(String[] dirs, String fileName, boolean isOverWrite){
@@ -442,57 +442,57 @@ public class FileManager {
 		return "目录检索成功！";
 	}
 	
-	//删除空目录
-	public String rdir(String[] dirs){
-		LinkedList<Directory> oldPath = currentPath;
-		
-		if(dirs[0].equals("root:")){//为绝对地址
-			if(dirs.length ==1){//只有根目录
-				return "无法删除根目录！";
-			}
-			currentPath.clear();//清除当前目录
-			currentPath.add(root);//设当前目录为root
-		}
-		
-		String sDir = null;
-		for(int i=0; i<dirs.length-1; i++){//检索到要删除目录的父目录
-			sDir = dirs[i];
-			if(sDir.equals("root:")){//忽略root地址
-				continue;
-			}
-			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
-			if(tDir != null){//存在此名字目录
-				currentPath.add(tDir);//更新当前目录
-			}else{//不存在
-				currentPath = oldPath;//恢复旧当前目录
-				return "路径不存在！删除目录失败！";
-			}
-		}
-		sDir = dirs[dirs.length-1];//最后一个目录就是要删除的目录
-		Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
-		if(tDir != null){//存在此名字目录
-			if(currentPath.equals(oldPath)){//等于原来当前目录
-				return "无法删除当前目录！";
-			}
-			if(tDir.getSize() != 0){//不是空目录
-				currentPath = oldPath;//恢复旧当前目录
-				return "目录" + dirs[dirs.length-1] + "不是空目录！无法删除！";
-			}
-			
-		}else{//不存在
-			currentDir = oldDir;//恢复旧当前目录
-			return "路径不存在！删除目录失败！";
-		}
-		return true;
-	}
-	
-	public String deldir(){
-		
-	}
-	
-	public boolean[] getUsage(){
-		return disk.getUsage();
-	}
+//	//删除空目录
+//	public String rdir(String[] dirs){
+//		LinkedList<Directory> oldPath = currentPath;
+//		
+//		if(dirs[0].equals("root:")){//为绝对地址
+//			if(dirs.length ==1){//只有根目录
+//				return "无法删除根目录！";
+//			}
+//			currentPath.clear();//清除当前目录
+//			currentPath.add(root);//设当前目录为root
+//		}
+//		
+//		String sDir = null;
+//		for(int i=0; i<dirs.length-1; i++){//检索到要删除目录的父目录
+//			sDir = dirs[i];
+//			if(sDir.equals("root:")){//忽略root地址
+//				continue;
+//			}
+//			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+//			if(tDir != null){//存在此名字目录
+//				currentPath.add(tDir);//更新当前目录
+//			}else{//不存在
+//				currentPath = oldPath;//恢复旧当前目录
+//				return "路径不存在！删除目录失败！";
+//			}
+//		}
+//		sDir = dirs[dirs.length-1];//最后一个目录就是要删除的目录
+//		Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+//		if(tDir != null){//存在此名字目录
+//			if(currentPath.equals(oldPath)){//等于原来当前目录
+//				return "无法删除当前目录！";
+//			}
+//			if(tDir.getSize() != 0){//不是空目录
+//				currentPath = oldPath;//恢复旧当前目录
+//				return "目录" + dirs[dirs.length-1] + "不是空目录！无法删除！";
+//			}
+//			
+//		}else{//不存在
+//			currentDir = oldDir;//恢复旧当前目录
+//			return "路径不存在！删除目录失败！";
+//		}
+//		return true;
+//	}
+//	
+//	public String deldir(){
+//		
+//	}
+//	
+//	public boolean[] getUsage(){
+//		return disk.getUsage();
+//	}
 	
 	
 	//检索目录树，进入目录
