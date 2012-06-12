@@ -3,14 +3,14 @@ package com.binary.os.filesys.dentries;
 import com.binary.os.utils.ByteHelper;
 
 public class Dentry {
-	public static int D_H_R = 1;
-	public static int D_H_W = 3;
-	public static int D_S_R = 5;
-	public static int D_S_W = 7;
-	public static int F_H_R = 9;
-	public static int F_H_W = 11;
-	public static int F_S_R = 13;
-	public static int F_S_W = 15;
+	public static final int D_H_R = 1;
+	public static final int D_H_W = 3;
+	public static final int D_S_R = 5;
+	public static final int D_S_W = 7;
+	public static final int F_H_R = 9;
+	public static final int F_H_W = 11;
+	public static final int F_S_R = 13;
+	public static final int F_S_W = 15;
 	
 	private String name;
 	private String extension;
@@ -116,6 +116,9 @@ public class Dentry {
 		if(name.getBytes().length>6){
 			return false;
 		}
+		if(name.contains(":")){
+			return false;
+		}
 		this.name = name;
 		return true;
 	}
@@ -128,12 +131,29 @@ public class Dentry {
 		if(extension.getBytes().length>3){
 			return false;
 		}
+		if(extension.contains(":")){
+			return false;
+		}
 		this.extension = extension;
 		return true;
 	}
 
 	public int getAttribute() {
 		return attribute;
+	}
+	
+	public String getStringAttri(){
+		if(attribute == D_H_R | attribute == F_H_R){
+			return "隐藏和只读";
+		}else if(attribute == D_H_W || attribute == F_H_W){
+			return "隐藏和可写";
+		}else if(attribute == D_S_R || attribute == F_S_R){
+			return "显示和只读";
+		}else if(attribute == D_S_W || attribute == F_S_W){
+			return "显示和可写";
+		}else{
+			return "非法属性";
+		}
 	}
 
 	public void setAttribute(int attribute) {

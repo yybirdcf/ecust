@@ -6,7 +6,7 @@ public class RootDirectory extends Directory{
 	
 	public RootDirectory(){
 		super();
-		this.setName("root");
+		this.setName("root:");
 		this.setAttribute(Dentry.D_S_W);
 		this.setDirectAddr1(1);
 		this.setDirectAddr2(2);
