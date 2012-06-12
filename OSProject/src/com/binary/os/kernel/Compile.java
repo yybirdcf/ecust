@@ -13,7 +13,7 @@ public class Compile {
 			sb.append(strs[i]);
 		}
 		String s = sb.toString();
-		String reg = "([a-zA-Z|!][=|\\+|-|a-zA-Z][0-9|a-zA-Z|\\+|-|0-9][;|.])*";
+		String reg = "([a-zA-Z|!][=|\\+|-|A-C|n][0-9|a-zA-Z|\\+|-|0-9][;|.])*";
 
 		boolean tag = false;
 		tag = Pattern.matches(reg, s);

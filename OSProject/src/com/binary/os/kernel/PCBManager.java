@@ -5,9 +5,9 @@ import java.util.Queue;
 
 public class PCBManager {
 
-	public static Queue<Integer> emptyQueue = new LinkedList<Integer>();
-	public static Queue<Integer> readyQueue = new LinkedList<Integer>();
-	public static Queue<Integer> blockQueue = new LinkedList<Integer>();
+	public static LinkedList<Integer> emptyQueue = new LinkedList<Integer>();
+	public static LinkedList<Integer> readyQueue = new LinkedList<Integer>();
+	public static LinkedList<Integer> blockQueue = new LinkedList<Integer>();
 	
 	public static void addToEmpty(int pid){
 		if(emptyQueue.size() < 10){
@@ -49,6 +49,14 @@ public class PCBManager {
 			pid = blockQueue.poll();
 		}
 		return pid;
+	}
+	
+	
+	public static boolean removeFromBlock(int pid){
+		if(blockQueue.size() > 0){
+			return blockQueue.remove((Integer)pid);
+		}
+		return false;
 	}
 	
 	public static void clearQueue(){

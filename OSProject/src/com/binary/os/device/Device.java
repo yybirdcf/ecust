@@ -1,6 +1,5 @@
 package com.binary.os.device;
 
-import java.util.LinkedList;
 
 class deviceProcessControl //设备进程控制类
 {
@@ -8,8 +7,8 @@ class deviceProcessControl //设备进程控制类
 		DeviceGlobalVar.devWaitList[deviceType].addLast(pid);
     }
     
-    public static void delListItem(int deviceType, int pid){
-    	DeviceGlobalVar.devWaitList[deviceType].remove(pid);
+    public static int delListItem(int deviceType){
+    	return (Integer) DeviceGlobalVar.devWaitList[deviceType].remove();
     }
     
 	public static boolean allocDevToProcess(int deviceType, int pid){

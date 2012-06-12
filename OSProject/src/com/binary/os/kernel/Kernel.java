@@ -38,11 +38,22 @@ public class Kernel {
 			//清楚进程资源
 			GlobalStaticVar.PSW = -1;
 		}else if(IR.charAt(0) == '!'){
-			
+			//申请IO设备
+			int time = IR.charAt(2);
+			if(IR.charAt(1) == 'A'){
+				//申请设备A
+				
+			}else if(IR.charAt(1) == 'B'){
+				//申请设备B
+				
+			}else if(IR.charAt(1) == 'C'){
+				//申请设备C
+				
+			}
 			
 		}else if(IR.charAt(1) == '='){
 		
-			GlobalStaticVar.Result = (byte) IR.charAt(2);
+			GlobalStaticVar.Result = (byte)(Integer.parseInt(IR.charAt(2)+""));
 		}else if(IR.charAt(1) == '+'){
 			
 			GlobalStaticVar.Result = GlobalStaticVar.Result++;

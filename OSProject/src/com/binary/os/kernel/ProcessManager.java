@@ -45,7 +45,7 @@ public class ProcessManager {
 		}
 	}
 
-	public static void Create(byte[] data){
+	public static int Create(byte[] data){
 		//进程创建
 		//申请主存空间,若申请成功，转入主存
 		//初始化进程控制块
@@ -63,9 +63,13 @@ public class ProcessManager {
 					p.setStatus(GlobalStaticVar.PCB_READY);
 					PCBManager.addToReady(p.getPID());
 					processes[p.getPID()] = p;
+					return p.getPID();
 				}
+				return -1;//内存空间不足
 			}
+			return -2;//检测语法
 		}
+		return -3;//进程数量最大
 	}
 	
 	public static void Destory(){
