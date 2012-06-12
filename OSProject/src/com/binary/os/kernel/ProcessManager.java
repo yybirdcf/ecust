@@ -103,14 +103,14 @@ public class ProcessManager {
 			p.saveDataBuffer(data);
 		}
 		p.setStatus(GlobalStaticVar.PCB_BLOCK);
-		p.setPSW((byte) 1);
 		PCBManager.addToBlock(p.getPID());
 	}
 	
-	public static void Wakeup(){
+	public static void Wakeup(int pid){
 		//½ø³Ì»½ÐÑ
 		if(PCBManager.blockQueue.size() > 0){
-			Process p = processes[PCBManager.removeFromBlock()];
+			PCBManager.removeFromBlock(pid);
+			Process p = processes[pid];
 			p.setPSW((byte) 0);
 			p.setStatus(GlobalStaticVar.PCB_READY);
 			PCBManager.addToReady(p.getPID());

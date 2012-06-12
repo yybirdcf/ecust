@@ -2,6 +2,8 @@ package com.binary.os.kernel;
 
 import java.util.TimerTask;
 
+import com.binary.os.device.IOControl;
+
 public class TaskTimer extends TimerTask {
 
 	@Override
@@ -12,11 +14,11 @@ public class TaskTimer extends TimerTask {
 		if(Clock.RELATIVECLOCK <= 0){
 			//进程调度
 			Clock.RELATIVECLOCK = Clock.CLOCKPERIOD * 5;
-			ProcessManager.Schedule();
+			GlobalStaticVar.PSW = 1;
 		}
 		//CPU执行计算任务
 		Kernel.CPU();
-		
+		IOControl.IORun();
 	}
 
 }
