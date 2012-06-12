@@ -41,4 +41,5 @@ public class UserMem {
 		for(int i = 0; i < MemGlobalVar.UnitBlock; i++)
 			users[MemGlobalVar.StartNo * 16 + i] = 0;
 	}
+	
 }

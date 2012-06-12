@@ -25,22 +25,25 @@ public class ProcessManager {
 			p.saveDataBuffer(data);
 		}
 		PCBManager.addToReady(GlobalStaticVar.PID_NOW);
+		GlobalStaticVar.PID_NOW = -1;
 		//就绪队列选择一个进程
-		Process ps = processes[PCBManager.removeFromReady()];
-		//恢复这个进程的寄存器内容到各个寄存器
-		GlobalStaticVar.PID_NOW = ps.getPID();
-		GlobalStaticVar.Result = ps.getResult();
-		MemGlobalVar.StartNo = ps.getStartNo();
-		MemGlobalVar.OffSet = ps.getBlockNum();
-		MemGlobalVar.PagePeek = ps.getPageOffset();
-		byte[] datas = ps.restoreDataBuffer();
-		if(datas.length > 0){
-			for(int i = 0; i < datas.length / 4; i++){
-				byte[] temp = new byte[4];
-				for(int j = 0; j < 4; j++){
-					temp[j] = datas[i * 4 + j];
+		if(!PCBManager.readyQueue.isEmpty()){
+			Process ps = processes[PCBManager.removeFromReady()];
+			//恢复这个进程的寄存器内容到各个寄存器
+			GlobalStaticVar.PID_NOW = ps.getPID();
+			GlobalStaticVar.Result = ps.getResult();
+			MemGlobalVar.StartNo = ps.getStartNo();
+			MemGlobalVar.OffSet = ps.getBlockNum();
+			MemGlobalVar.PagePeek = ps.getPageOffset();
+			byte[] datas = ps.restoreDataBuffer();
+			if(datas.length > 0){
+				for(int i = 0; i < datas.length / 4; i++){
+					byte[] temp = new byte[4];
+					for(int j = 0; j < 4; j++){
+						temp[j] = datas[i * 4 + j];
+					}
+					GlobalStaticVar.DR.add(new String(temp));
 				}
-				GlobalStaticVar.DR.add(new String(temp));
 			}
 		}
 	}
