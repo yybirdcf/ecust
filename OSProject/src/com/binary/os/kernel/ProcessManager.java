@@ -10,39 +10,66 @@ public class ProcessManager {
 	public static void Schedule(){
 		//进程调度函数
 		//保存正在运行程序到进程控制块
-		Process p = processes[GlobalStaticVar.PID_NOW];
-		p.setMemInfo2(MemGlobalVar.PagePeek);
-		p.setStatus(GlobalStaticVar.PCB_READY);
-		p.setResult(GlobalStaticVar.Result);
-		byte[] data;
-		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < GlobalStaticVar.DR.size(); i++){
-			sb.append(GlobalStaticVar.DR.poll());
-		}
-		String s = sb.toString();
-		if(s != null && !s.equals("")){
-			data = s.getBytes();
-			p.saveDataBuffer(data);
-		}
-		PCBManager.addToReady(GlobalStaticVar.PID_NOW);
-		GlobalStaticVar.PID_NOW = -1;
-		//就绪队列选择一个进程
-		if(!PCBManager.readyQueue.isEmpty()){
-			Process ps = processes[PCBManager.removeFromReady()];
-			//恢复这个进程的寄存器内容到各个寄存器
-			GlobalStaticVar.PID_NOW = ps.getPID();
-			GlobalStaticVar.Result = ps.getResult();
-			MemGlobalVar.StartNo = ps.getStartNo();
-			MemGlobalVar.OffSet = ps.getBlockNum();
-			MemGlobalVar.PagePeek = ps.getPageOffset();
-			byte[] datas = ps.restoreDataBuffer();
-			if(datas.length > 0){
-				for(int i = 0; i < datas.length / 4; i++){
-					byte[] temp = new byte[4];
-					for(int j = 0; j < 4; j++){
-						temp[j] = datas[i * 4 + j];
+		if(GlobalStaticVar.PID_NOW == -1){
+			
+			if(!PCBManager.readyQueue.isEmpty()){
+				GlobalStaticVar.PID_NOW = (byte) PCBManager.removeFromReady();
+				Process ps = processes[GlobalStaticVar.PID_NOW];
+				//恢复这个进程的寄存器内容到各个寄存器
+				GlobalStaticVar.Result = ps.getResult();
+				MemGlobalVar.StartNo = ps.getStartNo();
+				MemGlobalVar.OffSet = ps.getBlockNum();
+				MemGlobalVar.PagePeek = ps.getPageOffset();
+				GlobalStaticVar.PC = ps.getPC();
+				byte[] datas = ps.restoreDataBuffer();
+				if(datas.length > 0){
+					for(int i = 0; i < datas.length / 4; i++){
+						byte[] temp = new byte[4];
+						for(int j = 0; j < 4; j++){
+							temp[j] = datas[i * 4 + j];
+						}
+						GlobalStaticVar.DR.add(new String(temp));
 					}
-					GlobalStaticVar.DR.add(new String(temp));
+				}
+			}
+			
+		}
+		else{
+			Process p = processes[GlobalStaticVar.PID_NOW];
+			p.setMemInfo2(MemGlobalVar.PagePeek);
+			p.setStatus(GlobalStaticVar.PCB_READY);
+			p.setResult(GlobalStaticVar.Result);
+			p.setPC(GlobalStaticVar.PC);
+			byte[] data;
+			StringBuilder sb = new StringBuilder();
+			for(int i = 0; i < GlobalStaticVar.DR.size(); i++){
+				sb.append(GlobalStaticVar.DR.poll());
+			}
+			String s = sb.toString();
+			if(s != null && !s.equals("")){
+				data = s.getBytes();
+				p.saveDataBuffer(data);
+			}
+			PCBManager.addToReady(GlobalStaticVar.PID_NOW);
+			//就绪队列选择一个进程
+			if(!PCBManager.readyQueue.isEmpty()){
+				GlobalStaticVar.PID_NOW = (byte) PCBManager.removeFromReady();
+				Process ps = processes[GlobalStaticVar.PID_NOW];
+				//恢复这个进程的寄存器内容到各个寄存器
+				GlobalStaticVar.Result = ps.getResult();
+				MemGlobalVar.StartNo = ps.getStartNo();
+				MemGlobalVar.OffSet = ps.getBlockNum();
+				MemGlobalVar.PagePeek = ps.getPageOffset();
+				GlobalStaticVar.PC = ps.getPC();
+				byte[] datas = ps.restoreDataBuffer();
+				if(datas.length > 0){
+					for(int i = 0; i < datas.length / 4; i++){
+						byte[] temp = new byte[4];
+						for(int j = 0; j < 4; j++){
+							temp[j] = datas[i * 4 + j];
+						}
+						GlobalStaticVar.DR.add(new String(temp));
+					}
 				}
 			}
 		}
@@ -82,11 +109,11 @@ public class ProcessManager {
 		}
 		GlobalStaticVar.PID_NUM--;
 		GlobalStaticVar.PIDS[GlobalStaticVar.PID_NOW] = 0;
-		GlobalStaticVar.PID_NOW = -1;
-		GlobalStaticVar.PC = 0;
 		for(int i =0; i < 3; i++){
 			GlobalStaticVar.IR = null;
 		}
+		GlobalStaticVar.PID_NOW = -1;
+		GlobalStaticVar.PC = 0;
 	}
 	
 	public static void Block(){
@@ -95,6 +122,7 @@ public class ProcessManager {
 		//保存cpu现场
 		p.setMemInfo2(MemGlobalVar.PagePeek);
 		p.setResult(GlobalStaticVar.Result);
+		p.setPC(GlobalStaticVar.PC);
 		byte[] data;
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < GlobalStaticVar.DR.size(); i++){
@@ -107,6 +135,7 @@ public class ProcessManager {
 		}
 		p.setStatus(GlobalStaticVar.PCB_BLOCK);
 		PCBManager.addToBlock(p.getPID());
+		GlobalStaticVar.PID_NOW = -1;
 	}
 	
 	public static void Wakeup(int pid){
@@ -114,14 +143,8 @@ public class ProcessManager {
 		if(PCBManager.blockQueue.size() > 0){
 			PCBManager.removeFromBlock(pid);
 			Process p = processes[pid];
-			p.setPSW((byte) 0);
 			p.setStatus(GlobalStaticVar.PCB_READY);
 			PCBManager.addToReady(p.getPID());
 		}
-	}
-	
-	public static void Display(){
-		//显示
-		
 	}
 }

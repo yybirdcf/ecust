@@ -3,6 +3,7 @@ package com.binary.os.device;
 
 public class Device //设备进程控制类
 {
+	@SuppressWarnings("unchecked")
 	public static void addListItem(int deviceType, int pid,int time){
 		DeviceGlobalVar.devWaitList[deviceType].addLast(pid);
 		DeviceGlobalVar.processIOTime[deviceType].addLast(time);

@@ -30,7 +30,7 @@ public class PCBManager {
 	public static int removeFromEmpty(){
 		int pid = 0;
 		if(emptyQueue.size() > 0){
-			pid = emptyQueue.poll();
+			pid = emptyQueue.remove();
 		}
 		return pid;
 	}
@@ -38,7 +38,7 @@ public class PCBManager {
 	public static int removeFromReady(){
 		int pid = 0;
 		if(readyQueue.size() > 0){
-			pid = readyQueue.poll();
+			pid = readyQueue.remove();
 		}
 		return pid;
 	}
@@ -46,7 +46,7 @@ public class PCBManager {
 	public static int removeFromBlock(){
 		int pid = 0;
 		if(blockQueue.size() > 0){
-			pid = blockQueue.poll();
+			pid = blockQueue.remove();
 		}
 		return pid;
 	}

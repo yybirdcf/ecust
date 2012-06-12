@@ -13,4 +13,6 @@ public class DeviceGlobalVar {
 	public static LinkedList devWaitList[] = new LinkedList[3];
 	public static LinkedList processIOTime[] = new LinkedList[3];
 	public static int devCurrPid[][] = {{-1,-1,-1}, {-1,-1}, {-1}};
+	
+	public static int NUMOFAPPLYDEVICE = 0;
 }
