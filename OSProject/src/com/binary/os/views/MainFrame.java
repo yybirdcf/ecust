@@ -18,8 +18,8 @@ import javax.swing.JTextField;
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
 	private JPanel dirTreePane;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(43, 0, 1280, 768);
 		setResizable(false);
-		contentPane = new MyPanel("E:\\eclipseWorkSpace\\Git\\ecust\\OSProject\\image\\background.png");
+		contentPane = new MyPanel("background.png");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -184,13 +184,13 @@ public class MainFrame extends JFrame {
 		detailInfoPane.add(lev2IndexLabel);
 		
 		JPanel cmdResultsPane = new JPanel();
-		cmdResultsPane.setBounds(222, 287, 502, 433);
+		cmdResultsPane.setBounds(222, 287, 554, 433);
 		contentPane.add(cmdResultsPane);
 		cmdResultsPane.setOpaque(false);
 		cmdResultsPane.setLayout(null);
 		
 		JScrollPane resultScrolPane = new JScrollPane();
-		resultScrolPane.setBounds(0, 0, 502, 361);
+		resultScrolPane.setBounds(0, 0, 502, 392);
 		cmdResultsPane.add(resultScrolPane);
 		resultScrolPane.setOpaque(false);
 		
@@ -200,20 +200,25 @@ public class MainFrame extends JFrame {
 		resultsText.setEditable(false);
 		resultsText.setOpaque(false);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("ËÎÌו", Font.PLAIN, 15));
-		textField.setBounds(80, 361, 422, 21);
-		cmdResultsPane.add(textField);
-		textField.setColumns(10);
-		
 		JLabel lblNewLabel_3 = new JLabel("\u5F53\u524D\u8DEF\u5F84\uFF1A");
 		lblNewLabel_3.setFont(new Font("ËÎÌו", Font.BOLD, 15));
-		lblNewLabel_3.setBounds(5, 361, 80, 18);
+		lblNewLabel_3.setBounds(5, 394, 80, 18);
 		cmdResultsPane.add(lblNewLabel_3);
+		
+		JLabel currDirLabel = new JLabel("New Label");
+		currDirLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		currDirLabel.setBounds(81, 394, 421, 18);
+		cmdResultsPane.add(currDirLabel);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Arial", Font.BOLD, 15));
+		textField.setBounds(0, 412, 502, 21);
+		cmdResultsPane.add(textField);
+		textField.setColumns(10);
 		resultScrolPane.getViewport().setOpaque(false); 
 		
 		JPanel diskUsagePane = new JPanel();
-		diskUsagePane.setBounds(449, 10, 275, 275);
+		diskUsagePane.setBounds(449, 10, 327, 275);
 		contentPane.add(diskUsagePane);
 		diskUsagePane.setLayout(null);
 		diskUsagePane.setOpaque(false);
