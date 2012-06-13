@@ -45,6 +45,7 @@ public class CmdPanel extends JPanel implements KeyListener {
 		resultScrolPane.setOpaque(false);
 		
 		resultsText = new JTextArea();
+		resultsText.setLineWrap(true);
 		resultScrolPane.setViewportView(resultsText);
 		resultsText.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 15));
 		resultsText.setEditable(false);

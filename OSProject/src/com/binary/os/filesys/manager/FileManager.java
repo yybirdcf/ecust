@@ -783,6 +783,7 @@ public class FileManager {
 			result = GlobalStaticVar.ProcessCreateListener;
 		}
 		GlobalStaticVar.ProcessCreateListener = -4;
+		
 		if(result == -1){
 			return "运行文件失败！无法创建进程！内存空间不足！";
 		}
@@ -797,7 +798,7 @@ public class FileManager {
 		processFileName[result] = fileName;//保存文件名
 		
 		
-		return "成功运行文件" + fileName + "！ 创建的进程的PID为" + result;
+		return "成功运行文件" + fileName + "！ 创建的进程的PID为" + result + "！";
 	}
 	
 	//检索目录树，进入目录
@@ -994,10 +995,12 @@ public class FileManager {
 	public boolean saveOut(int pid, byte result){
 		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝当前路径
 		
+		
 		LinkedList<Directory> outPath  = processFileAddr[pid];//获得进程对应的路径
 		if(outPath == null){//路径不存在就保存结果失败
 			return false;
 		}
+		String exeName = processFileName[pid];//获取执行文件名
 		
 		currentPath = outPath;
 		
@@ -1006,7 +1009,9 @@ public class FileManager {
 			return false;
 		}
 		
-		String text = "执行文件路径为：" + getStringCurrentPath() + "\n结果为：x=" + result;
+		String exePath = getStringCurrentPath();//获取路径名
+		
+		String text = "执行文件路径为：" + exePath + exeName + "\n结果为：x=" + result;
 		
 		//设置文件文本
 		if(outFile.setText(text) == false){
@@ -1028,6 +1033,11 @@ public class FileManager {
 		saveAllDirs();//保存全部路径
 		
 		currentPath = oldPath;//恢复当前路径
+		
+		String out = "可执行文件" + exeName + "已经执行结束！ 其进程的PID为 " + pid + "！ \n其结果文件out的保存路径为：" + exePath;
+		
+		GlobalStaticVar.mf.cmdPanel.resultsText.append(out);//显示结果
+		GlobalStaticVar.mf.dirTreePanel.refresh();//刷新目录树
 		
 		return true;
 	}
