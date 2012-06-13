@@ -782,6 +782,7 @@ public class FileManager {
 			}
 			result = GlobalStaticVar.ProcessCreateListener;
 		}
+		GlobalStaticVar.ProcessCreateListener = -4;
 		if(result == -1){
 			return "运行文件失败！无法创建进程！内存空间不足！";
 		}
