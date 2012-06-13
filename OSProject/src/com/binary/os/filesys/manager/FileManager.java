@@ -10,6 +10,7 @@ import com.binary.os.filesys.dentries.SFile;
 import com.binary.os.kernel.GlobalStaticVar;
 import com.binary.os.kernel.ProcessManager;
 import com.binary.os.views.EditTextDialog;
+import com.binary.os.views.MainFrame;
 import com.binary.os.views.ShowTextDialog;
 
 public class FileManager {
@@ -80,6 +81,11 @@ public class FileManager {
 		//改变文件属性
 		if(operation.equals("change")){
 			return change(cmd.getDirs(), cmd.getFileName(), cmd.getAttrs());
+		}
+		
+		//改变目录属性
+		if(operation.equals("dchange")){
+			return dchange(cmd.getDirPath(), cmd.getAttrs());
 		}
 		
 		//格式化
@@ -189,6 +195,8 @@ public class FileManager {
 		}
 		
 		saveAllDirs();//保存全部路径
+		
+		setInfo(file);// 显示信息
 		
 		return fileName + " 文件创建成功！"; 
 	}
@@ -443,6 +451,7 @@ public class FileManager {
 			return "编辑文件结束！";
 		}else{
 			new ShowTextDialog(fileName, file.getText());//显示文件
+			setInfo(file);// 显示信息
 			return "显示文件成功！";
 		}
 		
@@ -491,14 +500,16 @@ public class FileManager {
 		
 		saveAllDirs();//保存全部路径
 		
+		setInfo(file);// 显示信息
+		
 		return fileName + " 文件保存成功！ 文件大小为" + file.getSize() + "字节"; 
 	}
 		
 	//改变文件属性
 	private String change(String[] dirs, String fileName, String[] attrs){
 		
-		if(fileName.equals("")){//文件名为空
-			return "文件名为空！修改文件属性失败！";
+		if(fileName.equals("")){//文件名为空，更改目录属性
+			return "文件名为空！";
 		}
 		
 		if(acceDirs(dirs) == false){//进入目录失败
@@ -535,7 +546,71 @@ public class FileManager {
 		
 		String cAttri = file.getStringAttri();//获取属性信息
 		
+		setInfo(file);// 显示信息
+		
 		return fileName + " 修改属性成功！  当前属性为 " + cAttri; 
+	}
+	
+	//改变文件夹属性
+	private String dchange(String[] dirs, String[] attrs){
+		
+		if(dirs.length == 0){//不存在目录树
+			return "没有输入文件名！";
+		}
+		
+		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝
+		
+		//检查是不是根目录
+		if(dirs[0].equals("root:")){//为绝对地址
+			if(dirs.length ==1){//只有根目录
+				return "无法更改根目录属性！";
+			}
+			currentPath.clear();//清除当前目录
+			currentPath.add(root);//设当前目录为root
+		}
+		
+		//检索路径
+		String sDir = null;
+		for(int i=0; i<dirs.length-1; i++){//检索到要更改目录的父目录
+			sDir = dirs[i];
+			if(sDir.equals("root:")){//忽略root地址
+				continue;
+			}
+			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+			if(tDir != null){//存在此名字目录
+				disk.readDirectory(tDir);//读取目录
+				currentPath.add(tDir);//更新当前目录
+			}else{//不存在
+				currentPath = oldPath;//恢复旧当前目录
+				return "路径不存在！更改目录属性失败！";
+			}
+		}
+		//获得目录
+		sDir = dirs[dirs.length-1];//最后一个目录就是要更改的目录
+		Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
+		
+		//检查目录是否存在
+		if(tDir == null){//目录不存在
+			currentPath = oldPath;//恢复旧当前目录
+			return "目录不存在！更改目录属性失败！";
+		}
+
+		//更改属性
+		for(String attri:attrs){//要更改成的属性队列
+			tDir.changeAttri(attri);//更改属性
+		}
+		
+		//保存目录
+		if(saveCurrentDir() == false){//保存当前目录失败
+			disk.recycleDentry(tDir);//回收为文件分配的盘块
+			return "磁盘空间不足！无法更新目录！保存目录失败！";
+		}
+		
+		String cAttri = tDir.getStringAttri();//获取属性信息
+		
+		setInfo(tDir);// 显示信息
+		
+		return sDir + "目录 修改属性成功！  当前属性为 " + cAttri; 
 	}
 	
 	private String format(){
@@ -797,6 +872,7 @@ public class FileManager {
 		processFileAddr[result] = new LinkedList<Directory>(currentPath);//浅拷贝//将进程的运行文件的路径保存
 		processFileName[result] = fileName;//保存文件名
 		
+		setInfo(file);// 显示信息
 		
 		return "成功运行文件" + fileName + "！ 创建的进程的PID为" + result + "！";
 	}
@@ -1034,9 +1110,10 @@ public class FileManager {
 		
 		currentPath = oldPath;//恢复当前路径
 		
-		String out = "可执行文件" + exeName + "已经执行结束！ 其进程的PID为 " + pid + "！ \n其结果文件out的保存路径为：" + exePath;
+		String out = "-->可执行文件" + exeName + "已经执行结束！ 其进程的PID为 " + pid + "！ \n-->其结果文件out的保存路径为：" + exePath + "\n\n";
 		
 		GlobalStaticVar.mf.cmdPanel.resultsText.append(out);//显示结果
+		GlobalStaticVar.mf.cmdPanel.scroll();
 		GlobalStaticVar.mf.dirTreePanel.refresh();//刷新目录树
 		
 		return true;
@@ -1079,5 +1156,17 @@ public class FileManager {
 
 	public void setCurrentPath(LinkedList<Directory> currentPath) {
 		this.currentPath = currentPath;
+	}
+	
+	public void setInfo(Dentry dentry){
+		MainFrame mf = GlobalStaticVar.mf;
+		mf.nameLabel.setText(dentry.getFullName());
+		mf.sizeLabel.setText(dentry.getSizeString());
+		mf.attributeLabel.setText(dentry.getStringAttri());
+		mf.typeLabel.setText(dentry.getTypeString());
+		mf.directAddr1Label.setText(String.valueOf(dentry.getDirectAddr1()));
+		mf.directAddr2Label.setText(String.valueOf(dentry.getDirectAddr2()));
+		mf.lev1IndexLabel.setText(String.valueOf(dentry.getLev1Index()));
+		mf.lev2IndexLabel.setText(String.valueOf(dentry.getLev2Index()));
 	}
 }

@@ -71,6 +71,13 @@ public class CmdPanel extends JPanel implements KeyListener {
 		currDirLabel.setText(fm.getStringCurrentPath());
 		resultScrolPane.getViewport().setOpaque(false); 
 	}
+	
+	public void scroll(){
+		resultScrolPane.validate();
+		JScrollBar sBar = resultScrolPane.getVerticalScrollBar();
+		sBar.setValue(sBar.getMaximum());//滚动条到底部
+		resultScrolPane.validate();
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -79,10 +86,11 @@ public class CmdPanel extends JPanel implements KeyListener {
 			lastCommand = command;//保存命令
 			resultsText.append(fm.getStringCurrentPath() + ">" + command + "\n");//加命令
 			cmdText.setText("");//命令框清空
+			
 			String result = fm.interpret(command);//运行命令
-			resultsText.append(result+"\n");//显示结果
-			JScrollBar sBar = resultScrolPane.getVerticalScrollBar();
-			sBar.setValue(sBar.getMaximum());//滚动条到底部
+			
+			resultsText.append(result+"\n\n");//显示结果
+			scroll();//滚动条到底部
 			currDirLabel.setText(fm.getStringCurrentPath());
 			mainFrame.dirTreePanel.refresh();
 		}else if (e.getKeyCode() == KeyEvent.VK_UP) {

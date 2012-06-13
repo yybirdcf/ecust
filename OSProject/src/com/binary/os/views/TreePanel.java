@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.ExpandVetoException;
@@ -14,10 +16,12 @@ import com.binary.os.filesys.dentries.CurDirFile;
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.manager.FileManager;
+import com.binary.os.kernel.GlobalStaticVar;
+
 import java.awt.BorderLayout;
 import java.util.LinkedList;
 
-public class TreePanel extends JPanel implements TreeWillExpandListener{
+public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSelectionListener{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -40,6 +44,9 @@ public class TreePanel extends JPanel implements TreeWillExpandListener{
 		rootNode.add(new DefaultMutableTreeNode(new CurDirFile(root)));
 		
 		for(Dentry dentry:root.getDentryList()){//将根目录下目录项加入树
+			if(dentry.isHide()){//不显示隐藏文件
+				continue;
+			}
 			DefaultMutableTreeNode dentryNode = new DefaultMutableTreeNode(dentry);
 			rootNode.add(dentryNode);//加入子文件
 			if(dentry.isFile() == false){//如果是目录的话，加一个当前目录的文件
@@ -48,6 +55,7 @@ public class TreePanel extends JPanel implements TreeWillExpandListener{
 		}
         tree = new JTree(rootNode);
         tree.addTreeWillExpandListener(this);
+        tree.addTreeSelectionListener(this);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		JScrollPane treeView = new JScrollPane(tree);
 		this.removeAll();
@@ -117,6 +125,9 @@ public class TreePanel extends JPanel implements TreeWillExpandListener{
 
 		//将当前目录下目录项加入树
 		for(Dentry dentry:currentDir.getDentryList()){
+			if(dentry.isHide()){//不显示隐藏文件
+				continue;
+			}
 			DefaultMutableTreeNode dentryNode = new DefaultMutableTreeNode(dentry);
 			currentDirNode.add(dentryNode);//加入子文件
 			if(dentry.isFile() == false){//如果是目录的话，加一个当前目录的文件
@@ -124,5 +135,13 @@ public class TreePanel extends JPanel implements TreeWillExpandListener{
 			}
 		}
 		
+	}
+
+	@Override
+	public void valueChanged(TreeSelectionEvent e) {
+		DefaultMutableTreeNode note = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent(); 
+		Dentry dentry = (Dentry) note.getUserObject();
+
+		fm.setInfo(dentry);
 	}
 }
