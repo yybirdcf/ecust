@@ -9,6 +9,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class cmdResultsPane extends JPanel {
+	
+	public JScrollPane resultScrolPane;
+	public JTextArea resultsText;
+	public JLabel currDirLabel;
+	public JTextField cmdText;
 
 	/**
 	 * Create the panel.
@@ -18,12 +23,12 @@ public class cmdResultsPane extends JPanel {
 		setOpaque(false);
 		setLayout(null);
 		
-		JScrollPane resultScrolPane = new JScrollPane();
+		resultScrolPane = new JScrollPane();
 		resultScrolPane.setBounds(0, 0, 502, 392);
 		add(resultScrolPane);
 		resultScrolPane.setOpaque(false);
 		
-		JTextArea resultsText = new JTextArea();
+		resultsText = new JTextArea();
 		resultScrolPane.setViewportView(resultsText);
 		resultsText.setFont(new Font("Arial", Font.PLAIN, 15));
 		resultsText.setEditable(false);
@@ -34,16 +39,16 @@ public class cmdResultsPane extends JPanel {
 		lblNewLabel_3.setBounds(5, 394, 80, 18);
 		add(lblNewLabel_3);
 		
-		JLabel currDirLabel = new JLabel("New Label");
+		currDirLabel = new JLabel("New Label");
 		currDirLabel.setFont(new Font("Arial", Font.BOLD, 15));
 		currDirLabel.setBounds(81, 394, 421, 18);
 		add(currDirLabel);
 		
-		JTextField textField = new JTextField();
-		textField.setFont(new Font("Arial", Font.BOLD, 15));
-		textField.setBounds(0, 412, 502, 21);
-		add(textField);
-		textField.setColumns(10);
+		cmdText = new JTextField();
+		cmdText.setFont(new Font("Arial", Font.BOLD, 15));
+		cmdText.setBounds(0, 412, 502, 21);
+		add(cmdText);
+		cmdText.setColumns(10);
 		resultScrolPane.getViewport().setOpaque(false); 
 	}
 
