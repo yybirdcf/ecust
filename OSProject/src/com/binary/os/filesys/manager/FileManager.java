@@ -198,7 +198,7 @@ public class FileManager {
 		
 		setInfo(file);// 显示信息
 		
-		return fileName + " 文件创建成功！"; 
+		return "文件" + fileName + "创建成功！"; 
 	}
 	
 	//创建并编辑文件
@@ -668,7 +668,7 @@ public class FileManager {
 		}
 		saveAllDirs();//保存全部路径
 		
-		return getCurrentDir().getName() + "文件夹创建成功！"; 
+		return "文件夹" + getCurrentDir().getName() + "创建成功！"; 
 	}
 	
 	//更改当前目录
