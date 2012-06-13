@@ -204,7 +204,7 @@ public class MainFrame extends JFrame {
 		typeLabel.setBounds(105, 97, 111, 16);
 		detailInfoPanel.add(typeLabel);
 		
-		cmdPanel = new CmdPanel();
+		cmdPanel = new CmdPanel(fm, this);
 		cmdPanel.cmdText.setBounds(0, 412, 554, 21);
 		cmdPanel.currDirLabel.setBounds(81, 394, 473, 18);
 		cmdPanel.resultScrolPane.setBounds(0, 0, 554, 392);
