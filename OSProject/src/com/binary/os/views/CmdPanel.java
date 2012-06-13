@@ -83,7 +83,7 @@ public class CmdPanel extends JPanel implements KeyListener {
 			JScrollBar sBar = resultScrolPane.getVerticalScrollBar();
 			sBar.setValue(sBar.getMaximum());//滚动条到底部
 			currDirLabel.setText(fm.getStringCurrentPath());
-			mainFrame.dirTreePanel.init();
+			mainFrame.dirTreePanel.refresh();
 		}else if (e.getKeyCode() == KeyEvent.VK_UP) {
 			cmdText.setText(lastCommand);//获取上一条指令
 		}

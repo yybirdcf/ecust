@@ -801,7 +801,7 @@ public class FileManager {
 	}
 	
 	//检索目录树，进入目录
-	private boolean acceDirs(String[] dirs){
+	public boolean acceDirs(String[] dirs){
 		if(dirs.length == 0){//不存在目录树
 			return true;
 		}
@@ -1060,4 +1060,14 @@ public class FileManager {
 //	public DiskManager getDisk() {
 //		return disk;
 //	}
+
+
+	public LinkedList<Directory> getCurrentPath() {
+		return currentPath;
+	}
+
+
+	public void setCurrentPath(LinkedList<Directory> currentPath) {
+		this.currentPath = currentPath;
+	}
 }
