@@ -438,10 +438,10 @@ public class FileManager {
 			if(file.getAttribute() == SFile.F_H_R || file.getAttribute() == SFile.F_S_R){//若文件属性是只读的
 				return "文件属性为只读！无法编辑文件！";
 			}
-			new EditTextDialog(fileName, file.toString(), this);//编辑文件
+			new EditTextDialog(fileName, file.getText(), this);//编辑文件
 			return "编辑文件结束！";
 		}else{
-			new ShowTextDialog(fileName, file.toString());//显示文件
+			new ShowTextDialog(fileName, file.getText());//显示文件
 			return "显示文件成功！";
 		}
 		
@@ -1041,9 +1041,9 @@ public class FileManager {
 		return "已刷新！";
 	}
 	
-//	public RootDirectory getRoot() {
-//		return root;
-//	}
+	public RootDirectory getRoot() {
+		return root;
+	}
 //
 //	public DiskManager getDisk() {
 //		return disk;
