@@ -91,7 +91,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(dirTreePanel);
 		dirTreePanel.setOpaque(false);
 		
-		JPanel detailInfoPanel = new JPanel();
+		detailInfoPanel = new JPanel();
 		detailInfoPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "œÍœ∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
 		detailInfoPanel.setBounds(222, 54, 226, 231);
 		contentPane.add(detailInfoPanel);
