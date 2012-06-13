@@ -12,6 +12,9 @@ public class TaskTimer extends TimerTask {
 		// TODO Auto-generated method stub
 		Clock.ABSOLUTECLOCK++;
 		
+		if(GlobalStaticVar.createApply.size() > 0)
+			ProcessManager.newProcess((byte[]) GlobalStaticVar.createApply.remove());
+		
 		if(Clock.RELATIVECLOCK <= 0){
 			//进程调度
 			Clock.RELATIVECLOCK = Clock.CLOCKPERIOD * 5;

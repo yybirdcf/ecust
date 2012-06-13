@@ -7,6 +7,7 @@ import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.dentries.RootDirectory;
 import com.binary.os.filesys.dentries.SFile;
+import com.binary.os.kernel.GlobalStaticVar;
 import com.binary.os.kernel.ProcessManager;
 import com.binary.os.views.EditTextDialog;
 import com.binary.os.views.ShowTextDialog;
@@ -438,10 +439,10 @@ public class FileManager {
 			if(file.getAttribute() == SFile.F_H_R || file.getAttribute() == SFile.F_S_R){//若文件属性是只读的
 				return "文件属性为只读！无法编辑文件！";
 			}
-			new EditTextDialog(fileName, file.toString(), this);//编辑文件
+			new EditTextDialog(fileName, file.getText(), this);//编辑文件
 			return "编辑文件结束！";
 		}else{
-			new ShowTextDialog(fileName, file.toString());//显示文件
+			new ShowTextDialog(fileName, file.getText());//显示文件
 			return "显示文件成功！";
 		}
 		
@@ -770,7 +771,16 @@ public class FileManager {
 		disk.readFile(file);//读取文件
 		
 		//创建进程
-		int result = ProcessManager.Create(file.getContent());
+		ProcessManager.Create(file.getContent());
+		
+		int result = GlobalStaticVar.ProcessCreateListener;
+		while(result == -4){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		if(result == -1){
 			return "运行文件失败！无法创建进程！内存空间不足！";
 		}
@@ -1041,9 +1051,9 @@ public class FileManager {
 		return "已刷新！";
 	}
 	
-//	public RootDirectory getRoot() {
-//		return root;
-//	}
+	public RootDirectory getRoot() {
+		return root;
+	}
 //
 //	public DiskManager getDisk() {
 //		return disk;

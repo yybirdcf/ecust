@@ -85,11 +85,23 @@ public class Dentry {
 		return content;
 	}
 	
+	public String toString(){
+		return getFullName();
+	}
+	
 	public boolean isFile(){
 		if(attribute>8){
 			return true;
 		}else{
 			return false;
+		}
+	}
+	
+	public String getTypeString(){
+		if(isFile()){
+			return "文件";
+		}else{
+			return "目录";
 		}
 	}
 	
@@ -130,7 +142,7 @@ public class Dentry {
 		return name + "." + extension;
 	}
 	
-	protected void setRootName(String name){
+	protected void setSuperName(String name){
 		this.name = name;
 	}
 
@@ -173,6 +185,10 @@ public class Dentry {
 
 	public int getSize() {
 		return size;
+	}
+	
+	public String getSizeString(){
+		return String.valueOf(size) + "字节";
 	}
 
 	public boolean setSize(int size) {

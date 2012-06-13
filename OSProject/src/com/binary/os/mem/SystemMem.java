@@ -1,5 +1,7 @@
 package com.binary.os.mem;
 
+import com.binary.os.kernel.GlobalStaticVar;
+
 
 public class SystemMem {
 
@@ -38,7 +40,7 @@ public class SystemMem {
 						if(count == 1){
 							//作为页表存放
 							//将页表块号存放进pcb
-							MemGlobalVar.StartNo = (byte) no;
+							MemGlobalVar.MemStartNo = (byte) no;
 						}else{
 							UserMem.storeTable(no);
 						}
@@ -56,17 +58,21 @@ public class SystemMem {
 	}
 	
 	public static void recycle(){
-		if(MemGlobalVar.OffSet > 0){
-			for(int i = 0; i < MemGlobalVar.OffSet; i++){
-				int no = UserMem.users[MemGlobalVar.StartNo * 16 + i];
+		if(GlobalStaticVar.ProcessOffSet > 0){
+			for(int i = 0; i < GlobalStaticVar.ProcessOffSet; i++){
+				int no = UserMem.users[GlobalStaticVar.ProcessStartNo * 16 + i];
 				int y = no / 8;
 				int x = no % 8;
 				bitmap[y][x] = 0;
 			}
+			
+			bitmap[GlobalStaticVar.ProcessStartNo/8][GlobalStaticVar.ProcessStartNo%8] = 0;
 			//回收块内存
 			UserMem.clearData();
 			//回收页表占用内存
 			UserMem.clearTable();
+			
+			MemGlobalVar.idleBlockNum += (GlobalStaticVar.ProcessOffSet + 1);
 		}
 	}
 }

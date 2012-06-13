@@ -14,6 +14,7 @@ import com.binary.os.filesys.manager.FileManager;
 import com.binary.os.kernel.ClockControl;
 
 import java.util.ArrayList;
+import java.util.Timer;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
@@ -141,6 +142,8 @@ public class TestFrame extends JFrame{
 	
 	public static void init(FileManager fm){
 		ClockControl.SystemStart(fm);
+		//Timer timer = new Timer();
+		//timer.schedule(new ShowTimer(), 0, 1000);
 	}
 
 	/**
