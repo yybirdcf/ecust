@@ -26,8 +26,7 @@ public class MainFrame extends JFrame {
 	
 	private JPanel contentPane;
 	public  TreePanel dirTreePanel;
-	public CmdPanel cmdPanel;
-//	public hhhh cmdPanel;
+	public CmdPanelold cmdPanel;
 	public DetailItemPanel[] devDetail = new DetailItemPanel[6];
 	public JLabel nameLabel;
 	public JLabel sizeLabel;
@@ -202,8 +201,7 @@ public class MainFrame extends JFrame {
 		typeLabel.setBounds(105, 97, 111, 16);
 		detailInfoPanel.add(typeLabel);
 		
-		cmdPanel = new CmdPanel(fm, this);
-//		cmdPanel = new hhhh(fm, this);
+		cmdPanel = new CmdPanelold(fm, this);
 		contentPane.add(cmdPanel);
 		cmdPanel.setOpaque(false);
 		cmdPanel.setLayout(null);
@@ -220,7 +218,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(devicePanel);
 		devicePanel.setOpaque(false);
 		devicePanel.setLayout(null);
-		devicePanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "设备信息", TitledBorder.LEADING, TitledBorder.TOP,new Font("宋体",Font.BOLD,18), Color.WHITE));
+		devicePanel.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, new Color(240, 240, 240)), "设备信息", TitledBorder.LEADING, TitledBorder.TOP,new Font("宋体",Font.BOLD,18), Color.WHITE));
 		
 		JPanel devDetailPanel = new JPanel();
 		devDetailPanel.setBounds(0, 25, 487, 168);
