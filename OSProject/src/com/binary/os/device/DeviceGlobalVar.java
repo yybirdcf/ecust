@@ -11,9 +11,15 @@ public class DeviceGlobalVar {
 	
 	public static final int totalDev[] = {3, 2, 1};
 	@SuppressWarnings("rawtypes")
-	public static LinkedList devWaitList[] = new LinkedList[3];
+	public static LinkedList devAWaitList = new LinkedList();
+	public static LinkedList devBWaitList = new LinkedList();
+	public static LinkedList devCWaitList = new LinkedList();
+	
 	@SuppressWarnings("rawtypes")
-	public static LinkedList processIOTime[] = new LinkedList[3];
+	public static LinkedList devAWaitTime = new LinkedList();
+	public static LinkedList devBWaitTime = new LinkedList();
+	public static LinkedList devCWaitTime = new LinkedList();
+	
 	public static int devCurrPid[][] = {{-1,-1,-1}, {-1,-1}, {-1}};
 	
 	public static int NUMOFAPPLYDEVICE = 0;

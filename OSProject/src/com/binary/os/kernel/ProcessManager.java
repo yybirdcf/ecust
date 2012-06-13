@@ -1,7 +1,5 @@
 package com.binary.os.kernel;
 
-import java.util.LinkedList;
-
 import com.binary.os.mem.MemGlobalVar;
 import com.binary.os.mem.SystemMem;
 import com.binary.os.mem.UserMem;
@@ -181,10 +179,18 @@ public class ProcessManager {
 			p.saveDataBuffer(data);
 		}
 		p.setStatus(GlobalStaticVar.PCB_BLOCK);
+		
+		System.out.println("block "+GlobalStaticVar.PID_NOW);
+		
 		PCBManager.addToBlock(p.getPID());
 		GlobalStaticVar.PID_NOW = -1;
-		
+		GlobalStaticVar.DR.clear();
+		GlobalStaticVar.PC = 0;
+		GlobalStaticVar.IR = null;
+		GlobalStaticVar.Result = 0;
 		UserMem.count = 0;
+		
+		GlobalStaticVar.ResetGlobalStaticVar();
 	}
 	
 	public static void Wakeup(int pid){
@@ -194,6 +200,8 @@ public class ProcessManager {
 			Process p = processes[pid];
 			p.setStatus(GlobalStaticVar.PCB_READY);
 			PCBManager.addToReady(p.getPID());
+			
+			System.out.println("wake up "+pid);
 		}
 	}
 }

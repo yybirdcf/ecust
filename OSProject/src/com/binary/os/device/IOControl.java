@@ -29,15 +29,22 @@ public class IOControl {
 	private static void ScheduleA(){
 		for(int i = 0; i < 3; i++){
 			if(DeviceGlobalVar.ABCTime[0][i] > 0){
+				
+				System.out.println(DeviceGlobalVar.ABCTime[0][i]);
+				
 				DeviceGlobalVar.ABCTime[0][i] -= Clock.CLOCKPERIOD;
 			}
 			if(DeviceGlobalVar.ABCTime[0][i] == 0){
+				
 				int pid = DeviceGlobalVar.devCurrPid[0][i];
+				
+				System.out.println("device a over-----pid="+pid);
+				
 				ProcessManager.Wakeup(pid);
 				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 				DeviceGlobalVar.ABCTime[0][i] = -1;
 				DeviceGlobalVar.devCurrPid[0][i] = -1;
-				if(DeviceGlobalVar.devWaitList[0].size() > 0){
+				if(DeviceGlobalVar.devAWaitList.size() > 0){
 					int p = Device.delListItem(0);
 					int time = Device.delProcessTime(0);
 					InnerApplyIO(0, p, time);
@@ -49,15 +56,23 @@ public class IOControl {
 	private static void ScheduleB(){
 		for(int i = 0; i < 2; i++){
 			if(DeviceGlobalVar.ABCTime[1][i] > 0){
+				
+				System.out.println(DeviceGlobalVar.ABCTime[1][i]);
+				
 				DeviceGlobalVar.ABCTime[1][i] -= Clock.CLOCKPERIOD;
 			}
 			if(DeviceGlobalVar.ABCTime[1][i] == 0){
+				
+				
 				int pid = DeviceGlobalVar.devCurrPid[1][i];
+				
+				System.out.println("device b over-----pid="+pid);
+				
 				ProcessManager.Wakeup(pid);
 				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 				DeviceGlobalVar.ABCTime[1][i] = -1;
 				DeviceGlobalVar.devCurrPid[1][i] = -1;
-				if(DeviceGlobalVar.devWaitList[1].size() > 0){
+				if(DeviceGlobalVar.devBWaitList.size() > 0){
 					int p = Device.delListItem(1);
 					int time = Device.delProcessTime(1);
 					InnerApplyIO(1, p, time);
@@ -68,15 +83,23 @@ public class IOControl {
 	
 	private static void ScheduleC(){
 		if(DeviceGlobalVar.ABCTime[2][0] > 0){
+			
+			System.out.println(DeviceGlobalVar.ABCTime[2][0]);
+			
 			DeviceGlobalVar.ABCTime[2][0] -= Clock.CLOCKPERIOD;
 		}
 		if(DeviceGlobalVar.ABCTime[2][0] == 0){
+			
+			
 			int pid = DeviceGlobalVar.devCurrPid[2][0];
+			
+			System.out.println("device c over-----pid="+pid);
+			
 			ProcessManager.Wakeup(pid);
 			DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 			DeviceGlobalVar.ABCTime[2][0] = -1;
 			DeviceGlobalVar.devCurrPid[2][0] = -1;
-			if(DeviceGlobalVar.devWaitList[2].size() > 0){
+			if(DeviceGlobalVar.devCWaitList.size() > 0){
 				int p = Device.delListItem(2);
 				int time = Device.delProcessTime(2);
 				InnerApplyIO(2, p, time);
