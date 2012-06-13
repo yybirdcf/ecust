@@ -17,14 +17,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.binary.os.filesys.manager.FileManager;
+import com.binary.os.kernel.ClockControl;
 
 public class MainFrame extends JFrame {
 
 	private FileManager fm;
 	
 	private JPanel contentPane;
-	public  TreePanel dirTreePane;
-	public CmdPanel cmdResultsPane;
+	public  TreePanel dirTreePanel;
 	private CmdPanel cmdPanel;
 
 	/**
@@ -35,7 +35,6 @@ public class MainFrame extends JFrame {
 			public void run() {
 				try {
 					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,6 +48,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		
 		fm = new FileManager();
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(43, 0, 1280, 768);
@@ -83,11 +83,10 @@ public class MainFrame extends JFrame {
 		lblNewLabel_1.setBounds(5, 0, 160, 44);
 		sysClockPanel.add(lblNewLabel_1);
 		
-		dirTreePane = new TreePanel(fm, this);
-		dirTreePane.setBounds(10, 54, 212, 666);
-		contentPane.add(dirTreePane);
-		dirTreePane.setOpaque(false);
-//		dirTreePane.setLayout(null);
+		dirTreePanel = new TreePanel(fm, this);
+		dirTreePanel.setBounds(10, 54, 212, 666);
+		contentPane.add(dirTreePanel);
+		dirTreePanel.setOpaque(false);
 		
 		JPanel detailInfoPanel = new JPanel();
 		detailInfoPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "œÍœ∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
@@ -360,5 +359,9 @@ public class MainFrame extends JFrame {
 		blockList.setOpaque(false);
 		blockList.setBounds(0, 238, 487, 70);
 		procPanel.add(blockList);
+		
+		setVisible(true);
+		
+		ClockControl.SystemStart(fm, this);
 	}
 }
