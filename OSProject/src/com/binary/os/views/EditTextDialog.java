@@ -25,6 +25,7 @@ public class EditTextDialog extends JDialog{
 	private FileManager fileManager;
 	
 	
+	
 	public EditTextDialog(String fileName, String text, FileManager fileManager){
 		
 		super(parentFrame, fileName, true);

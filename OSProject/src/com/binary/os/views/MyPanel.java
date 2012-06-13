@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
 	
+	
 	String imageLoc;
 	
 	public MyPanel(String imageLoc){

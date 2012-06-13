@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(43, 0, 1280, 768);
 		setResizable(false);
-		contentPane = new MyPanel("background.png");
+		contentPane = new MyPanel("backgrounds.png");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 public class ShowTextDialog extends JDialog{
 	private static final long serialVersionUID = 1L;
 	
+	
 	private static JFrame parentFrame = null;
 	
 	public ShowTextDialog(String fileName, String text){
