@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.manager.FileManager;
+import com.binary.os.kernel.ClockControl;
 
 import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
@@ -20,7 +21,7 @@ public class TestFrame extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private FileManager fm = new FileManager();
+	private FileManager fm = null;
 	private String lastCommand = "";
 	
 	private JTextArea dirText;
@@ -31,6 +32,8 @@ public class TestFrame extends JFrame{
 	private JScrollPane scrollPane_1;
 	private JScrollPane scrollPane_2;
 	public TestFrame() {
+		
+		fm = new FileManager();
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -126,6 +129,13 @@ public class TestFrame extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		commandText.requestFocus();
+		
+		
+		init(fm);
+	}
+	
+	public static void init(FileManager fm){
+		ClockControl.SystemStart(fm);
 	}
 
 	/**
@@ -133,8 +143,9 @@ public class TestFrame extends JFrame{
 	 */
 	public static void main(String[] args) {
 		new TestFrame();
-
 	}
+	
+	
 	
 	public void refresh(){
 		String dirs = "";
