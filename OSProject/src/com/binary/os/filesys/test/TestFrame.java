@@ -7,7 +7,6 @@ import java.awt.Dimension;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import java.awt.Color;
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.manager.FileManager;
 
@@ -22,11 +21,15 @@ public class TestFrame extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private FileManager fm = new FileManager();
+	private String lastCommand = "";
+	
 	private JTextArea dirText;
 	private JTextArea dentryText;
 	private JTextArea resultText;
 	private JTextArea usageText;
 	private JTextField commandText;
+	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane_2;
 	public TestFrame() {
 		
 		JPanel panel = new JPanel();
@@ -42,25 +45,39 @@ public class TestFrame extends JFrame{
 		scrollPane.setViewportView(resultText);
 		panel.add(scrollPane);
 		
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 5, 456, 24);
+		panel.add(scrollPane_2);
+		
 		dirText = new JTextArea();
+		scrollPane_2.setViewportView(dirText);
 		dirText.setEditable(false);
-		dirText.setBounds(10, 5, 456, 24);
-		panel.add(dirText);
+		
+		dirText.setText(fm.getStringCurrentPath());
 		
 		dentryText = new JTextArea();
-		dentryText.setEditable(false);
-		dentryText.setBackground(Color.WHITE);
+		dentryText.setLineWrap(true);
 		dentryText.setBounds(10, 39, 456, 57);
-		panel.add(dentryText);
+		dentryText.setEditable(false);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(10, 39, 456, 57);
+		scrollPane2.setViewportView(dentryText);
+		panel.add(scrollPane2);
 		
 		getContentPane().add(panel, BorderLayout.CENTER);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 114, 454, 139);
+		panel.add(scrollPane_1);
 	
 		usageText = new JTextArea();
+		usageText.setLineWrap(true);
+		scrollPane_1.setViewportView(usageText);
 		usageText.setEditable(false);
-		usageText.setBounds(10, 114, 454, 139);
-		panel.add(usageText);
 		
 		commandText = new JTextField();
+		commandText.setRequestFocusEnabled(true);
 		commandText.setBounds(10, 528, 454, 21);
 		panel.add(commandText);
 		commandText.setColumns(10);
@@ -69,6 +86,7 @@ public class TestFrame extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					String command = commandText.getText();
+					lastCommand = command;
 					resultText.append(command+"\n");
 					commandText.setText("");
 					String result = fm.interpret(command);
@@ -77,56 +95,37 @@ public class TestFrame extends JFrame{
 					String dirs = "";
 					ArrayList<Dentry> dentries = fm.getCurrentDir().getDentryList();
 					for(Dentry den:dentries){
-						dirs = dirs + den.getFullName() + "    ";
+						String isFile = "文件夹";
+						if(den.isFile()){
+							isFile = "文件";
+						}
+						dirs = dirs + den.getFullName() + "   (" + isFile + ", " + den.getStringAttri() + ", " + den.getSize() + "字节)\n";
 					}
 					dentryText.setText(dirs);
 					String usage = "";
 					boolean[] res = fm.getUsage();
-					for(int i=0; i<8; i++){
-						for(int j=0; j<32; j++){
-							if(i*32+j == 255){
-								break;
-							}
-							if(res[i*32+j]){
-								usage = usage + "1 ";
-							}else{
-								usage = usage + "0 ";
-							}
+					for(int i=0; i<255; i++){
+						if(res[i]){
+							usage = usage + "1 ";
+						}else{
+							usage = usage + "0 ";
 						}
-						usage = usage + "\n";
 					}
 					usageText.setText(usage);
+				}else if (e.getKeyCode() == KeyEvent.VK_UP) {
+					commandText.setText(lastCommand);
 				}
+				
 			}
 		});
+
+		refresh();
 		
-		dirText.setText(fm.getStringCurrentPath());
-		String dirs = "";
-		ArrayList<Dentry> dentries = fm.getCurrentDir().getDentryList();
-		for(Dentry den:dentries){
-			dirs = dirs + den.getFullName() + "    ";
-		}
-		dentryText.setText(dirs);
-		String usage = "";
-		boolean[] res = fm.getUsage();
-		for(int i=0; i<8; i++){
-			for(int j=0; j<32; j++){
-				if(i*32+j == 255){
-					break;
-				}
-				if(res[i*32+j]){
-					usage = usage + "1 ";
-				}else{
-					usage = usage + "0 ";
-				}
-			}
-			usage = usage + "\n";
-		}
-		usageText.setText(usage);
-	
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(new Dimension(492, 610));
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		commandText.requestFocus();
 	}
 
 	/**
@@ -135,5 +134,28 @@ public class TestFrame extends JFrame{
 	public static void main(String[] args) {
 		new TestFrame();
 
+	}
+	
+	public void refresh(){
+		String dirs = "";
+		ArrayList<Dentry> dentries = fm.getCurrentDir().getDentryList();
+		for(Dentry den:dentries){
+			String isFile = "文件夹";
+			if(den.isFile()){
+				isFile = "文件";
+			}
+			dirs = dirs + den.getFullName() + "   (" + isFile + ", " + den.getStringAttri() + ", " + den.getSize() + "字节)\n";
+		}
+		dentryText.setText(dirs);
+		String usage = "";
+		boolean[] res = fm.getUsage();
+		for(int i=0; i<255; i++){
+			if(res[i]){
+				usage = usage + "1 ";
+			}else{
+				usage = usage + "0 ";
+			}
+		}
+		usageText.setText(usage);
 	}
 }

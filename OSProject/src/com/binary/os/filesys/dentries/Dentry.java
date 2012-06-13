@@ -155,13 +155,13 @@ public class Dentry {
 	
 	public String getStringAttri(){
 		if(attribute == D_H_R | attribute == F_H_R){
-			return "隐藏和只读";
+			return "隐藏与只读";
 		}else if(attribute == D_H_W || attribute == F_H_W){
-			return "隐藏和可写";
+			return "隐藏与可写";
 		}else if(attribute == D_S_R || attribute == F_S_R){
-			return "显示和只读";
+			return "显示与只读";
 		}else if(attribute == D_S_W || attribute == F_S_W){
-			return "显示和可写";
+			return "显示与可写";
 		}else{
 			return "非法属性";
 		}
