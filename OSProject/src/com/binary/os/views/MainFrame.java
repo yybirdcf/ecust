@@ -26,7 +26,8 @@ public class MainFrame extends JFrame {
 	
 	private JPanel contentPane;
 	public  TreePanel dirTreePanel;
-	public CmdPanelold cmdPanel;
+//	public CmdPanelold cmdPanel;
+	public CmdPanel cmdPanel;
 	public DetailItemPanel[] devDetail = new DetailItemPanel[6];
 	public JLabel nameLabel;
 	public JLabel sizeLabel;
@@ -201,7 +202,7 @@ public class MainFrame extends JFrame {
 		typeLabel.setBounds(105, 97, 111, 16);
 		detailInfoPanel.add(typeLabel);
 		
-		cmdPanel = new CmdPanelold(fm, this);
+		cmdPanel = new CmdPanel(fm, this);
 		contentPane.add(cmdPanel);
 		cmdPanel.setOpaque(false);
 		cmdPanel.setLayout(null);
