@@ -4,20 +4,19 @@ import javax.swing.JPanel;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 public class ShowTextDialog extends JDialog{
 	private static final long serialVersionUID = 1L;
 	
-	private static Frame frame = null;
+	private static JFrame parentFrame = null;
 	
 	public ShowTextDialog(String fileName, String text){
 		
-		super(frame);
-		this.setTitle(fileName);
+		super(parentFrame, fileName, true);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	
 		JTextArea textArea = new JTextArea(text);

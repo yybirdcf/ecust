@@ -406,7 +406,7 @@ public class FileManager {
 				return "文件属性为只读！无法编辑文件！";
 			}
 			new EditTextDialog(fileName, file.toString(), this);//编辑文件
-			return "编辑文件！";
+			return "编辑文件结束！";
 		}else{
 			new ShowTextDialog(fileName, file.toString());//显示文件
 			return "显示文件成功！";
@@ -484,11 +484,8 @@ public class FileManager {
 			return "文件不存在！修改文件属性失败！";
 		}	
 		
-		//获得旧属性
-		int oldAttri = file.getAttribute();
-		
 		if(attrs.length == 0){//没有要覆的属性
-			return fileName + " 没有要修改的属性！  当前属性为 " + oldAttri; 
+			return fileName + " 没有要修改的属性！  当前属性为 " + file.getStringAttri();
 		}
 		
 		//更改属性
@@ -513,6 +510,8 @@ public class FileManager {
 			result = "格式化磁盘失败！";
 		}
 		disk.readDirectory(root);
+		currentPath.clear();//清除当前路径
+		currentPath.add(root);
 		return result;
 	}
 	
@@ -692,11 +691,15 @@ public class FileManager {
 		}
 		
 		//检查是否是当前目录
+		currentPath.add(tDir);//暂时先把要删的目录加到当前路径
 		if(currentPath.equals(oldPath)){//等于原来当前目录
 			return "无法删除当前目录！";
+		}else{//恢复
+			currentPath.pollLast();
 		}
 		
 		deleSub(tDir);//删除目录及子目录项
+		getCurrentDir().removeDentry(tDir);//当前目录移除要删除目录的FCB
 		saveAllDirs();//保存全部路径
 			
 		return sDir + " 目录删除成功！"; 
@@ -810,6 +813,7 @@ public class FileManager {
 				return true;
 			}
 			currentPath.pollLast();//向上一级
+			return true;
 		}
 		
 		if(dirs[0].equals("root:")){//为绝对地址
@@ -882,10 +886,6 @@ public class FileManager {
 		}
 		
 		if(getCurrentDir().checkName(name, exten) == true){//同名
-			return null;
-		}
-		
-		if(getCurrentDir().checkName(name, exten) == true){//同名
 			SFile cFile = getCurrentDir().checkFileName(name, exten);
 			if(cFile == null){
 				return null;
@@ -939,8 +939,9 @@ public class FileManager {
 		return file;
 	}
 	
-	//删除目录下的子项
+	//删除目录下的子项，递归法
 	public void deleSub(Directory dir){
+		disk.readDirectory(dir);//读取目录
 		for(Dentry dentry:dir.getDentryList()){//取出所有目录项
 			if(dentry.isFile()){//如果是文件就删除
 				disk.recycleDentry(dentry);
@@ -948,7 +949,6 @@ public class FileManager {
 				deleSub((Directory)dentry);
 			}
 		}
-		dir.getDentryList().clear();//目录清空
 		disk.recycleDentry(dir);//回收目录
 	}
 	

@@ -388,7 +388,7 @@ public class DiskManager {
 					if(index > 0){//存在二次索引地址
 
 						indexs.add(index);
-						dentry.setLev1Index(0);//二次索引地址置0
+						dentry.setLev2Index(0);//二次索引地址置0
 						
 						iBlock = new IndexBlock(index, readBlock(index));//一级索引块
 						indexList = iBlock.getIndexList();
