@@ -25,6 +25,11 @@ public class Process {
 			}
 		}
 	}
+	
+	public void clearDataBufferArea(){
+		for(int i = 0; i < 16; i++)
+			SystemMem.pcbs[32 * newpid + 6 + i] = 0;
+	}
 
 	public byte getPID(){
 		return newpid;
@@ -53,7 +58,7 @@ public class Process {
 		SystemMem.pcbs[32 * newpid + 5] = PagePeek; 
 	}
 	
-	public void setMemInfo2(byte PagePeek){
+	public void setPageOffset(byte PagePeek){
 		SystemMem.pcbs[32 * newpid + 5] = PagePeek;
 	}
 	

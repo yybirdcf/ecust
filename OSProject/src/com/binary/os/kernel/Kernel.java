@@ -12,7 +12,7 @@ public class Kernel {
 			GlobalStaticVar.PSW = 0;
 		}
 
-		if (GlobalStaticVar.DR.isEmpty()) {
+		if (GlobalStaticVar.DR.size() == 0) {
 			Register.loadDataToDataBuffer();
 		}
 		
@@ -20,7 +20,6 @@ public class Kernel {
 			Register.loadDataToIR();
 		}
 			
-		GlobalStaticVar.IR = GlobalStaticVar.DR.poll();
 		Command(GlobalStaticVar.IR);
 		
 		GlobalStaticVar.IR = null;
@@ -40,6 +39,8 @@ public class Kernel {
 			//进程结束
 			//输出结果
 			GlobalStaticVar.fm.saveOut(GlobalStaticVar.PID_NOW, GlobalStaticVar.Result);
+			System.out.println("result-------"+GlobalStaticVar.Result);
+			System.out.println("pid	---------" + GlobalStaticVar.PID_NOW + "	over");
 			//清楚进程资源
 			ProcessManager.Destory();
 		}else if(IR.charAt(0) == '!'){
@@ -65,10 +66,10 @@ public class Kernel {
 			GlobalStaticVar.Result = (byte)(Integer.parseInt(IR.charAt(2)+""));
 		}else if(IR.charAt(1) == '+'){
 			
-			GlobalStaticVar.Result = GlobalStaticVar.Result++;
+			GlobalStaticVar.Result++;
 		}else if(IR.charAt(1) == '-'){
 			
-			GlobalStaticVar.Result = GlobalStaticVar.Result--;
+			GlobalStaticVar.Result--;
 		}
 	}
 }
