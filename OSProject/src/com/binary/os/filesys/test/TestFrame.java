@@ -2,6 +2,8 @@ package com.binary.os.filesys.test;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -31,6 +33,7 @@ public class TestFrame extends JFrame{
 	private JTextField commandText;
 	private JScrollPane scrollPane_1;
 	private JScrollPane scrollPane_2;
+	private JScrollPane scrollPane;
 	public TestFrame() {
 		
 		fm = new FileManager();
@@ -43,7 +46,7 @@ public class TestFrame extends JFrame{
 		resultText.setLineWrap(true);
 		resultText.setBounds(10, 263, 454, 255);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 263, 454, 255);
 		scrollPane.setViewportView(resultText);
 		panel.add(scrollPane);
@@ -94,6 +97,8 @@ public class TestFrame extends JFrame{
 					commandText.setText("");
 					String result = fm.interpret(command);
 					resultText.append(result+"\n");
+					JScrollBar sBar = scrollPane.getVerticalScrollBar();
+					sBar.setValue(sBar.getMaximum());
 					dirText.setText(fm.getStringCurrentPath());
 					String dirs = "";
 					ArrayList<Dentry> dentries = fm.getCurrentDir().getDentryList();
