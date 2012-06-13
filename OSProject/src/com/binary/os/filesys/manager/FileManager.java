@@ -335,6 +335,14 @@ public class FileManager {
 			desExten = stemp[1];//后缀
 		}
 		
+		//检查重名
+		if(getCurrentDir().checkName(desName, desExten) == true){//同名
+			currentPath = oldPath; //回到源目录路径
+			getCurrentDir().addDentry(srcFile);//放回目录
+			saveCurrentDir();//保存当前目录
+			return "目标目录存在同名文件夹或文件！移动文件失败！";
+		}
+		
 		//设目标文件名
 		if(srcFile.setName(desName) == false){//目标文件名超长
 			currentPath = oldPath; //回到源目录路径
@@ -985,6 +993,11 @@ public class FileManager {
 		}
 		return path;
 	}
+	
+	//刷新 状态
+//	public boolean refresh(){
+//		
+//	}
 	
 	public RootDirectory getRoot() {
 		return root;
