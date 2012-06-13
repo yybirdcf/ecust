@@ -6,15 +6,17 @@ import com.binary.os.device.Device;
 import com.binary.os.filesys.manager.FileManager;
 import com.binary.os.mem.SystemMem;
 import com.binary.os.mem.UserMem;
+import com.binary.os.views.MainFrame;
 
 public class ClockControl {
 
 	private static Timer timer;
 	
-	public static void SystemStart(FileManager fm){
+	public static void SystemStart(FileManager fm,MainFrame mf){
 		//初始化系统资源
 		
 		GlobalStaticVar.fm = fm;
+		GlobalStaticVar.mf = mf;
 		
 		SystemMem.init();
 		UserMem.init();

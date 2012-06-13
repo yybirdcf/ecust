@@ -3,6 +3,7 @@ package com.binary.os.kernel;
 import java.util.LinkedList;
 
 import com.binary.os.filesys.manager.FileManager;
+import com.binary.os.views.MainFrame;
 
 public class GlobalStaticVar {
 
@@ -35,4 +36,6 @@ public class GlobalStaticVar {
 	
 	public static int ProcessCreateListener = -4;
 	public static LinkedList createApply = new LinkedList();
+	
+	public static MainFrame mf = null;
 }
