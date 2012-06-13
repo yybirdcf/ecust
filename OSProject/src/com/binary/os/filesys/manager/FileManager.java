@@ -121,7 +121,7 @@ public class FileManager {
 	}
 	
 	//外部调用的时候要确认 创建文件
-	public String create(String[] dirs, String fileName){
+	private String create(String[] dirs, String fileName){
 		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！文件创建失败！";
@@ -193,7 +193,7 @@ public class FileManager {
 	}
 	
 	//创建并编辑文件
-	public String vi(String[] dirs, String fileName){
+	private String vi(String[] dirs, String fileName){
 		//创建文件
 		String result = create(dirs, fileName);
 		if(result.equals(fileName + " 文件创建成功！") == false){//创建文件失败
@@ -207,7 +207,7 @@ public class FileManager {
 	}
 	
 	//复制文件
-	public String copy(String[] srcDirs, String srcFileName, String[] desDirs, String desFileName){
+	private String copy(String[] srcDirs, String srcFileName, String[] desDirs, String desFileName){
 		
 		if(srcFileName.equals("")){//文件名为空
 			return "源文件名为空！复制文件失败！";
@@ -266,7 +266,7 @@ public class FileManager {
 	}
 	
 	//删除文件
-	public String delete(String[] dirs, String fileName){
+	private String delete(String[] dirs, String fileName){
 		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！删除文件失败！";
@@ -307,7 +307,7 @@ public class FileManager {
 	}
 		
 	//移动文件
-	public String move(String[] srcDirs, String srcFileName, String[] desDirs, String desFileName){
+	private String move(String[] srcDirs, String srcFileName, String[] desDirs, String desFileName){
 		
 		if(srcFileName.equals("")){//文件名为空
 			return "源文件名为空！移动文件失败！";
@@ -408,7 +408,7 @@ public class FileManager {
 	}
 	
 	//显示文件
-	public String type(String[] dirs, String fileName, boolean isForEdit){
+	private String type(String[] dirs, String fileName, boolean isForEdit){
 		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！显示文件失败！";
@@ -494,7 +494,7 @@ public class FileManager {
 	}
 		
 	//改变文件属性
-	public String change(String[] dirs, String fileName, String[] attrs){
+	private String change(String[] dirs, String fileName, String[] attrs){
 		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！修改文件属性失败！";
@@ -537,7 +537,7 @@ public class FileManager {
 		return fileName + " 修改属性成功！  当前属性为 " + cAttri; 
 	}
 	
-	public String format(){
+	private String format(){
 		String result = "成功格式化磁盘！";
 		if(!disk.format()){
 			result = "格式化磁盘失败！";
@@ -549,7 +549,7 @@ public class FileManager {
 	}
 	
 	//创建目录
-	public String makdir(String[] dirs){
+	private String makdir(String[] dirs){
 		
 		ArrayList<String> unCreatedDirs = checkDirs(dirs);//获得未创建目录树
 		if(unCreatedDirs.size() == 0){//需要创建的目录树都已存在
@@ -596,7 +596,7 @@ public class FileManager {
 	}
 	
 	//更改当前目录
-	public String chadir(String[] dirs){
+	private String chadir(String[] dirs){
 		if(acceDirs(dirs) == false){//检查目录树失败
 			return "目录不存在！";
 		}
@@ -604,7 +604,7 @@ public class FileManager {
 	}
 	
 	//删除空目录
-	public String rdir(String[] dirs){
+	private String rdir(String[] dirs){
 		if(dirs.length == 0){//不存在目录树
 			return "没有输入要删除的目录！";
 		}
@@ -681,7 +681,7 @@ public class FileManager {
 	}
 	
 	//删除目录并删除子文件
-	public String deldir(String[] dirs){
+	private String deldir(String[] dirs){
 		if(dirs.length == 0){//不存在目录树
 			return "没有输入要删除的目录！";
 		}
@@ -739,7 +739,7 @@ public class FileManager {
 	}
 	
 	//执行可执行文件
-	public String run(String[] dirs, String fileName){
+	private String run(String[] dirs, String fileName){
 		
 		if(fileName.equals("")){//文件名为空
 			return "文件名为空！运行文件失败！";
@@ -788,54 +788,8 @@ public class FileManager {
 		return "成功运行文件" + fileName + "！ 创建的进程的PID为" + result;
 	}
 	
-	//保存out文件
-	public boolean saveOut(int pid, byte result){
-		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝当前路径
-		
-		LinkedList<Directory> outPath  = processFileAddr[pid];//获得进程对应的路径
-		if(outPath == null){//路径不存在就保存结果失败
-			return false;
-		}
-		
-		currentPath = outPath;
-		
-		SFile outFile = sCreate("out", true);//保存out文件
-		if(outFile == null){
-			return false;
-		}
-		
-		String text = "执行文件路径为：" + getStringCurrentPath() + "\n结果为：x=" + result;
-		
-		//设置文件文本
-		if(outFile.setText(text) == false){
-			return false;
-		}
-		
-		//保存文件
-		if(disk.saveDentry(outFile) == false){//保存文件失败
-			return false;
-		}
-		
-		//保存目录
-		if(saveCurrentDir() == false){//保存当前目录失败
-			getCurrentDir().removeDentry(outFile);
-			disk.recycleDentry(outFile);//回收为文件分配的盘块
-			return false;
-		}
-		
-		saveAllDirs();//保存全部路径
-		
-		currentPath = oldPath;//恢复当前路径
-		
-		return true;
-	}
-	
-	public boolean[] getUsage(){
-		return disk.getUsage();
-	}
-	
 	//检索目录树，进入目录
-	public boolean acceDirs(String[] dirs){
+	private boolean acceDirs(String[] dirs){
 		if(dirs.length == 0){//不存在目录树
 			return true;
 		}
@@ -871,7 +825,7 @@ public class FileManager {
 	}
 	
 	//检索目录树，进入已存在目录，获得不存在的目录树
-	public ArrayList<String> checkDirs(String[] dirs){
+	private ArrayList<String> checkDirs(String[] dirs){
 		boolean notExist = false;
 		ArrayList<String> unCreatedDirs = new ArrayList<String>();//存放还未创建的目录
 		
@@ -905,7 +859,7 @@ public class FileManager {
 	}
 
 	//在当前目录创建文件
-	public SFile sCreate(String fileName, boolean isOverWrite){
+	private SFile sCreate(String fileName, boolean isOverWrite){
 		
 		if(fileName.equals("")){//文件名为空
 			return null;
@@ -973,7 +927,7 @@ public class FileManager {
 	}
 	
 	//删除目录下的子项，递归法
-	public void deleSub(Directory dir){
+	private void deleSub(Directory dir){
 		disk.readDirectory(dir);//读取目录
 		for(Dentry dentry:dir.getDentryList()){//取出所有目录项
 			if(dentry.isFile()){//如果是文件就删除
@@ -985,7 +939,7 @@ public class FileManager {
 		disk.recycleDentry(dir);//回收目录
 	}
 	
-	public boolean saveCurrentDir(){
+	private boolean saveCurrentDir(){
 		if(getCurrentDir() == root){//若当前目录为根目录
 			if(disk.saveRoot(root) == false){//保存根目录失败
 				return false;
@@ -999,7 +953,7 @@ public class FileManager {
 	}
 	
 	//保存当前路径到根目录的所有目录，倒着保存
-	public void saveAllDirs(){
+	private void saveAllDirs(){
 		for(int i=currentPath.size()-1; i>0; i--){//保存除root目录外
 			disk.saveDentry(currentPath.get(i));//保存目录
 		}
@@ -1017,6 +971,53 @@ public class FileManager {
 			path = path + dir.getName() + "\\";
 		}
 		return path;
+	}
+	
+	//获得磁盘使用情况
+	public boolean[] getUsage(){
+		return disk.getUsage();
+	}
+	
+	//保存out文件
+	public boolean saveOut(int pid, byte result){
+		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝当前路径
+		
+		LinkedList<Directory> outPath  = processFileAddr[pid];//获得进程对应的路径
+		if(outPath == null){//路径不存在就保存结果失败
+			return false;
+		}
+		
+		currentPath = outPath;
+		
+		SFile outFile = sCreate("out", true);//保存out文件
+		if(outFile == null){
+			return false;
+		}
+		
+		String text = "执行文件路径为：" + getStringCurrentPath() + "\n结果为：x=" + result;
+		
+		//设置文件文本
+		if(outFile.setText(text) == false){
+			return false;
+		}
+		
+		//保存文件
+		if(disk.saveDentry(outFile) == false){//保存文件失败
+			return false;
+		}
+		
+		//保存目录
+		if(saveCurrentDir() == false){//保存当前目录失败
+			getCurrentDir().removeDentry(outFile);
+			disk.recycleDentry(outFile);//回收为文件分配的盘块
+			return false;
+		}
+		
+		saveAllDirs();//保存全部路径
+		
+		currentPath = oldPath;//恢复当前路径
+		
+		return true;
 	}
 	
 	//刷新 状态
@@ -1040,11 +1041,11 @@ public class FileManager {
 		return "已刷新！";
 	}
 	
-	public RootDirectory getRoot() {
-		return root;
-	}
-
-	public DiskManager getDisk() {
-		return disk;
-	}
+//	public RootDirectory getRoot() {
+//		return root;
+//	}
+//
+//	public DiskManager getDisk() {
+//		return disk;
+//	}
 }
