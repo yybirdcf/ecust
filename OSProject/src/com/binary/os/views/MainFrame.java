@@ -31,7 +31,6 @@ public class MainFrame extends JFrame {
 	public DetailItemPanel[] devDetail = new DetailItemPanel[6];
 	public JLabel nameLabel;
 	public JLabel sizeLabel;
-	public JLabel fatherDirLabel;
 	public JLabel typeLabel;
 	public JLabel attributeLabel;
 	public JLabel directAddr1Label;
@@ -119,12 +118,6 @@ public class MainFrame extends JFrame {
 		label.setBounds(10, 53, 54, 16);
 		detailInfoPanel.add(label);
 		
-		JLabel label_1 = new JLabel("\u7236\u76EE\u5F55\uFF1A");
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("ËÎÌå", Font.BOLD, 15));
-		label_1.setBounds(10, 75, 68, 16);
-		detailInfoPanel.add(label_1);
-		
 		JLabel label_2 = new JLabel("\u5C5E\u6027\uFF1A");
 		label_2.setForeground(Color.WHITE);
 		label_2.setFont(new Font("ËÎÌå", Font.BOLD, 15));
@@ -157,49 +150,43 @@ public class MainFrame extends JFrame {
 		
 		nameLabel = new JLabel("New label");
 		nameLabel.setForeground(Color.WHITE);
-		nameLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		nameLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		nameLabel.setBounds(105, 31, 111, 16);
 		detailInfoPanel.add(nameLabel);
 		
 		sizeLabel = new JLabel("New label");
 		sizeLabel.setForeground(Color.WHITE);
-		sizeLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		sizeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		sizeLabel.setBounds(105, 53, 111, 16);
 		detailInfoPanel.add(sizeLabel);
 		
-		fatherDirLabel = new JLabel("New label");
-		fatherDirLabel.setForeground(Color.WHITE);
-		fatherDirLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		fatherDirLabel.setBounds(105, 75, 111, 16);
-		detailInfoPanel.add(fatherDirLabel);
-		
 		attributeLabel = new JLabel("New label");
 		attributeLabel.setForeground(Color.WHITE);
-		attributeLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		attributeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		attributeLabel.setBounds(105, 119, 111, 16);
 		detailInfoPanel.add(attributeLabel);
 		
 		directAddr1Label = new JLabel("New label");
 		directAddr1Label.setForeground(Color.WHITE);
-		directAddr1Label.setFont(new Font("Arial", Font.BOLD, 15));
+		directAddr1Label.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		directAddr1Label.setBounds(105, 141, 111, 16);
 		detailInfoPanel.add(directAddr1Label);
 		
 		directAddr2Label = new JLabel("New label");
 		directAddr2Label.setForeground(Color.WHITE);
-		directAddr2Label.setFont(new Font("Arial", Font.BOLD, 15));
+		directAddr2Label.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		directAddr2Label.setBounds(105, 163, 111, 16);
 		detailInfoPanel.add(directAddr2Label);
 		
 		lev1IndexLabel = new JLabel("New label");
 		lev1IndexLabel.setForeground(Color.WHITE);
-		lev1IndexLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		lev1IndexLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		lev1IndexLabel.setBounds(105, 185, 111, 16);
 		detailInfoPanel.add(lev1IndexLabel);
 		
 		lev2IndexLabel = new JLabel("New label");
 		lev2IndexLabel.setForeground(Color.WHITE);
-		lev2IndexLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		lev2IndexLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		lev2IndexLabel.setBounds(105, 208, 111, 16);
 		detailInfoPanel.add(lev2IndexLabel);
 		
@@ -211,7 +198,7 @@ public class MainFrame extends JFrame {
 		
 		typeLabel = new JLabel("New label");
 		typeLabel.setForeground(Color.WHITE);
-		typeLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		typeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		typeLabel.setBounds(105, 97, 111, 16);
 		detailInfoPanel.add(typeLabel);
 		
