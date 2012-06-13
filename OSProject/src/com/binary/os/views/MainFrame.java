@@ -29,15 +29,15 @@ public class MainFrame extends JFrame {
 	public CmdPanel cmdPanel;
 //	public hhhh cmdPanel;
 	public DetailItemPanel[] devDetail = new DetailItemPanel[6];
-	private JLabel nameLabel;
-	private JLabel sizeLabel;
-	private JLabel fatherDirLabel;
-	private JLabel typeLabel;
-	private JLabel attributeLabel;
-	private JLabel directAddr1Label;
-	private JLabel directAddr2Label;
-	private JLabel lev1IndexLabel;
-	private JLabel lev2IndexLabel;
+	public JLabel nameLabel;
+	public JLabel sizeLabel;
+	public JLabel fatherDirLabel;
+	public JLabel typeLabel;
+	public JLabel attributeLabel;
+	public JLabel directAddr1Label;
+	public JLabel directAddr2Label;
+	public JLabel lev1IndexLabel;
+	public JLabel lev2IndexLabel;
 
 	/**
 	 * Launch the application.
