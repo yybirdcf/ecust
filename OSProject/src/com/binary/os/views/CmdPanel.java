@@ -19,7 +19,7 @@ import com.binary.os.filesys.manager.FileManager;
 
 public class CmdPanel extends JPanel implements KeyListener {
 	
-	private MainFrameTest mainFrame;
+	private MainFrame mainFrame;
 	private FileManager fm = null;
 	private String lastCommand = "";
 	
@@ -31,7 +31,7 @@ public class CmdPanel extends JPanel implements KeyListener {
 	/**
 	 * Create the panel.
 	 */
-	public CmdPanel(FileManager fm, MainFrameTest mainFrame) {
+	public CmdPanel(FileManager fm, MainFrame mainFrame) {
 		this.fm = fm;
 		this.mainFrame = mainFrame;
 		

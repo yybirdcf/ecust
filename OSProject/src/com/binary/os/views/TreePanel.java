@@ -20,11 +20,11 @@ public class TreePanel extends JPanel implements TreeWillExpandListener{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private MainFrameTest mainFrame;
+	private MainFrame mainFrame;
 	private FileManager fm;
 	private JTree tree;
 
-	public TreePanel(FileManager fm, MainFrameTest mainFrame) {
+	public TreePanel(FileManager fm, MainFrame mainFrame) {
 		this.fm = fm;
 		this.mainFrame = mainFrame;
 		init();
