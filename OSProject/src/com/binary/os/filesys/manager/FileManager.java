@@ -780,6 +780,7 @@ public class FileManager {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			result = GlobalStaticVar.ProcessCreateListener;
 		}
 		if(result == -1){
 			return "运行文件失败！无法创建进程！内存空间不足！";
