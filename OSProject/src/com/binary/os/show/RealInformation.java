@@ -37,17 +37,17 @@ public class RealInformation {
 	
 	@SuppressWarnings("unchecked")
 	public static LinkedList<Integer> getWaitDeviceA(){
-		return DeviceGlobalVar.devWaitList[0];
+		return DeviceGlobalVar.devAWaitList;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static LinkedList<Integer> getWaitDeviceB(){
-		return DeviceGlobalVar.devWaitList[1];
+		return DeviceGlobalVar.devBWaitList;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static LinkedList<Integer> getWaitDeviceC(){
-		return DeviceGlobalVar.devWaitList[2];
+		return DeviceGlobalVar.devCWaitList;
 	}
 	
 	public static long getSystemClock(){
