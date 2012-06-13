@@ -3,12 +3,8 @@ package com.binary.os.views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -17,11 +13,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
-import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.manager.FileManager;
 
 public class CmdPanel extends JPanel implements KeyListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private MainFrame mainFrame;
 	private FileManager fm = null;
 	private String lastCommand = "";

@@ -16,8 +16,6 @@ import com.binary.os.filesys.dentries.CurDirFile;
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.manager.FileManager;
-import com.binary.os.kernel.GlobalStaticVar;
-
 import java.awt.BorderLayout;
 import java.util.LinkedList;
 
