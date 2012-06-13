@@ -7,6 +7,7 @@ import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.dentries.RootDirectory;
 import com.binary.os.filesys.dentries.SFile;
+import com.binary.os.kernel.GlobalStaticVar;
 import com.binary.os.kernel.ProcessManager;
 import com.binary.os.views.EditTextDialog;
 import com.binary.os.views.ShowTextDialog;
@@ -770,7 +771,16 @@ public class FileManager {
 		disk.readFile(file);//读取文件
 		
 		//创建进程
-		int result = ProcessManager.Create(file.getContent());
+		ProcessManager.Create(file.getContent());
+		
+		int result = GlobalStaticVar.ProcessCreateListener;
+		while(result == -4){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		if(result == -1){
 			return "运行文件失败！无法创建进程！内存空间不足！";
 		}
