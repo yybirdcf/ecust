@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -26,6 +27,7 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	public  TreePanel dirTreePanel;
 	private CmdPanel cmdPanel;
+	public DetailItemPanel[] devDetail = new DetailItemPanel[6];
 
 	/**
 	 * Launch the application.
@@ -60,27 +62,27 @@ public class MainFrame extends JFrame {
 		
 		JPanel sysClockPanel = new JPanel();
 		sysClockPanel.setBorder(new LineBorder(Color.WHITE, 2, true));
-		sysClockPanel.setBounds(10, 10, 438, 44);
+		sysClockPanel.setBounds(10, 20, 438, 34);
 		contentPane.add(sysClockPanel);
 		sysClockPanel.setOpaque(false);
 		sysClockPanel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(265, 0, 173, 44);
+		lblNewLabel.setBounds(265, 0, 173, 34);
 		lblNewLabel.setFont(new Font("宋体", Font.BOLD, 18));
 		sysClockPanel.add(lblNewLabel);
 		
 		JLabel sysClockLabel = new JLabel("New label");
 		sysClockLabel.setForeground(Color.RED);
 		sysClockLabel.setFont(new Font("宋体", Font.BOLD, 18));
-		sysClockLabel.setBounds(165, 0, 90, 44);
+		sysClockLabel.setBounds(165, 0, 90, 34);
 		sysClockPanel.add(sysClockLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("宋体", Font.BOLD, 18));
-		lblNewLabel_1.setBounds(5, 0, 160, 44);
+		lblNewLabel_1.setBounds(5, 0, 160, 34);
 		sysClockPanel.add(lblNewLabel_1);
 		
 		dirTreePanel = new TreePanel(fm, this);
@@ -204,10 +206,6 @@ public class MainFrame extends JFrame {
 		detailInfoPanel.add(typeLabel);
 		
 		cmdPanel = new CmdPanel(fm, this);
-		cmdPanel.cmdText.setBounds(0, 412, 554, 21);
-		cmdPanel.currDirLabel.setBounds(81, 394, 473, 18);
-		cmdPanel.resultScrolPane.setBounds(0, 0, 554, 392);
-		cmdPanel.setBounds(222, 287, 554, 433);
 		contentPane.add(cmdPanel);
 		cmdPanel.setOpaque(false);
 		cmdPanel.setLayout(null);
@@ -224,15 +222,16 @@ public class MainFrame extends JFrame {
 		contentPane.add(devicePanel);
 		devicePanel.setOpaque(false);
 		devicePanel.setLayout(null);
+		devicePanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "设备信息", TitledBorder.LEADING, TitledBorder.TOP,new Font("宋体",Font.BOLD,18), Color.WHITE));
 		
 		JPanel devDetailPanel = new JPanel();
-		devDetailPanel.setBounds(0, 0, 487, 193);
+		devDetailPanel.setBounds(0, 25, 487, 168);
 		devicePanel.add(devDetailPanel);
 		devDetailPanel.setOpaque(false);
 		devDetailPanel.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 487, 24);
+		panel.setBounds(14, 0, 460, 24);
 		devDetailPanel.add(panel);
 		panel.setOpaque(false);
 		panel.setLayout(null);
@@ -240,56 +239,41 @@ public class MainFrame extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("\u8BBE\u5907\u540D");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("宋体", Font.BOLD, 15));
-		lblNewLabel_3.setBounds(0, 0, 121, 24);
+		lblNewLabel_3.setBounds(0, 0, 115, 24);
 		panel.add(lblNewLabel_3);
+		lblNewLabel_3.setForeground(Color.WHITE);
+		lblNewLabel_3.setBorder(new MatteBorder(2, 2, 1, 1, Color.WHITE));
 		
 		JLabel label_8 = new JLabel("\u8BBE\u5907\u7C7B\u578B");
 		label_8.setFont(new Font("宋体", Font.BOLD, 15));
 		label_8.setHorizontalAlignment(SwingConstants.CENTER);
-		label_8.setBounds(121, 0, 121, 24);
+		label_8.setBounds(115, 0, 115, 24);
 		panel.add(label_8);
+		label_8.setForeground(Color.WHITE);
+		label_8.setBorder(new MatteBorder(2, 1, 1, 1, Color.WHITE));
 		
 		JLabel label_9 = new JLabel("\u72B6\u6001");
 		label_9.setHorizontalAlignment(SwingConstants.CENTER);
 		label_9.setFont(new Font("宋体", Font.BOLD, 15));
-		label_9.setBounds(242, 0, 121, 24);
+		label_9.setBounds(230, 0, 115, 24);
 		panel.add(label_9);
+		label_9.setForeground(Color.WHITE);
+		label_9.setBorder(new MatteBorder(2, 1, 1, 1, Color.WHITE));
 		
 		JLabel label_10 = new JLabel("\u5F53\u524D\u8FDB\u7A0B");
 		label_10.setHorizontalAlignment(SwingConstants.CENTER);
 		label_10.setFont(new Font("宋体", Font.BOLD, 15));
-		label_10.setBounds(363, 0, 124, 24);
+		label_10.setBounds(345, 0, 115, 24);
 		panel.add(label_10);
+		label_10.setForeground(Color.WHITE);
+		label_10.setBorder(new MatteBorder(2, 1, 1, 2, Color.WHITE));
 		
-		JPanel detailItemPanel = new JPanel();
-		detailItemPanel.setLayout(null);
-		detailItemPanel.setOpaque(false);
-		detailItemPanel.setBounds(0, 24, 487, 24);
-		devDetailPanel.add(detailItemPanel);
-		
-		JLabel devNameLabel = new JLabel("New Label");
-		devNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		devNameLabel.setFont(new Font("宋体", Font.BOLD, 15));
-		devNameLabel.setBounds(0, 0, 121, 24);
-		detailItemPanel.add(devNameLabel);
-		
-		JLabel devTypeLabel = new JLabel("New Label");
-		devTypeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		devTypeLabel.setFont(new Font("宋体", Font.BOLD, 15));
-		devTypeLabel.setBounds(121, 0, 121, 24);
-		detailItemPanel.add(devTypeLabel);
-		
-		JLabel devStatusLabel = new JLabel("New Label");
-		devStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		devStatusLabel.setFont(new Font("宋体", Font.BOLD, 15));
-		devStatusLabel.setBounds(242, 0, 121, 24);
-		detailItemPanel.add(devStatusLabel);
-		
-		JLabel currPidLabel = new JLabel("New Label");
-		currPidLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		currPidLabel.setFont(new Font("宋体", Font.BOLD, 15));
-		currPidLabel.setBounds(363, 0, 124, 24);
-		detailItemPanel.add(currPidLabel);
+		for(int i=0; i<6; i++){
+			devDetail[i] = new DetailItemPanel();
+			devDetail[i].setBounds(14, 24*(i+1), 460, 24);
+			devDetailPanel.add(devDetail[i]);
+		}
+		devDetail[5].setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
 		
 		JPanel devAListPanel = new JPanel();
 		devAListPanel.setBounds(0, 193, 487, 70);
@@ -363,5 +347,51 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 		
 		ClockControl.SystemStart(fm, this);
+	}
+}
+
+class DetailItemPanel extends JPanel {
+	
+	public JLabel devNameLabel;
+	public JLabel devTypeLabel;
+	public JLabel devStatusLabel;
+	public JLabel currPidLabel;
+	
+	public DetailItemPanel(){
+		setLayout(null);
+		setOpaque(false);
+//		setBounds(14, 24, 460, 24);
+		
+		devNameLabel = new JLabel("New Label");
+		devNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		devNameLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		devNameLabel.setBounds(0, 0, 115, 24);
+		add(devNameLabel);
+		devNameLabel.setForeground(Color.WHITE);
+		devNameLabel.setBorder(new MatteBorder(1, 2, 1, 1, Color.WHITE));
+		
+		devTypeLabel = new JLabel("New Label");
+		devTypeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		devTypeLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		devTypeLabel.setBounds(115, 0, 115, 24);
+		add(devTypeLabel);
+		devTypeLabel.setForeground(Color.WHITE);
+		devTypeLabel.setBorder(new LineBorder(Color.WHITE, 1));
+		
+		devStatusLabel = new JLabel("New Label");
+		devStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		devStatusLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		devStatusLabel.setBounds(230, 0, 115, 24);
+		add(devStatusLabel);
+		devStatusLabel.setForeground(Color.WHITE);
+		devStatusLabel.setBorder(new LineBorder(Color.WHITE, 1));
+		
+		currPidLabel = new JLabel("New Label");
+		currPidLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		currPidLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		currPidLabel.setBounds(345, 0, 115, 24);
+		add(currPidLabel);
+		currPidLabel.setForeground(Color.WHITE);
+		currPidLabel.setBorder(new MatteBorder(1, 1, 1, 2, Color.WHITE));
 	}
 }
