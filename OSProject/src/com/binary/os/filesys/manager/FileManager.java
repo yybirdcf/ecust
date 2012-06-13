@@ -46,6 +46,11 @@ public class FileManager {
 			return create(cmd.getDirs(), cmd.getFileName());
 		}
 		
+		//创建并编辑文件
+		if(operation.equals("vi")){
+			return vi(cmd.getDirs(), cmd.getFileName());
+		}
+		
 		//拷贝文件
 		if(operation.equals("copy")){
 			return copy(cmd.getSrcDirs(), cmd.getSrcFileName(), cmd.getDesDirs() , cmd.getDesFileName());
@@ -179,6 +184,20 @@ public class FileManager {
 		saveAllDirs();//保存全部路径
 		
 		return fileName + " 文件创建成功！"; 
+	}
+	
+	//创建并编辑文件
+	public String vi(String[] dirs, String fileName){
+		//创建文件
+		String result = create(dirs, fileName);
+		if(result.equals(fileName + " 文件创建成功！") == false){//创建文件失败
+			return result;
+		}
+		
+		//编辑文件
+		result = type(dirs, fileName, true);
+		
+		return result;
 	}
 	
 	//复制文件
@@ -467,7 +486,7 @@ public class FileManager {
 		
 		return fileName + " 文件保存成功！ 文件大小为" + file.getSize() + "字节"; 
 	}
-	
+		
 	//改变文件属性
 	public String change(String[] dirs, String fileName, String[] attrs){
 		
