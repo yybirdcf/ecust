@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
 	
 	private JPanel contentPane;
 	public  TreePanel dirTreePanel;
+	public JPanel detailInfoPanel;
 	private CmdPanel cmdPanel;
 	public DetailItemPanel[] devDetail = new DetailItemPanel[6];
 
