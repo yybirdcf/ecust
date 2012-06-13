@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -16,8 +17,9 @@ import javax.swing.JTextField;
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.manager.FileManager;
 
-public class CmdPanel extends JPanel {
+public class CmdPanel extends JPanel implements KeyListener {
 	
+	private MainFrameTest mainFrame;
 	private FileManager fm = null;
 	private String lastCommand = "";
 	
@@ -29,8 +31,10 @@ public class CmdPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CmdPanel(FileManager fm) {
+	public CmdPanel(FileManager fm, MainFrameTest mainFrame) {
 		this.fm = fm;
+		this.mainFrame = mainFrame;
+		
 		setBounds(222, 287, 554, 433);
 		setOpaque(false);
 		setLayout(null);
@@ -61,42 +65,40 @@ public class CmdPanel extends JPanel {
 		cmdText.setBounds(0, 412, 502, 21);
 		add(cmdText);
 		cmdText.setColumns(10);
-		cmdText.addKeyListener(new MyKeyListener());
+		cmdText.addKeyListener(this);
 
 		currDirLabel.setText(fm.getStringCurrentPath());
 		resultScrolPane.getViewport().setOpaque(false); 
 	}
-	
-	class MyKeyListener implements KeyListener{
 
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {//回车键
-				String command = cmdText.getText();//命令
-				lastCommand = command;//保存命令
-				resultsText.append(fm.getStringCurrentPath() + ">" + command + "\n");//加命令
-				cmdText.setText("");//命令框清空
-				String result = fm.interpret(command);//运行命令
-				resultsText.append(result+"\n");//显示结果
-				JScrollBar sBar = resultScrolPane.getVerticalScrollBar();
-				sBar.setValue(sBar.getMaximum());//滚动条到底部
-				currDirLabel.setText(fm.getStringCurrentPath());
-				
-			}else if (e.getKeyCode() == KeyEvent.VK_UP) {
-				cmdText.setText(lastCommand);//获取上一条指令
-			}
-			
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {//回车键
+			String command = cmdText.getText();//命令
+			lastCommand = command;//保存命令
+			resultsText.append(fm.getStringCurrentPath() + ">" + command + "\n");//加命令
+			cmdText.setText("");//命令框清空
+			String result = fm.interpret(command);//运行命令
+			resultsText.append(result+"\n");//显示结果
+			JScrollBar sBar = resultScrolPane.getVerticalScrollBar();
+			sBar.setValue(sBar.getMaximum());//滚动条到底部
+			currDirLabel.setText(fm.getStringCurrentPath());
+			mainFrame.dirTreePane.init();
+		}else if (e.getKeyCode() == KeyEvent.VK_UP) {
+			cmdText.setText(lastCommand);//获取上一条指令
 		}
+		
+	}
 
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			
-		}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
-		@Override
-		public void keyTyped(KeyEvent arg0) {
-			
-		}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
