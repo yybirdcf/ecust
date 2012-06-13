@@ -79,6 +79,10 @@ public class Directory extends Dentry{
 		return (16*dentryList.size());
 	}
 	
+	public String getSizeString(){
+		return "";
+	}
+	
 	public ArrayList<Dentry> getDentryList() {
 		return dentryList;
 	}

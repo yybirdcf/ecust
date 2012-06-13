@@ -500,4 +500,9 @@ public class DiskManager {
 		
 		return usage;
 	}
+	
+	//刷新
+	public void refresh(){
+		this.sBlock = new SuperBlock(readBlock(0));//重新读取SuperBlock
+	}
 }

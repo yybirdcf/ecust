@@ -13,7 +13,7 @@ public class SFile extends Dentry{
 		super(fcb);
 	}
 	
-	public String toString(){
+	public String getText(){
 		String text = new String(this.getContent());
 		return text;
 	}

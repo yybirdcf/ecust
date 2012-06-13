@@ -37,7 +37,7 @@ public class IOControl {
 				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 				DeviceGlobalVar.ABCTime[0][i] = -1;
 				DeviceGlobalVar.devCurrPid[0][i] = -1;
-				if(!DeviceGlobalVar.devWaitList[0].isEmpty()){
+				if(DeviceGlobalVar.devWaitList[0].size() > 0){
 					int p = Device.delListItem(0);
 					int time = Device.delProcessTime(0);
 					InnerApplyIO(0, p, time);
@@ -57,7 +57,7 @@ public class IOControl {
 				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 				DeviceGlobalVar.ABCTime[1][i] = -1;
 				DeviceGlobalVar.devCurrPid[1][i] = -1;
-				if(!DeviceGlobalVar.devWaitList[1].isEmpty()){
+				if(DeviceGlobalVar.devWaitList[1].size() > 0){
 					int p = Device.delListItem(1);
 					int time = Device.delProcessTime(1);
 					InnerApplyIO(1, p, time);
@@ -76,7 +76,7 @@ public class IOControl {
 			DeviceGlobalVar.NUMOFAPPLYDEVICE--;
 			DeviceGlobalVar.ABCTime[2][0] = -1;
 			DeviceGlobalVar.devCurrPid[2][0] = -1;
-			if(!DeviceGlobalVar.devWaitList[2].isEmpty()){
+			if(DeviceGlobalVar.devWaitList[2].size() > 0){
 				int p = Device.delListItem(2);
 				int time = Device.delProcessTime(2);
 				InnerApplyIO(2, p, time);
