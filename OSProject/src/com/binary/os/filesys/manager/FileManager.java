@@ -111,6 +111,12 @@ public class FileManager {
 			return run(cmd.getDirs(), cmd.getFileName());
 		}
 		
+		//刷新
+		if(operation.equals("refresh")){
+			return refresh();
+		}
+		
+		
 		return "不是合法的命令！";
 	}
 	
@@ -1014,9 +1020,25 @@ public class FileManager {
 	}
 	
 	//刷新 状态
-//	public boolean refresh(){
-//		
-//	}
+	public String refresh(){
+		//刷新磁盘，重新读取超级块
+		disk.refresh();
+		//重新读取根目录
+		disk.readDirectory(root);
+		
+		
+		String path = getStringCurrentPath();//当前目录String化
+		//当前目录回到根目录
+		this.currentPath.clear();
+		this.currentPath.add(root);
+		
+		//调用命令解释器，来获得目录树
+		Interpreter iper = new Interpreter("chadir " + path);
+		//检查路径
+		checkDirs(iper.getDirs());
+
+		return "已刷新！";
+	}
 	
 	public RootDirectory getRoot() {
 		return root;
