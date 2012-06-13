@@ -17,6 +17,7 @@ public class Device //设备进程控制类
     	return (Integer) DeviceGlobalVar.processIOTime[deviceType].remove();
     }
     
+	@SuppressWarnings("unused")
 	public static boolean allocDevToProcess(int deviceType, int pid, int time){
 		for(int i=0; i < DeviceGlobalVar.totalDev[deviceType] && DeviceGlobalVar.devCurrPid[deviceType][i] == -1; i++){
 			DeviceGlobalVar.devCurrPid[deviceType][i] = pid;

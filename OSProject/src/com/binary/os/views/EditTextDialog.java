@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 public class EditTextDialog extends JDialog{
 	private static final long serialVersionUID = 1L;
 	
-	private static Frame frame = null;
+	private static JFrame parentFrame = null;
 	private JTextArea textArea;
 	private String fileName;
 	private FileManager fileManager;
@@ -27,15 +27,14 @@ public class EditTextDialog extends JDialog{
 	
 	public EditTextDialog(String fileName, String text, FileManager fileManager){
 		
-		super(frame);
+		super(parentFrame, fileName, true);
 		
 		this.fileManager = fileManager;
 		this.fileName = fileName;
 		
-		this.setTitle(fileName);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	
-		JTextArea textArea = new JTextArea(text);
+		textArea = new JTextArea(text);
 		textArea.setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD,15)); 
 		textArea.setLineWrap(true);
 		

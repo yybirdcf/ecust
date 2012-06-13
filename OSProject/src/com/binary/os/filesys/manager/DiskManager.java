@@ -182,7 +182,6 @@ public class DiskManager {
 				}
 			}
 		}
-		System.out.println(content.get().length);
 		file.setContent(content.get());
 	}
 	

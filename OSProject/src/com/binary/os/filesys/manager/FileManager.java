@@ -2,7 +2,6 @@ package com.binary.os.filesys.manager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import javax.swing.JOptionPane;
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
@@ -59,7 +58,7 @@ public class FileManager {
 		
 		//移动文件
 		if(operation.equals("move")){	
-			return copy(cmd.getSrcDirs(), cmd.getSrcFileName(), cmd.getDesDirs() , cmd.getDesFileName());
+			return move(cmd.getSrcDirs(), cmd.getSrcFileName(), cmd.getDesDirs() , cmd.getDesFileName());
 		}
 		
 		//显示文件
@@ -89,7 +88,7 @@ public class FileManager {
 		
 		//更改当前目录
 		if(operation.equals("chadir")){
-			return makdir(cmd.getDirPath());
+			return chadir(cmd.getDirPath());
 		}
 		
 		//删除空目录
@@ -123,9 +122,9 @@ public class FileManager {
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
 		String name = stemp[0];//文件名
-		String exten = stemp[1];//后缀
-		if(exten == null){//若无后缀
-			exten = "";
+		String exten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			exten = stemp[1];//后缀
 		}
 		
 		if(getCurrentDir().checkName(name, exten) == true){//同名
@@ -177,6 +176,8 @@ public class FileManager {
 			return "磁盘空间不足！无法更新目录！文件创建失败！";
 		}
 		
+		saveAllDirs();//保存全部路径
+		
 		return fileName + " 文件创建成功！"; 
 	}
 	
@@ -197,9 +198,9 @@ public class FileManager {
 		
 		String[] stemp = srcFileName.split("\\.");//拆分文件名和后缀
 		String srcName = stemp[0];//文件名
-		String srcExten = stemp[1];//后缀
-		if(srcExten == null){//若无后缀
-			srcExten = "";
+		String srcExten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			srcExten = stemp[1];//后缀
 		}
 		
 		SFile srcFile = getCurrentDir().checkFileName(srcName, srcExten);
@@ -213,19 +214,29 @@ public class FileManager {
 			return "目标目录不存在！复制文件失败！";
 		}
 		
+		//创建空文件
 		SFile desFile = sCreate(desFileName, false);//初始创建目标文件
 		if(desFile == null){//创建目标文件失败
 			return "无法创建目标文件！复制文件失败！";
 		}
 		
+		desFile.setSize(srcFile.getSize());//复制文件大小属性
 		desFile.setAttribute(srcFile.getAttribute());//复制属性
 		desFile.setContent(srcFile.getContent());//复制文件内容
 		
 		if(disk.saveDentry(desFile) == false){//保存文件
-			getCurrentDir().removeDentry(desFile);//当前目录移除此文件
-			saveCurrentDir();//保存当前目录
 			return "磁盘空间不足！无法保存目标文件！复制文件失败！";
 		}
+		
+		//保存目录
+		if(saveCurrentDir() == false){//保存当前目录失败
+			disk.recycleDentry(desFile);//回收为文件分配的盘块
+			getCurrentDir().removeDentry(desFile);//删除目录项
+			return "磁盘空间不足！无法更新目录！文件创建失败！";
+		}
+		
+		saveAllDirs();//保存全部路径
+		
 		return "复制文件成功！";
 	}
 	
@@ -242,9 +253,9 @@ public class FileManager {
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
 		String name = stemp[0];//文件名
-		String exten = stemp[1];//后缀
-		if(exten == null){//若无后缀
-			exten = "";
+		String exten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			exten = stemp[1];//后缀
 		}
 		
 		SFile file = getCurrentDir().checkFileName(name, exten);
@@ -265,6 +276,8 @@ public class FileManager {
 			return "磁盘已满！无法回收文件！删除文件失败！";
 		}
 		
+		saveAllDirs();//保存全部路径
+		
 		return fileName + " 文件删除成功！"; 
 	}
 		
@@ -284,19 +297,19 @@ public class FileManager {
 			return "源目录不存在！移动文件失败！";
 		}
 		
-		LinkedList<Directory> oldPath = currentPath;//备份源目录路径
+		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝//备份源目录路径
 		
 		String[] stemp = srcFileName.split("\\.");//拆分文件名和后缀
 		String srcName = stemp[0];//文件名
-		String srcExten = stemp[1];//后缀
-		if(srcExten == null){//若无后缀
-			srcExten = "";
+		String srcExten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			srcExten = stemp[1];//后缀
 		}
 		
 		//查源文件是否存在于源目录
 		SFile srcFile = getCurrentDir().checkFileName(srcName, srcExten);
 		if(srcFile == null){
-			return "源文件不存在！移动文件失败";
+			return "源文件不存在！移动文件失败！";
 		}
 		
 		//源目录移除源文件
@@ -311,15 +324,15 @@ public class FileManager {
 		if(acceDirs(desDirs) == false){//进入目录失败
 			getCurrentDir().addDentry(srcFile);//放回目录
 			saveCurrentDir();//保存当前目录
-			return "目标目录不存在！移动文件失败";
+			return "目标目录不存在！移动文件失败！";
 		}
 		
 		//目标文件名
 		stemp = desFileName.split("\\.");//拆分文件名和后缀
 		String desName = stemp[0];//文件名
-		String desExten = stemp[1];//后缀
-		if(desExten == null){//若无后缀
-			desExten = "";
+		String desExten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			desExten = stemp[1];//后缀
 		}
 		
 		//设目标文件名
@@ -343,7 +356,7 @@ public class FileManager {
 			currentPath = oldPath; //回到源目录路径
 			getCurrentDir().addDentry(srcFile);//放回目录
 			saveCurrentDir();//保存当前目录
-			return "超过目标目录项数限制！移动文件失败";
+			return "超过目标目录项数限制！移动文件失败！";
 		}
 		
 		//保存目标目录
@@ -355,6 +368,8 @@ public class FileManager {
 			saveCurrentDir();//保存当前目录
 			return "无法更新目标目录！移动文件失败！";
 		}
+		
+		saveAllDirs();//保存全部路径
 		
 		return "移动文件成功！";
 	}
@@ -372,9 +387,9 @@ public class FileManager {
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
 		String name = stemp[0];//文件名
-		String exten = stemp[1];//后缀
-		if(exten == null){//若无后缀
-			exten = "";
+		String exten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			exten = stemp[1];//后缀
 		}
 		
 		//获取文件
@@ -387,15 +402,17 @@ public class FileManager {
 		
 		//是否是为了编辑
 		if(isForEdit){//是为了编辑，要判断属性
-			if(file.getAttribute() == SFile.F_H_R || file.getAttribute() == SFile.F_S_W){//若文件属性是只读的
+			if(file.getAttribute() == SFile.F_H_R || file.getAttribute() == SFile.F_S_R){//若文件属性是只读的
 				return "文件属性为只读！无法编辑文件！";
 			}
 			new EditTextDialog(fileName, file.toString(), this);//编辑文件
+			return "编辑文件！";
 		}else{
 			new ShowTextDialog(fileName, file.toString());//显示文件
+			return "显示文件成功！";
 		}
 		
-		return "显示文件成功！";
+		
 	}
 	
 	//编辑文件
@@ -407,9 +424,9 @@ public class FileManager {
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
 		String name = stemp[0];//文件名
-		String exten = stemp[1];//后缀
-		if(exten == null){//若无后缀
-			exten = "";
+		String exten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			exten = stemp[1];//后缀
 		}
 		
 		//获取文件
@@ -418,7 +435,7 @@ public class FileManager {
 			return "文件不存在！编辑文件失败！";
 		}	
 		
-		if(file.getAttribute() == SFile.F_H_R || file.getAttribute() == SFile.F_S_W){//若文件属性是只读的
+		if(file.getAttribute() == SFile.F_H_R || file.getAttribute() == SFile.F_S_R){//若文件属性是只读的
 			return "文件属性为只读！无法编辑文件！";
 		}
 		
@@ -432,7 +449,15 @@ public class FileManager {
 			return "磁盘空间不足！保存文件失败！";
 		}
 		
-		return fileName + " 文件创建成功！"; 
+		//保存目录
+		if(saveCurrentDir() == false){//保存当前目录失败
+			disk.recycleDentry(file);//回收为文件分配的盘块
+			return "磁盘空间不足！无法更新目录！保存文件失败！";
+		}
+		
+		saveAllDirs();//保存全部路径
+		
+		return fileName + " 文件保存成功！ 文件大小为" + file.getSize() + "字节"; 
 	}
 	
 	//改变文件属性
@@ -448,9 +473,9 @@ public class FileManager {
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
 		String name = stemp[0];//文件名
-		String exten = stemp[1];//后缀
-		if(exten == null){//若无后缀
-			exten = "";
+		String exten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			exten = stemp[1];//后缀
 		}
 		
 		//获取文件
@@ -471,10 +496,10 @@ public class FileManager {
 			file.changeAttri(attri);//更改属性
 		}
 		
-		//保存文件
-		if(disk.saveDentry(file) == false){//保存文件失败
-			file.setAttribute(oldAttri);//恢复属性
-			return "磁盘空间不足！无法保存文件修改！修改文件属性失败！";
+		//保存目录
+		if(saveCurrentDir() == false){//保存当前目录失败
+			disk.recycleDentry(file);//回收为文件分配的盘块
+			return "磁盘空间不足！无法更新目录！保存文件失败！";
 		}
 		
 		String cAttri = file.getStringAttri();//获取属性信息
@@ -495,7 +520,7 @@ public class FileManager {
 	public String makdir(String[] dirs){
 		
 		ArrayList<String> unCreatedDirs = checkDirs(dirs);//获得未创建目录树
-		if(unCreatedDirs.size() == dirs.length){//需要创建的目录树都已存在
+		if(unCreatedDirs.size() == 0){//需要创建的目录树都已存在
 			return "需要创建的目录都已存在，不需要再创建！";
 		}
 		
@@ -533,8 +558,9 @@ public class FileManager {
 			
 			currentPath.add(dir);//添加到当前路径中，更新当前目录为已创建目录
 		}
+		saveAllDirs();//保存全部路径
 		
-		return "文件夹创建成功！"; 
+		return getCurrentDir().getName() + "文件夹创建成功！"; 
 	}
 	
 	//更改当前目录
@@ -542,12 +568,16 @@ public class FileManager {
 		if(acceDirs(dirs) == false){//检查目录树失败
 			return "目录不存在！";
 		}
-		return "目录检索成功！";
+		return "进入目录成功！";
 	}
 	
 	//删除空目录
 	public String rdir(String[] dirs){
-		LinkedList<Directory> oldPath = currentPath;
+		if(dirs.length == 0){//不存在目录树
+			return "没有输入要删除的目录！";
+		}
+		
+		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝
 		
 		//检查是不是根目录
 		if(dirs[0].equals("root:")){//为绝对地址
@@ -567,6 +597,7 @@ public class FileManager {
 			}
 			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
 			if(tDir != null){//存在此名字目录
+				disk.readDirectory(tDir);//读取目录
 				currentPath.add(tDir);//更新当前目录
 			}else{//不存在
 				currentPath = oldPath;//恢复旧当前目录
@@ -584,8 +615,11 @@ public class FileManager {
 		}
 		
 		//检查是否是当前目录
+		currentPath.add(tDir);//暂时先把要删的目录加到当前路径
 		if(currentPath.equals(oldPath)){//等于原来当前目录
 			return "无法删除当前目录！";
+		}else{//恢复
+			currentPath.pollLast();
 		}
 		
 		//检查是不是空目录
@@ -608,13 +642,19 @@ public class FileManager {
 			saveCurrentDir();//保存当前目录
 			return "磁盘已满！无法回收文件！删除文件失败！";
 		}
+		
+		saveAllDirs();//保存全部路径
 			
 		return sDir + " 目录删除成功！"; 
 	}
 	
 	//删除目录并删除子文件
 	public String deldir(String[] dirs){
-		LinkedList<Directory> oldPath = currentPath;
+		if(dirs.length == 0){//不存在目录树
+			return "没有输入要删除的目录！";
+		}
+		
+		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);
 		
 		//检查是不是根目录
 		if(dirs[0].equals("root:")){//为绝对地址
@@ -634,6 +674,7 @@ public class FileManager {
 			}
 			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
 			if(tDir != null){//存在此名字目录
+				disk.readDirectory(tDir);//读取目录
 				currentPath.add(tDir);//更新当前目录
 			}else{//不存在
 				currentPath = oldPath;//恢复旧当前目录
@@ -656,6 +697,7 @@ public class FileManager {
 		}
 		
 		deleSub(tDir);//删除目录及子目录项
+		saveAllDirs();//保存全部路径
 			
 		return sDir + " 目录删除成功！"; 
 	}
@@ -673,9 +715,9 @@ public class FileManager {
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
 		String name = stemp[0];//文件名
-		String exten = stemp[1];//后缀
-		if(exten == null){//若无后缀
-			exten = "";
+		String exten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			exten = stemp[1];//后缀
 		}
 		
 		//检查后缀
@@ -703,7 +745,7 @@ public class FileManager {
 			return "运行文件失败！无法创建进程！进程数量已为最大！";
 		}
 		
-		processFileAddr[result] = currentPath;//将进程的运行文件的路径保存
+		processFileAddr[result] = new LinkedList<Directory>(currentPath);//浅拷贝//将进程的运行文件的路径保存
 		processFileName[result] = fileName;//保存文件名
 		
 		
@@ -712,7 +754,7 @@ public class FileManager {
 	
 	//保存out文件
 	public boolean saveOut(int pid, byte result){
-		LinkedList<Directory> oldPath = currentPath;//保存当前路径
+		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝当前路径
 		
 		LinkedList<Directory> outPath  = processFileAddr[pid];//获得进程对应的路径
 		if(outPath == null){//路径不存在就保存结果失败
@@ -738,6 +780,15 @@ public class FileManager {
 			return false;
 		}
 		
+		//保存目录
+		if(saveCurrentDir() == false){//保存当前目录失败
+			getCurrentDir().removeDentry(outFile);
+			disk.recycleDentry(outFile);//回收为文件分配的盘块
+			return false;
+		}
+		
+		saveAllDirs();//保存全部路径
+		
 		currentPath = oldPath;//恢复当前路径
 		
 		return true;
@@ -749,7 +800,17 @@ public class FileManager {
 	
 	//检索目录树，进入目录
 	public boolean acceDirs(String[] dirs){
-		LinkedList<Directory> oldPath = currentPath;
+		if(dirs.length == 0){//不存在目录树
+			return true;
+		}
+		LinkedList<Directory> oldPath = new LinkedList<Directory>(currentPath);//浅拷贝
+		
+		if(dirs[0].equals("..")){//上一级目录
+			if(getCurrentDir() == root){
+				return true;
+			}
+			currentPath.pollLast();//向上一级
+		}
 		
 		if(dirs[0].equals("root:")){//为绝对地址
 			currentPath.clear();//清除当前目录
@@ -762,6 +823,7 @@ public class FileManager {
 			}
 			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
 			if(tDir != null){//存在此名字目录
+				disk.readDirectory(tDir);//读取目录
 				currentPath.add(tDir);//更新当前目录
 			}else{//不存在
 				currentPath = oldPath;//恢复旧当前目录
@@ -775,6 +837,10 @@ public class FileManager {
 	public ArrayList<String> checkDirs(String[] dirs){
 		boolean notExist = false;
 		ArrayList<String> unCreatedDirs = new ArrayList<String>();//存放还未创建的目录
+		
+		if(dirs.length == 0){//不存在目录树
+			return unCreatedDirs;
+		}
 		
 		if(dirs[0].equals("root:")){//为绝对地址
 			currentPath.clear();//清除当前目录
@@ -791,6 +857,7 @@ public class FileManager {
 			}
 			Directory tDir = getCurrentDir().checkDirName(sDir);//查文件夹名
 			if(tDir != null){//存在此名字目录
+				disk.readDirectory(tDir);//读取目录
 				currentPath.add(tDir);//更新当前目录
 			}else{//不存在
 				notExist = true;
@@ -809,9 +876,9 @@ public class FileManager {
 		
 		String[] stemp = fileName.split("\\.");//拆分文件名和后缀
 		String name = stemp[0];//文件名
-		String exten = stemp[1];//后缀
-		if(exten == null){//若无后缀
-			exten = "";
+		String exten = "";//后缀
+		if(stemp.length > 1){//存在后缀
+			exten = stemp[1];//后缀
 		}
 		
 		if(getCurrentDir().checkName(name, exten) == true){//同名
@@ -867,6 +934,8 @@ public class FileManager {
 			return null;
 		}
 		
+		saveAllDirs();//保存全部路径
+		
 		return file;
 	}
 	
@@ -896,6 +965,14 @@ public class FileManager {
 		return true;
 	}
 	
+	//保存当前路径到根目录的所有目录，倒着保存
+	public void saveAllDirs(){
+		for(int i=currentPath.size()-1; i>0; i--){//保存除root目录外
+			disk.saveDentry(currentPath.get(i));//保存目录
+		}
+		disk.saveRoot((RootDirectory)currentPath.get(0));//第一个一定是root目录
+	}
+	
 	public Directory getCurrentDir(){
 		return currentPath.getLast();//路径最后一个就是当前目录
 	}
@@ -916,7 +993,4 @@ public class FileManager {
 	public DiskManager getDisk() {
 		return disk;
 	}
-	
-	
-
 }
