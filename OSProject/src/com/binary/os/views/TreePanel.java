@@ -134,6 +134,8 @@ public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSele
 		}
 		
 	}
+	
+	
 
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {

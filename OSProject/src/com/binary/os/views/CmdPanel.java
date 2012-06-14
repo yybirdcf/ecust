@@ -2,7 +2,9 @@ package com.binary.os.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
@@ -100,6 +102,7 @@ public class CmdPanel extends JPanel implements KeyListener {
 			scroll();//滚动条到底部
 			currDirLabel.setText(fm.getStringCurrentPath() + ">");
 			mainFrame.dirTreePanel.refresh();
+			paintMemoryTable(mainFrame.diskUsagePanel,new int[8][8]);
 		}else if (e.getKeyCode() == KeyEvent.VK_UP) {
 			cmdText.setText(lastCommand);//获取上一条指令
 		}
@@ -115,5 +118,42 @@ public class CmdPanel extends JPanel implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 		
 	}
+	
+    public void paintTable(int h,int w,int vertical,int horizontal,Component c){//单元格的高，单元格的宽，表的高度，表的宽度，表格所在的对象
+        Graphics g=c.getGraphics();
+        clearTable(c);
+        g.setColor(Color.RED);
+        for(int i=0;i<vertical;i=i+h){//画表的高
+            for(int j=0;j<horizontal;j=j+w){//画表的宽
+                g.drawRect(j,i,w,h);
+            }
+        }
+    }
+	
+    public void fillTable(int x,int y,int h,int w,Component c,Color co){//填充颜色
+        Graphics g=c.getGraphics();
+        g.setColor(co);
+        g.fill3DRect(x,y,w,h,true);
+    }
+    public void paintMemoryTable(Component c,int[][] newMatrix){//在内存示意图中填充占用情况
+        paintTable(20,20,160,160,c);
+        for(int i=0;i<8;i++){
+             for(int j=0;j<8;j++){
+                 if(newMatrix[i][j]==1){
+                     fillTable(j*20,i*20,20,20,c,Color.RED);//注意这里的j和i所放的位置
+                 }
+                 if(newMatrix[i][j]==2){
+                     fillTable(j*20,i*20,20,20,c,Color.BLUE);
+                 }
+                 if(newMatrix[i][j]==3){
+                     fillTable(j*20,i*20,20,20,c,Color.BLACK);
+                 }
+             }
+         }
+    }
+    public void clearTable(Component c){//清除画布
+        Graphics g=c.getGraphics();
+        g.clearRect(0,0,c.getWidth(),c.getHeight());
+    }
 
 }

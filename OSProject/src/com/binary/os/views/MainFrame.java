@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
 	public JLabel directAddr2Label;
 	public JLabel lev1IndexLabel;
 	public JLabel lev2IndexLabel;
-	public JPanel diskUsagePanel;
+	public DiskUsagePanel diskUsagePanel;
 
 	/**
 	 * Launch the application.
@@ -208,7 +208,7 @@ public class MainFrame extends JFrame {
 		cmdPanel.setOpaque(false);
 		cmdPanel.setLayout(null);
 		
-		diskUsagePanel = new JPanel();
+		diskUsagePanel = new DiskUsagePanel();
 		diskUsagePanel.setBounds(449, 10, 327, 275);
 		contentPane.add(diskUsagePanel);
 		diskUsagePanel.setLayout(null);
