@@ -141,7 +141,7 @@ public class TestFrame extends JFrame{
 	}
 	
 	public static void init(FileManager fm){
-		ClockControl.SystemStart(fm);
+		ClockControl.SystemStart(fm,null);
 		//Timer timer = new Timer();
 		//timer.schedule(new ShowTimer(), 0, 1000);
 	}

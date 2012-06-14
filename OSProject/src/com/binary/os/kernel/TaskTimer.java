@@ -4,6 +4,7 @@ import java.util.TimerTask;
 
 import com.binary.os.device.DeviceGlobalVar;
 import com.binary.os.device.IOControl;
+import com.binary.os.show.UpdateInformation;
 
 public class TaskTimer extends TimerTask {
 
@@ -35,6 +36,9 @@ public class TaskTimer extends TimerTask {
 		
 		if(DeviceGlobalVar.NUMOFAPPLYDEVICE > 0)
 			IOControl.IORun();
+		
+		//¸üÐÂÃæ°å
+		UpdateInformation.update(GlobalStaticVar.mf);
 	}
 
 }

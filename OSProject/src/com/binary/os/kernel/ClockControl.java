@@ -30,5 +30,7 @@ public class ClockControl {
 		//清空相关资源
 		
 		Device.clearDevice();
+		GlobalStaticVar.fm = null;
+		GlobalStaticVar.mf = null;
 	}
 }
