@@ -316,7 +316,7 @@ public class MainFrame extends JFrame {
 		txtrA.setBounds(5, 10, 68, 50);
 		devAListPanel.add(txtrA);
 		
-		devAListLabel = new JLabel("New label");
+		devAListLabel = new JLabel("");
 		devAListLabel.setForeground(Color.WHITE);
 		devAListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		devAListLabel.setBounds(83, 0, 402, 70);
@@ -336,7 +336,7 @@ public class MainFrame extends JFrame {
 		txtrB.setBounds(5, 10, 68, 50);
 		devBListPanel.add(txtrB);
 		
-		devBListLabel = new JLabel("New label");
+		devBListLabel = new JLabel("");
 		devBListLabel.setForeground(Color.WHITE);
 		devBListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		devBListLabel.setBounds(83, 0, 402, 70);
@@ -357,7 +357,7 @@ public class MainFrame extends JFrame {
 		txtrC.setBounds(5, 10, 68, 50);
 		devCListPanel.add(txtrC);
 		
-		devCListLabel = new JLabel("New label");
+		devCListLabel = new JLabel("");
 		devCListLabel.setForeground(Color.WHITE);
 		devCListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		devCListLabel.setBounds(83, 0, 437, 70);
@@ -445,7 +445,7 @@ public class MainFrame extends JFrame {
 		waitList.add(textArea);
 		textArea.setOpaque(false);
 		
-		waitListLabel = new JLabel("New label");
+		waitListLabel = new JLabel("");
 		waitListLabel.setForeground(Color.WHITE);
 		waitListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		waitListLabel.setBounds(50, 0, 437, 70);
@@ -465,7 +465,7 @@ public class MainFrame extends JFrame {
 		textArea_1.setBounds(5, 10, 40, 60);
 		blockList.add(textArea_1);
 		
-		blockListLabel = new JLabel("New label");
+		blockListLabel = new JLabel("");
 		blockListLabel.setForeground(Color.WHITE);
 		blockListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		blockListLabel.setBounds(50, 0, 437, 70);
