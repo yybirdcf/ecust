@@ -7,11 +7,12 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.SwingConstants;
 
 import com.binary.os.filesys.manager.FileManager;
 import com.binary.os.kernel.ClockControl;
@@ -42,6 +43,11 @@ public class MainFrame extends JFrame {
 	public JLabel currInstructLabel;
 	public JLabel tempResultLabel;
 	public JLabel remainTLabel;
+	public JLabel waitListLabel;
+	public JLabel blockListLabel;
+	public JLabel devAListLabel;
+	public JLabel devBListLabel;
+	public JLabel devCListLabel;
 
 	/**
 	 * Launch the application.
@@ -301,15 +307,58 @@ public class MainFrame extends JFrame {
 		devicePanel.add(devAListPanel);
 		devAListPanel.setOpaque(false);
 		
+		JTextArea txtrA = new JTextArea("  A\u8BBE\u5907\r\n\u7B49\u5F85\u961F\u5217");
+		txtrA.setOpaque(false);
+		txtrA.setForeground(Color.WHITE);
+		txtrA.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		txtrA.setEditable(false);
+		txtrA.setBounds(0, 10, 64, 60);
+		devAListPanel.add(txtrA);
+		
+		devAListLabel = new JLabel("New label");
+		devAListLabel.setForeground(Color.WHITE);
+		devAListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		devAListLabel.setBounds(74, 0, 413, 70);
+		devAListPanel.add(devAListLabel);
+		
 		JPanel devBListPanel = new JPanel();
 		devBListPanel.setBounds(0, 263, 487, 70);
 		devicePanel.add(devBListPanel);
 		devBListPanel.setOpaque(false);
 		
+		JTextArea txtrB = new JTextArea("  B\u8BBE\u5907\r\n\u7B49\u5F85\u961F\u5217");
+		txtrB.setOpaque(false);
+		txtrB.setForeground(Color.WHITE);
+		txtrB.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		txtrB.setEditable(false);
+		txtrB.setBounds(0, 10, 64, 60);
+		devBListPanel.add(txtrB);
+		
+		devBListLabel = new JLabel("New label");
+		devBListLabel.setForeground(Color.WHITE);
+		devBListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		devBListLabel.setBounds(74, 0, 413, 70);
+		devBListPanel.add(devBListLabel);
+		
+		
 		JPanel devCListPanel = new JPanel();
 		devCListPanel.setBounds(0, 333, 487, 70);
 		devicePanel.add(devCListPanel);
 		devCListPanel.setOpaque(false);
+		
+		JTextArea txtrC = new JTextArea("  C\u8BBE\u5907\r\n\u7B49\u5F85\u961F\u5217");
+		txtrC.setOpaque(false);
+		txtrC.setForeground(Color.WHITE);
+		txtrC.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		txtrC.setEditable(false);
+		txtrC.setBounds(0, 10, 64, 60);
+		devCListPanel.add(txtrC);
+		
+		devCListLabel = new JLabel("New label");
+		devCListLabel.setForeground(Color.WHITE);
+		devCListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		devCListLabel.setBounds(74, 0, 413, 70);
+		devCListPanel.add(devCListLabel);
 		
 		JPanel procPanel = new JPanel();
 		procPanel.setBounds(777, 10, 487, 307);
@@ -385,10 +434,38 @@ public class MainFrame extends JFrame {
 		procPanel.add(waitList);
 		waitList.setLayout(null);
 		
+		JTextArea textArea = new JTextArea("¾ÍÐ÷\n¶ÓÁÐ");
+		textArea.setEditable(false);
+		textArea.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		textArea.setForeground(Color.WHITE);
+		textArea.setBounds(5, 10, 40, 60);
+		waitList.add(textArea);
+		textArea.setOpaque(false);
+		
+		waitListLabel = new JLabel("New label");
+		waitListLabel.setForeground(Color.WHITE);
+		waitListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		waitListLabel.setBounds(50, 0, 437, 70);
+		waitList.add(waitListLabel);
+		
 		JPanel blockList = new JPanel();
 		blockList.setOpaque(false);
 		blockList.setBounds(0, 238, 487, 70);
 		procPanel.add(blockList);
+		
+		JTextArea textArea_1 = new JTextArea("\u963B\u585E\r\n\u961F\u5217");
+		textArea_1.setOpaque(false);
+		textArea_1.setForeground(Color.WHITE);
+		textArea_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		textArea_1.setEditable(false);
+		textArea_1.setBounds(5, 10, 36, 60);
+		blockList.add(textArea_1);
+		
+		blockListLabel = new JLabel("New label");
+		blockListLabel.setForeground(Color.WHITE);
+		blockListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
+		blockListLabel.setBounds(51, 0, 437, 70);
+		blockList.add(blockListLabel);
 		
 		setVisible(true);
 		
