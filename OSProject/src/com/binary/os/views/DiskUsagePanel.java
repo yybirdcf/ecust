@@ -43,22 +43,22 @@ public class DiskUsagePanel extends JPanel{
         g.setColor(Color.RED);
         for(int i=0;i<vertical;i=i+h){//画表的高
             for(int j=0;j<horizontal;j=j+w){//画表的宽
-                g.draw3DRect(50+j, 39+i, w, h, true);
+                g.draw3DRect(50+j, 45+i, w, h, true);
             }
         }
         g.setColor(Color.YELLOW);
         for(int i=0;i<vertical/h;i++){
-        	g.drawChars(String.format("%2d",i).toCharArray(), 0, 2, 50-20, 39+13+i*h);
+        	g.drawChars(String.format("%2d",i).toCharArray(), 0, 2, 50-20, 45+13+i*h);
         }
         for(int i=0;i<horizontal/w;i++){
-        	g.drawChars(String.format("%2d",i).toCharArray(), 0, 2, 50+i*w, 39-5);
+        	g.drawChars(String.format("%2d",i).toCharArray(), 0, 2, 50+i*w, 45-5);
         }
         
     }
 	
     public void fillTable(int x,int y,int h,int w,Graphics g,Color co, boolean isUp){//填充颜色
         g.setColor(co);
-        g.fill3DRect(50+x, 39+y, w, h, isUp);
+        g.fill3DRect(50+x, 45+y, w, h, isUp);
     }
    
 }

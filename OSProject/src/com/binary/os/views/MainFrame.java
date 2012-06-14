@@ -78,7 +78,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(43, 0, 1280, 768);
 		setResizable(false);
-		contentPane = new MyPanel("bg.jpg");
+		contentPane = new MyPanel("3.jpg");
 	//	contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -112,14 +112,15 @@ public class MainFrame extends JFrame {
 		sysClockPanel.add(sysClock);
 		
 		dirTreePanel = new TreePanel(fm, this);
-		dirTreePanel.setBounds(10, 54, 212, 666);
+		dirTreePanel.setBounds(10, 63, 212, 656);
+		dirTreePanel.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
 		contentPane.add(dirTreePanel);
 		dirTreePanel.setBackground(null);
-//		dirTreePanel.setOpaque(false);
+		dirTreePanel.setOpaque(false);
 		
 		JPanel detailInfoPanel = new JPanel();
 		detailInfoPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "œÍœ∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
-		detailInfoPanel.setBounds(222, 54, 226, 241);
+		detailInfoPanel.setBounds(222, 54, 226, 251);
 		contentPane.add(detailInfoPanel);
 		detailInfoPanel.setOpaque(false);
 		detailInfoPanel.setLayout(null);
@@ -127,97 +128,97 @@ public class MainFrame extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("\u540D\u79F0\uFF1A");
 		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		lblNewLabel_2.setBounds(10, 31, 54, 16);
+		lblNewLabel_2.setBounds(10, 33, 54, 16);
 		detailInfoPanel.add(lblNewLabel_2);
 		
 		JLabel label = new JLabel("\u5927\u5C0F\uFF1A");
 		label.setForeground(Color.WHITE);
 		label.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label.setBounds(10, 55, 54, 16);
+		label.setBounds(10, 59, 54, 16);
 		detailInfoPanel.add(label);
 		
 		JLabel label_2 = new JLabel("\u5C5E\u6027\uFF1A");
 		label_2.setForeground(Color.WHITE);
 		label_2.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_2.setBounds(10, 103, 54, 16);
+		label_2.setBounds(10, 111, 54, 16);
 		detailInfoPanel.add(label_2);
 		
 		JLabel label_3 = new JLabel("\u76F4\u63A5\u5730\u57401\uFF1A");
 		label_3.setForeground(Color.WHITE);
 		label_3.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_3.setBounds(10, 127, 94, 16);
+		label_3.setBounds(10, 137, 94, 16);
 		detailInfoPanel.add(label_3);
 		
 		JLabel label_4 = new JLabel("\u76F4\u63A5\u5730\u57402\uFF1A");
 		label_4.setForeground(Color.WHITE);
 		label_4.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_4.setBounds(10, 151, 94, 16);
+		label_4.setBounds(10, 163, 94, 16);
 		detailInfoPanel.add(label_4);
 		
 		JLabel label_5 = new JLabel("\u4E00\u7EA7\u7D22\u5F15\uFF1A");
 		label_5.setForeground(Color.WHITE);
 		label_5.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_5.setBounds(10, 175, 85, 16);
+		label_5.setBounds(10, 189, 85, 16);
 		detailInfoPanel.add(label_5);
 		
 		JLabel label_6 = new JLabel("\u4E8C\u7EA7\u7D22\u5F15\uFF1A");
 		label_6.setForeground(Color.WHITE);
 		label_6.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_6.setBounds(10, 199, 85, 16);
+		label_6.setBounds(10, 215, 85, 16);
 		detailInfoPanel.add(label_6);
 		
 		nameLabel = new JLabel("");
 		nameLabel.setForeground(Color.WHITE);
 		nameLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		nameLabel.setBounds(105, 31, 111, 16);
+		nameLabel.setBounds(105, 33, 111, 16);
 		detailInfoPanel.add(nameLabel);
 		
 		sizeLabel = new JLabel("");
 		sizeLabel.setForeground(Color.WHITE);
 		sizeLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		sizeLabel.setBounds(105, 55, 111, 16);
+		sizeLabel.setBounds(105, 59, 111, 16);
 		detailInfoPanel.add(sizeLabel);
 		
 		attributeLabel = new JLabel("");
 		attributeLabel.setForeground(Color.WHITE);
 		attributeLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		attributeLabel.setBounds(105, 103, 111, 16);
+		attributeLabel.setBounds(105, 111, 111, 16);
 		detailInfoPanel.add(attributeLabel);
 		
 		directAddr1Label = new JLabel("");
 		directAddr1Label.setForeground(Color.WHITE);
 		directAddr1Label.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		directAddr1Label.setBounds(105, 127, 111, 16);
+		directAddr1Label.setBounds(105, 137, 111, 16);
 		detailInfoPanel.add(directAddr1Label);
 		
 		directAddr2Label = new JLabel("");
 		directAddr2Label.setForeground(Color.WHITE);
 		directAddr2Label.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		directAddr2Label.setBounds(105, 151, 111, 16);
+		directAddr2Label.setBounds(105, 163, 111, 16);
 		detailInfoPanel.add(directAddr2Label);
 		
 		lev1IndexLabel = new JLabel("");
 		lev1IndexLabel.setForeground(Color.WHITE);
 		lev1IndexLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		lev1IndexLabel.setBounds(105, 175, 111, 16);
+		lev1IndexLabel.setBounds(105, 189, 111, 16);
 		detailInfoPanel.add(lev1IndexLabel);
 		
 		lev2IndexLabel = new JLabel("");
 		lev2IndexLabel.setForeground(Color.WHITE);
 		lev2IndexLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		lev2IndexLabel.setBounds(105, 199, 111, 16);
+		lev2IndexLabel.setBounds(105, 215, 111, 16);
 		detailInfoPanel.add(lev2IndexLabel);
 		
 		JLabel label_7 = new JLabel("\u7C7B\u578B\uFF1A");
 		label_7.setForeground(Color.WHITE);
 		label_7.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_7.setBounds(10, 79, 68, 16);
+		label_7.setBounds(10, 85, 68, 16);
 		detailInfoPanel.add(label_7);
 		
 		typeLabel = new JLabel("");
 		typeLabel.setForeground(Color.WHITE);
 		typeLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
-		typeLabel.setBounds(105, 79, 111, 16);
+		typeLabel.setBounds(105, 85, 111, 16);
 		detailInfoPanel.add(typeLabel);
 		
 		cmdPanel = new CmdPanel(fm, this);
@@ -226,7 +227,7 @@ public class MainFrame extends JFrame {
 		cmdPanel.setLayout(null);
 		
 		diskUsagePanel = new DiskUsagePanel(fm);
-		diskUsagePanel.setBounds(449, 10, 327, 285);
+		diskUsagePanel.setBounds(449, 10, 327, 295);
 		contentPane.add(diskUsagePanel);
 		diskUsagePanel.setLayout(null);
 		diskUsagePanel.setOpaque(false);
@@ -237,7 +238,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(devicePanel);
 		devicePanel.setOpaque(false);
 		devicePanel.setLayout(null);
-		devicePanel.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, new Color(240, 240, 240)), "…Ë±∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
+		devicePanel.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2,Color.WHITE), "…Ë±∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
 		
 		JPanel devDetailPanel = new JPanel();
 		devDetailPanel.setBounds(0, 25, 487, 168);

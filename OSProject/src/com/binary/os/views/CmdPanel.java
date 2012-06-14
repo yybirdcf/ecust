@@ -39,15 +39,15 @@ public class CmdPanel extends JPanel implements KeyListener {
 		this.fm = fm;
 		this.mainFrame = mainFrame;
 		
-		setBounds(224, 297, 550, 422);
+		setBounds(224, 307, 550, 412);
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 		
 		resultScrolPane = new JScrollPane();
 		add(resultScrolPane);
-		resultScrolPane.setBounds(0, 0, 550, 392);
+		resultScrolPane.setBounds(0, 0, 550, 382);
 		resultScrolPane.setOpaque(false);
-		resultScrolPane.setBorder(new MatteBorder(2, 2, 2, 2, new Color(240, 240, 240)));
+		resultScrolPane.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
 		
 		resultsText = new JTextArea();
 		resultsText.setLineWrap(true);
@@ -58,7 +58,7 @@ public class CmdPanel extends JPanel implements KeyListener {
 		resultsText.setOpaque(false);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 392, 550, 30);
+		panel.setBounds(0, 382, 550, 30);
 		add(panel, BorderLayout.SOUTH);
 		panel.setOpaque(false);
 		panel.setLayout(new BorderLayout(0, 0));

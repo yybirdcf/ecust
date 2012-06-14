@@ -1,5 +1,13 @@
 package com.binary.os.views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.LinkedList;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -8,6 +16,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -16,12 +25,8 @@ import com.binary.os.filesys.dentries.CurDirFile;
 import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.manager.FileManager;
-import java.awt.BorderLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.LinkedList;
 
-public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSelectionListener, MouseListener{
+public class  TreePanel extends JPanel implements TreeWillExpandListener,TreeSelectionListener, MouseListener{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -58,11 +63,33 @@ public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSele
         tree.addTreeSelectionListener(this);
         tree.addMouseListener(this);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		JScrollPane treeView = new JScrollPane(tree);
+		
+        JScrollPane treeView = new JScrollPane(tree);
+		
+	    treeView.setOpaque(false);
+        treeView.getViewport().setOpaque(false);
+	    tree.setOpaque(false);
+	    
 		this.removeAll();
 		setLayout(new BorderLayout(0, 0));
 		this.add(treeView);
 		this.validate();
+		
+
+		DefaultTreeCellRenderer cellRenderer = new DefaultTreeCellRenderer();
+	    tree.setCellRenderer(cellRenderer);
+
+	    
+//	    cellRenderer.setBackground(null);
+	    cellRenderer.setBackground(new Color(0,0,0,1));
+		
+	    cellRenderer.setBackgroundNonSelectionColor(null);
+	    cellRenderer.setBackgroundSelectionColor(Color.RED);
+		
+	    cellRenderer.setTextNonSelectionColor(Color.WHITE);
+	    
+	    cellRenderer.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD | Font.ITALIC, 15));
+	    tree.setRowHeight(18);
 	}
 	
 	//Ë¢ÐÂ
