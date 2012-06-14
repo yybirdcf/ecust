@@ -98,6 +98,7 @@ public class MainFrame extends JFrame {
 		sysClockPanel.add(lblNewLabel);
 		
 		sysClockLabel = new JLabel("New label");
+		sysClockLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		sysClockLabel.setForeground(Color.RED);
 		sysClockLabel.setFont(new Font("ËÎÌו", Font.BOLD, 18));
 		sysClockLabel.setBounds(165, 0, 90, 34);
