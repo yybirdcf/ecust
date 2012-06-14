@@ -30,15 +30,11 @@ public class IOControl {
 		for(int i = 0; i < 3; i++){
 			if(DeviceGlobalVar.ABCTime[0][i] > 0){
 				
-				System.out.println(DeviceGlobalVar.ABCTime[0][i]);
-				
 				DeviceGlobalVar.ABCTime[0][i] -= Clock.CLOCKPERIOD;
 			}
 			if(DeviceGlobalVar.ABCTime[0][i] == 0){
 				
 				int pid = DeviceGlobalVar.devCurrPid[0][i];
-				
-				System.out.println("device a over-----pid="+pid);
 				
 				ProcessManager.Wakeup(pid);
 				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
@@ -57,16 +53,12 @@ public class IOControl {
 		for(int i = 0; i < 2; i++){
 			if(DeviceGlobalVar.ABCTime[1][i] > 0){
 				
-				System.out.println(DeviceGlobalVar.ABCTime[1][i]);
-				
 				DeviceGlobalVar.ABCTime[1][i] -= Clock.CLOCKPERIOD;
 			}
 			if(DeviceGlobalVar.ABCTime[1][i] == 0){
 				
 				
 				int pid = DeviceGlobalVar.devCurrPid[1][i];
-				
-				System.out.println("device b over-----pid="+pid);
 				
 				ProcessManager.Wakeup(pid);
 				DeviceGlobalVar.NUMOFAPPLYDEVICE--;
@@ -92,8 +84,6 @@ public class IOControl {
 			
 			
 			int pid = DeviceGlobalVar.devCurrPid[2][0];
-			
-			System.out.println("device c over-----pid="+pid);
 			
 			ProcessManager.Wakeup(pid);
 			DeviceGlobalVar.NUMOFAPPLYDEVICE--;

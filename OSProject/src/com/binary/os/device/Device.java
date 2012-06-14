@@ -47,11 +47,16 @@ public class Device //设备进程控制类
     
 	@SuppressWarnings("unused")
 	public static boolean allocDevToProcess(int deviceType, int pid, int time){
-		for(int i=0; i < DeviceGlobalVar.totalDev[deviceType] && DeviceGlobalVar.devCurrPid[deviceType][i] == -1; i++){
-			DeviceGlobalVar.devCurrPid[deviceType][i] = pid;
-			DeviceGlobalVar.ABCTime[deviceType][i] = time;
-			return true;
+		
+		for(int i=0; i < DeviceGlobalVar.totalDev[deviceType]; i++){
+			if(DeviceGlobalVar.devCurrPid[deviceType][i] == -1){
+				DeviceGlobalVar.devCurrPid[deviceType][i] = pid;
+				DeviceGlobalVar.ABCTime[deviceType][i] = time;
+				System.out.println(pid+"ok");
+				return true;
+			}
 		}
+		System.out.println(pid+"fail");
 		return false;
 	}
 	
