@@ -160,7 +160,12 @@ public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSele
 				Object[] nodes = path.getPath();
 				Dentry dentry = null;
 				for (Object n : nodes) {
-					dentry = (Dentry) ((DefaultMutableTreeNode) n).getUserObject();
+					try{
+						dentry = (Dentry) ((DefaultMutableTreeNode) n).getUserObject();
+					}catch(Exception e1){
+						e1.printStackTrace();
+						return;
+					}
 					spath = spath + dentry.getFullName() + "\\";
 				}
 				if(dentry.getExtension().equals("exe")){

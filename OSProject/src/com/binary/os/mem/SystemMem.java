@@ -48,6 +48,7 @@ public class SystemMem {
 						if(count == blockNum + 1){
 							MemGlobalVar.idleBlockNum -= count;
 							UserMem.loadData(blockNum, data);
+							UserMem.count = 0;
 							return true;
 						}
 					}

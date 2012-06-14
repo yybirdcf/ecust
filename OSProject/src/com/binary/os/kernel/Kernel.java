@@ -19,7 +19,7 @@ public class Kernel {
 		if(GlobalStaticVar.IR == null){
 			Register.loadDataToIR();
 		}
-			
+		GlobalStaticVar.IRTEMP = GlobalStaticVar.IR;
 		Command(GlobalStaticVar.IR);
 		
 		GlobalStaticVar.IR = null;

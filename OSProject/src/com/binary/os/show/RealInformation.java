@@ -55,7 +55,7 @@ public class RealInformation {
 	}
 	
 	public static String getIR(){
-		return GlobalStaticVar.IR;
+		return GlobalStaticVar.IRTEMP;
 	}
 	
 	public static int getResult(){
