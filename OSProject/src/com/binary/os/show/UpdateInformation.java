@@ -8,6 +8,8 @@ public class UpdateInformation {
 		
 		updateClock();
 		updateMem();
+		updateProcess();
+		updateDevice();
 	}
 	
 	private static void updateMem(){
@@ -18,5 +20,16 @@ public class UpdateInformation {
 	
 	private static void updateClock(){
 		GlobalStaticVar.mf.sysClockLabel.setText(RealInformation.getSystemClock()+"");
+	}
+	
+	private static void updateDevice(){
+		
+	}
+	
+	private static void updateProcess(){
+		GlobalStaticVar.mf.procNameLabel.setText(RealInformation.getProcess()+"");
+		GlobalStaticVar.mf.currInstructLabel.setText(RealInformation.getIR());
+		GlobalStaticVar.mf.tempResultLabel.setText(RealInformation.getResult()+"");
+		GlobalStaticVar.mf.remainTLabel.setText(RealInformation.getSystemRelativeClock()+"");
 	}
 }

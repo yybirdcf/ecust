@@ -24,7 +24,7 @@ public class ProcessManager {
 				GlobalStaticVar.ProcessPagePeek = ps.getPageOffset();
 				GlobalStaticVar.PC = ps.getPC();
 				
-				UserMem.count = 0;
+	//			UserMem.count = 0;
 				GlobalStaticVar.DR.clear();
 				GlobalStaticVar.IR = null;
 				
@@ -66,7 +66,7 @@ public class ProcessManager {
 			}
 			PCBManager.addToReady(GlobalStaticVar.PID_NOW);
 			//就绪队列选择一个进程
-			UserMem.count = 0;
+//			UserMem.count = 0;
 			GlobalStaticVar.DR.clear();
 			GlobalStaticVar.IR = null;
 			
@@ -154,7 +154,7 @@ public class ProcessManager {
 		GlobalStaticVar.IR = null;
 		GlobalStaticVar.PID_NUM--;
 		GlobalStaticVar.Result = 0;
-		UserMem.count = 0;
+//		UserMem.count = 0;
 		
 		GlobalStaticVar.ResetGlobalStaticVar();
 		
@@ -188,7 +188,7 @@ public class ProcessManager {
 		GlobalStaticVar.PC = 0;
 		GlobalStaticVar.IR = null;
 		GlobalStaticVar.Result = 0;
-		UserMem.count = 0;
+//		UserMem.count = 0;
 		
 		GlobalStaticVar.ResetGlobalStaticVar();
 	}

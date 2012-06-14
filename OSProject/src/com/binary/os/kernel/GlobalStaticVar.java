@@ -38,4 +38,6 @@ public class GlobalStaticVar {
 	public static LinkedList createApply = new LinkedList();
 	
 	public static MainFrame mf = null;
+	
+	public static String IRTEMP = null;
 }
