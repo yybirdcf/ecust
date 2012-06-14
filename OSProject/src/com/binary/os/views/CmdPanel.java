@@ -50,7 +50,7 @@ public class CmdPanel extends JPanel implements KeyListener {
 		resultsText = new JTextArea();
 		resultsText.setLineWrap(true);
 		resultScrolPane.setViewportView(resultsText);
-		resultsText.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 15));
+		resultsText.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 15));
 		resultsText.setEditable(false);
 		resultsText.setOpaque(false);
 		
@@ -62,13 +62,13 @@ public class CmdPanel extends JPanel implements KeyListener {
 		panel.setBorder(new MatteBorder(0, 2, 2, 2, new Color(240, 240, 240)));
 		
 		currDirLabel = new JLabel("New Label");
-		currDirLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
+		currDirLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD | Font.ITALIC, 18));
 		panel.add(currDirLabel, BorderLayout.WEST);
 		currDirLabel.setForeground(Color.RED);
 		
 		cmdText = new JTextField();
 		panel.add(cmdText, BorderLayout.CENTER);
-		cmdText.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
+		cmdText.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD | Font.ITALIC, 18));
 		cmdText.setForeground(Color.RED);
 		cmdText.setBorder(null);
 		cmdText.setOpaque(false);
