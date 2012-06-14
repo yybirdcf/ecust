@@ -31,10 +31,6 @@ public class RealInformation {
 		return DeviceGlobalVar.devCurrPid;
 	}
 	
-	public static int[][] getDeviceWhoUsed(){
-		return DeviceGlobalVar.devCurrPid;
-	}
-	
 	@SuppressWarnings("unchecked")
 	public static LinkedList<Integer> getWaitDeviceA(){
 		return DeviceGlobalVar.devAWaitList;

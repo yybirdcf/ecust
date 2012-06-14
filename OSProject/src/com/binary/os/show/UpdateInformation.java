@@ -73,7 +73,49 @@ public class UpdateInformation {
 	}
 	
 	private static void updateDevice(){
-		
+		int[][] detail = RealInformation.getDeviceUsed();
+		if(detail[0][0] != -1){
+			GlobalStaticVar.mf.devDetail[0].devStatusLabel.setText("ц╕");
+			GlobalStaticVar.mf.devDetail[0].currPidLabel.setText(detail[0][0]+""); 
+		}else{
+			GlobalStaticVar.mf.devDetail[0].devStatusLabel.setText("оп");
+			GlobalStaticVar.mf.devDetail[0].currPidLabel.setText(""); 
+		}
+		if(detail[0][1] != -1){
+			GlobalStaticVar.mf.devDetail[1].devStatusLabel.setText("ц╕");
+			GlobalStaticVar.mf.devDetail[1].currPidLabel.setText(detail[0][1]+""); 
+		}else{
+			GlobalStaticVar.mf.devDetail[1].devStatusLabel.setText("оп");
+			GlobalStaticVar.mf.devDetail[1].currPidLabel.setText(""); 
+		}
+		if(detail[0][2] != -1){
+			GlobalStaticVar.mf.devDetail[2].devStatusLabel.setText("ц╕");
+			GlobalStaticVar.mf.devDetail[2].currPidLabel.setText(detail[0][2]+""); 
+		}else{
+			GlobalStaticVar.mf.devDetail[2].devStatusLabel.setText("оп");
+			GlobalStaticVar.mf.devDetail[2].currPidLabel.setText(""); 
+		}
+		if(detail[1][0] != -1){
+			GlobalStaticVar.mf.devDetail[3].devStatusLabel.setText("ц╕");
+			GlobalStaticVar.mf.devDetail[3].currPidLabel.setText(detail[1][0]+""); 
+		}else{
+			GlobalStaticVar.mf.devDetail[3].devStatusLabel.setText("оп");
+			GlobalStaticVar.mf.devDetail[3].currPidLabel.setText(""); 
+		}
+		if(detail[1][1] != -1){
+			GlobalStaticVar.mf.devDetail[4].devStatusLabel.setText("ц╕");
+			GlobalStaticVar.mf.devDetail[4].currPidLabel.setText(detail[1][1]+""); 
+		}else{
+			GlobalStaticVar.mf.devDetail[4].devStatusLabel.setText("оп");
+			GlobalStaticVar.mf.devDetail[4].currPidLabel.setText(""); 
+		}
+		if(detail[2][0] != -1){
+			GlobalStaticVar.mf.devDetail[5].devStatusLabel.setText("ц╕");
+			GlobalStaticVar.mf.devDetail[5].currPidLabel.setText(detail[2][0]+""); 
+		}else{
+			GlobalStaticVar.mf.devDetail[5].devStatusLabel.setText("оп");
+			GlobalStaticVar.mf.devDetail[5].currPidLabel.setText(""); 
+		}
 	}
 	
 	private static void updateProcess(){
