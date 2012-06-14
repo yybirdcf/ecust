@@ -22,7 +22,7 @@ import com.binary.os.kernel.ClockControl;
 
 public class MainFrame extends JFrame {
 
-	private FileManager fm;
+	public FileManager fm;
 	
 	private JPanel contentPane;
 	public  TreePanel dirTreePanel;
@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		
-		fm = new FileManager();
+		this.fm = new FileManager();
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -209,7 +209,7 @@ public class MainFrame extends JFrame {
 		cmdPanel.setOpaque(false);
 		cmdPanel.setLayout(null);
 		
-		diskUsagePanel = new DiskUsagePanel();
+		diskUsagePanel = new DiskUsagePanel(fm);
 		diskUsagePanel.setBounds(449, 10, 327, 285);
 		contentPane.add(diskUsagePanel);
 		diskUsagePanel.setLayout(null);

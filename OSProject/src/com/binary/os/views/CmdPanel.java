@@ -102,6 +102,7 @@ public class CmdPanel extends JPanel implements KeyListener {
 			scroll();//滚动条到底部
 			currDirLabel.setText(fm.getStringCurrentPath() + ">");
 			mainFrame.dirTreePanel.refresh();
+			mainFrame.diskUsagePanel.repaint();
 		}else if (e.getKeyCode() == KeyEvent.VK_UP) {
 			cmdText.setText(lastCommand);//获取上一条指令
 		}
