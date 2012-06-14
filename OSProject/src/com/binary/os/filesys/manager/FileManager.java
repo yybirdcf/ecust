@@ -205,7 +205,7 @@ public class FileManager {
 	private String vi(String[] dirs, String fileName){
 		//创建文件
 		String result = create(dirs, fileName);
-		if(result.equals(fileName + " 文件创建成功！") == false){//创建文件失败
+		if(result.equals("文件" + fileName + "创建成功！") == false){//创建文件失败
 			return result;
 		}
 		
