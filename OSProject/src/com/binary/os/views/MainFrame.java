@@ -38,6 +38,7 @@ public class MainFrame extends JFrame {
 	public JLabel lev1IndexLabel;
 	public JLabel lev2IndexLabel;
 	public DiskUsagePanel diskUsagePanel;
+	public JPanel currProcPanel;
 
 	/**
 	 * Launch the application.
@@ -102,7 +103,7 @@ public class MainFrame extends JFrame {
 		
 		JPanel detailInfoPanel = new JPanel();
 		detailInfoPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "œÍœ∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
-		detailInfoPanel.setBounds(222, 54, 226, 231);
+		detailInfoPanel.setBounds(222, 54, 226, 241);
 		contentPane.add(detailInfoPanel);
 		detailInfoPanel.setOpaque(false);
 		detailInfoPanel.setLayout(null);
@@ -209,7 +210,7 @@ public class MainFrame extends JFrame {
 		cmdPanel.setLayout(null);
 		
 		diskUsagePanel = new DiskUsagePanel();
-		diskUsagePanel.setBounds(449, 10, 327, 275);
+		diskUsagePanel.setBounds(449, 10, 327, 285);
 		contentPane.add(diskUsagePanel);
 		diskUsagePanel.setLayout(null);
 		diskUsagePanel.setOpaque(false);
@@ -272,6 +273,19 @@ public class MainFrame extends JFrame {
 			devDetailPanel.add(devDetail[i]);
 		}
 		devDetail[5].setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
+		for(int i=0; i<3; i++){
+			devDetail[i].devNameLabel.setText("A" + i);
+			devDetail[i].devTypeLabel.setText("A");
+			devDetail[i].devStatusLabel.setText("œ–");
+		}
+		for(int i=0; i<2; i++){
+			devDetail[i+3].devNameLabel.setText("B" + i);
+			devDetail[i+3].devTypeLabel.setText("B");
+			devDetail[i+3].devStatusLabel.setText("œ–");
+		}
+		devDetail[5].devNameLabel.setText("C0");
+		devDetail[5].devTypeLabel.setText("C");
+		devDetail[5].devStatusLabel.setText("œ–");
 		
 		JPanel devAListPanel = new JPanel();
 		devAListPanel.setBounds(0, 193, 487, 70);
@@ -294,7 +308,7 @@ public class MainFrame extends JFrame {
 		procPanel.setLayout(null);
 		procPanel.setOpaque(false);
 		
-		JPanel currProcPanel = new JPanel();
+		currProcPanel = new JPanel();
 		currProcPanel.setBounds(0, 0, 163, 167);
 		procPanel.add(currProcPanel);
 		currProcPanel.setOpaque(false);
@@ -324,6 +338,30 @@ public class MainFrame extends JFrame {
 		label_14.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
 		label_14.setBounds(10, 128, 80, 16);
 		currProcPanel.add(label_14);
+		
+		JLabel procNameLabel = new JLabel("");
+		procNameLabel.setForeground(Color.WHITE);
+		procNameLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		procNameLabel.setBounds(89, 35, 64, 16);
+		currProcPanel.add(procNameLabel);
+		
+		JLabel currInstructLabel = new JLabel("");
+		currInstructLabel.setForeground(Color.WHITE);
+		currInstructLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		currInstructLabel.setBounds(89, 66, 64, 16);
+		currProcPanel.add(currInstructLabel);
+		
+		JLabel tempResultLabel = new JLabel("");
+		tempResultLabel.setForeground(Color.WHITE);
+		tempResultLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		tempResultLabel.setBounds(89, 97, 64, 16);
+		currProcPanel.add(tempResultLabel);
+		
+		JLabel remainTLabel = new JLabel("");
+		remainTLabel.setForeground(Color.WHITE);
+		remainTLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		remainTLabel.setBounds(89, 128, 64, 16);
+		currProcPanel.add(remainTLabel);
 		
 		JPanel memPanel = new JPanel();
 		memPanel.setBounds(163, 0, 314, 167);
@@ -378,13 +416,13 @@ class DetailItemPanel extends JPanel {
 		
 		devStatusLabel = new JLabel("New Label");
 		devStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		devStatusLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		devStatusLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
 		devStatusLabel.setBounds(230, 0, 115, 24);
 		add(devStatusLabel);
 		devStatusLabel.setForeground(Color.WHITE);
 		devStatusLabel.setBorder(new LineBorder(Color.WHITE, 1));
 		
-		currPidLabel = new JLabel("New Label");
+		currPidLabel = new JLabel("");
 		currPidLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		currPidLabel.setFont(new Font("Arial", Font.BOLD, 15));
 		currPidLabel.setBounds(345, 0, 115, 24);
