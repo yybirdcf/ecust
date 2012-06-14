@@ -156,6 +156,9 @@ public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSele
 					.getLastPathComponent();// 通过路径将指针指向该节点
 			if (node.isLeaf())// 如果该节点是叶子节点
 			{
+				if(((Dentry)node.getUserObject()).equals("此级目录")){
+					return;
+				}
 				String spath = "";
 				Object[] nodes = path.getPath();
 				Dentry dentry = null;
