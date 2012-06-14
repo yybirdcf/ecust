@@ -472,6 +472,7 @@ public class MainFrame extends JFrame {
 		blockListLabel.setBounds(50, 0, 437, 70);
 		blockList.add(blockListLabel);
 		
+		setLocationRelativeTo(null);
 		setVisible(true);
 		
 		cmdPanel.cmdText.requestFocus();
