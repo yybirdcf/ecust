@@ -41,11 +41,11 @@ public class MainFrame extends JFrame {
 	public DiskUsagePanel diskUsagePanel;
 	public JPanel currProcPanel;
 	public MemPanel memPanel;
-	private JLabel sysClockLabel;
-	private JLabel procNameLabel;
-	private JLabel currInstructLabel;
-	private JLabel tempResultLabel;
-	private JLabel remainTLabel;
+	public JLabel sysClockLabel;
+	public JLabel procNameLabel;
+	public JLabel currInstructLabel;
+	public JLabel tempResultLabel;
+	public JLabel remainTLabel;
 
 	/**
 	 * Launch the application.
@@ -395,6 +395,8 @@ public class MainFrame extends JFrame {
 		procPanel.add(blockList);
 		
 		setVisible(true);
+		
+		cmdPanel.cmdText.requestFocus();
 		
 		ClockControl.SystemStart();
 	}
