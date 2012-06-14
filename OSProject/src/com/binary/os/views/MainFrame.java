@@ -39,6 +39,7 @@ public class MainFrame extends JFrame {
 	public JLabel lev2IndexLabel;
 	public DiskUsagePanel diskUsagePanel;
 	public JPanel currProcPanel;
+	public MemPanel memPanel;
 
 	/**
 	 * Launch the application.
@@ -99,7 +100,8 @@ public class MainFrame extends JFrame {
 		dirTreePanel = new TreePanel(fm, this);
 		dirTreePanel.setBounds(10, 54, 212, 666);
 		contentPane.add(dirTreePanel);
-		dirTreePanel.setOpaque(false);
+		dirTreePanel.setBackground(null);
+//		dirTreePanel.setOpaque(false);
 		
 		JPanel detailInfoPanel = new JPanel();
 		detailInfoPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "œÍœ∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
@@ -363,7 +365,7 @@ public class MainFrame extends JFrame {
 		remainTLabel.setBounds(89, 128, 64, 16);
 		currProcPanel.add(remainTLabel);
 		
-		JPanel memPanel = new JPanel();
+		memPanel = new MemPanel();
 		memPanel.setBounds(163, 0, 314, 167);
 		procPanel.add(memPanel);
 		memPanel.setOpaque(false);
