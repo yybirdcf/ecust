@@ -1115,6 +1115,7 @@ public class FileManager {
 		GlobalStaticVar.mf.cmdPanel.resultsText.append(out);//显示结果
 		GlobalStaticVar.mf.cmdPanel.scroll();
 		GlobalStaticVar.mf.dirTreePanel.refresh();//刷新目录树
+		GlobalStaticVar.mf.diskUsagePanel.repaint();//刷新磁盘图
 		
 		return true;
 	}

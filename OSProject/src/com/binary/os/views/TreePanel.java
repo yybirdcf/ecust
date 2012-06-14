@@ -17,9 +17,11 @@ import com.binary.os.filesys.dentries.Dentry;
 import com.binary.os.filesys.dentries.Directory;
 import com.binary.os.filesys.manager.FileManager;
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
-public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSelectionListener{
+public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSelectionListener, MouseListener{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -54,6 +56,7 @@ public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSele
         tree = new JTree(rootNode);
         tree.addTreeWillExpandListener(this);
         tree.addTreeSelectionListener(this);
+        tree.addMouseListener(this);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		JScrollPane treeView = new JScrollPane(tree);
 		this.removeAll();
@@ -143,5 +146,64 @@ public class TreePanel extends JPanel implements TreeWillExpandListener,TreeSele
 		Dentry dentry = (Dentry) note.getUserObject();
 
 		fm.setInfo(dentry);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 2) {
+			TreePath path = tree.getSelectionPath();// 获取选中节点路径
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) path
+					.getLastPathComponent();// 通过路径将指针指向该节点
+			if (node.isLeaf())// 如果该节点是叶子节点
+			{
+				String spath = "";
+				Object[] nodes = path.getPath();
+				Dentry dentry = null;
+				for (Object n : nodes) {
+					dentry = (Dentry) ((DefaultMutableTreeNode) n).getUserObject();
+					spath = spath + dentry.getFullName() + "\\";
+				}
+				if(dentry.getExtension().equals("exe")){
+					String result = fm.interpret("run " + spath);
+					mainFrame.cmdPanel.resultsText.append(result+"\n\n");//显示结果
+					mainFrame.cmdPanel.scroll();//滚动条到底部
+					mainFrame.cmdPanel.currDirLabel.setText(fm.getStringCurrentPath() + ">");
+					mainFrame.dirTreePanel.refresh();
+					mainFrame.diskUsagePanel.repaint();
+				}else{
+					String result = fm.interpret("edit " + spath);
+					mainFrame.cmdPanel.resultsText.append(result+"\n\n");//显示结果
+					mainFrame.cmdPanel.scroll();//滚动条到底部
+					mainFrame.cmdPanel.currDirLabel.setText(fm.getStringCurrentPath() + ">");
+					mainFrame.dirTreePanel.refresh();
+					mainFrame.diskUsagePanel.repaint();
+				}
+			}
+
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
