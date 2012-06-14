@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 
 import com.binary.os.filesys.manager.FileManager;
 import com.binary.os.kernel.ClockControl;
+import com.binary.os.kernel.GlobalStaticVar;
 
 public class MainFrame extends JFrame {
 
@@ -67,6 +68,9 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		
 		this.fm = new FileManager();
+		
+		GlobalStaticVar.fm = fm;
+		GlobalStaticVar.mf = this;
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -392,7 +396,7 @@ public class MainFrame extends JFrame {
 		
 		setVisible(true);
 		
-		ClockControl.SystemStart(fm, this);
+		ClockControl.SystemStart();
 	}
 }
 

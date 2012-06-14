@@ -12,11 +12,8 @@ public class ClockControl {
 
 	private static Timer timer;
 	
-	public static void SystemStart(FileManager fm,MainFrame mf){
+	public static void SystemStart(){
 		//初始化系统资源
-		
-		GlobalStaticVar.fm = fm;
-		GlobalStaticVar.mf = mf;
 		
 		SystemMem.init();
 		UserMem.init();
