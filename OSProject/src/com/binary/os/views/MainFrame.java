@@ -306,38 +306,40 @@ public class MainFrame extends JFrame {
 		devAListPanel.setBounds(0, 193, 487, 70);
 		devicePanel.add(devAListPanel);
 		devAListPanel.setOpaque(false);
+		devAListPanel.setLayout(null);
 		
 		JTextArea txtrA = new JTextArea("  A\u8BBE\u5907\r\n\u7B49\u5F85\u961F\u5217");
 		txtrA.setOpaque(false);
 		txtrA.setForeground(Color.WHITE);
 		txtrA.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		txtrA.setEditable(false);
-		txtrA.setBounds(0, 10, 64, 60);
+		txtrA.setBounds(5, 10, 68, 50);
 		devAListPanel.add(txtrA);
 		
 		devAListLabel = new JLabel("New label");
 		devAListLabel.setForeground(Color.WHITE);
 		devAListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
-		devAListLabel.setBounds(74, 0, 413, 70);
+		devAListLabel.setBounds(83, 0, 402, 70);
 		devAListPanel.add(devAListLabel);
 		
 		JPanel devBListPanel = new JPanel();
 		devBListPanel.setBounds(0, 263, 487, 70);
 		devicePanel.add(devBListPanel);
 		devBListPanel.setOpaque(false);
+		devBListPanel.setLayout(null);
 		
 		JTextArea txtrB = new JTextArea("  B\u8BBE\u5907\r\n\u7B49\u5F85\u961F\u5217");
 		txtrB.setOpaque(false);
 		txtrB.setForeground(Color.WHITE);
 		txtrB.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		txtrB.setEditable(false);
-		txtrB.setBounds(0, 10, 64, 60);
+		txtrB.setBounds(5, 10, 68, 50);
 		devBListPanel.add(txtrB);
 		
 		devBListLabel = new JLabel("New label");
 		devBListLabel.setForeground(Color.WHITE);
 		devBListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
-		devBListLabel.setBounds(74, 0, 413, 70);
+		devBListLabel.setBounds(83, 0, 402, 70);
 		devBListPanel.add(devBListLabel);
 		
 		
@@ -345,19 +347,20 @@ public class MainFrame extends JFrame {
 		devCListPanel.setBounds(0, 333, 487, 70);
 		devicePanel.add(devCListPanel);
 		devCListPanel.setOpaque(false);
+		devCListPanel.setLayout(null);
 		
 		JTextArea txtrC = new JTextArea("  C\u8BBE\u5907\r\n\u7B49\u5F85\u961F\u5217");
 		txtrC.setOpaque(false);
 		txtrC.setForeground(Color.WHITE);
 		txtrC.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		txtrC.setEditable(false);
-		txtrC.setBounds(0, 10, 64, 60);
+		txtrC.setBounds(5, 10, 68, 50);
 		devCListPanel.add(txtrC);
 		
 		devCListLabel = new JLabel("New label");
 		devCListLabel.setForeground(Color.WHITE);
 		devCListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
-		devCListLabel.setBounds(74, 0, 413, 70);
+		devCListLabel.setBounds(83, 0, 437, 70);
 		devCListPanel.add(devCListLabel);
 		
 		JPanel procPanel = new JPanel();
@@ -452,19 +455,20 @@ public class MainFrame extends JFrame {
 		blockList.setOpaque(false);
 		blockList.setBounds(0, 238, 487, 70);
 		procPanel.add(blockList);
+		blockList.setLayout(null);
 		
 		JTextArea textArea_1 = new JTextArea("\u963B\u585E\r\n\u961F\u5217");
 		textArea_1.setOpaque(false);
 		textArea_1.setForeground(Color.WHITE);
 		textArea_1.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		textArea_1.setEditable(false);
-		textArea_1.setBounds(5, 10, 36, 60);
+		textArea_1.setBounds(5, 10, 40, 60);
 		blockList.add(textArea_1);
 		
 		blockListLabel = new JLabel("New label");
 		blockListLabel.setForeground(Color.WHITE);
 		blockListLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
-		blockListLabel.setBounds(51, 0, 437, 70);
+		blockListLabel.setBounds(50, 0, 437, 70);
 		blockList.add(blockListLabel);
 		
 		setVisible(true);
