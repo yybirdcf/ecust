@@ -40,6 +40,11 @@ public class MainFrame extends JFrame {
 	public DiskUsagePanel diskUsagePanel;
 	public JPanel currProcPanel;
 	public MemPanel memPanel;
+	private JLabel sysClockLabel;
+	private JLabel procNameLabel;
+	private JLabel currInstructLabel;
+	private JLabel tempResultLabel;
+	private JLabel remainTLabel;
 
 	/**
 	 * Launch the application.
@@ -80,23 +85,24 @@ public class MainFrame extends JFrame {
 		sysClockPanel.setOpaque(false);
 		sysClockPanel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("\u4E2A\u65F6\u949F\u5355\u4F4D");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBounds(265, 0, 173, 34);
 		lblNewLabel.setFont(new Font("宋体", Font.BOLD, 18));
 		sysClockPanel.add(lblNewLabel);
 		
-		JLabel sysClockLabel = new JLabel("New label");
+		sysClockLabel = new JLabel("New label");
 		sysClockLabel.setForeground(Color.RED);
 		sysClockLabel.setFont(new Font("宋体", Font.BOLD, 18));
 		sysClockLabel.setBounds(165, 0, 90, 34);
 		sysClockPanel.add(sysClockLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("宋体", Font.BOLD, 18));
-		lblNewLabel_1.setBounds(5, 0, 160, 34);
-		sysClockPanel.add(lblNewLabel_1);
+		JLabel sysClock = new JLabel("\u7CFB\u7EDF\u5DF2\u542F\u52A8\uFF1A");
+		sysClock.setHorizontalAlignment(SwingConstants.CENTER);
+		sysClock.setForeground(Color.WHITE);
+		sysClock.setFont(new Font("宋体", Font.BOLD, 18));
+		sysClock.setBounds(5, 0, 160, 34);
+		sysClockPanel.add(sysClock);
 		
 		dirTreePanel = new TreePanel(fm, this);
 		dirTreePanel.setBounds(10, 54, 212, 666);
@@ -342,25 +348,25 @@ public class MainFrame extends JFrame {
 		label_14.setBounds(10, 128, 80, 16);
 		currProcPanel.add(label_14);
 		
-		JLabel procNameLabel = new JLabel("");
+		procNameLabel = new JLabel("");
 		procNameLabel.setForeground(Color.WHITE);
 		procNameLabel.setFont(new Font("宋体", Font.BOLD, 15));
 		procNameLabel.setBounds(89, 35, 64, 16);
 		currProcPanel.add(procNameLabel);
 		
-		JLabel currInstructLabel = new JLabel("");
+		currInstructLabel = new JLabel("");
 		currInstructLabel.setForeground(Color.WHITE);
 		currInstructLabel.setFont(new Font("宋体", Font.BOLD, 15));
 		currInstructLabel.setBounds(89, 66, 64, 16);
 		currProcPanel.add(currInstructLabel);
 		
-		JLabel tempResultLabel = new JLabel("");
+		tempResultLabel = new JLabel("");
 		tempResultLabel.setForeground(Color.WHITE);
 		tempResultLabel.setFont(new Font("宋体", Font.BOLD, 15));
 		tempResultLabel.setBounds(89, 97, 64, 16);
 		currProcPanel.add(tempResultLabel);
 		
-		JLabel remainTLabel = new JLabel("");
+		remainTLabel = new JLabel("");
 		remainTLabel.setForeground(Color.WHITE);
 		remainTLabel.setFont(new Font("宋体", Font.BOLD, 15));
 		remainTLabel.setBounds(89, 128, 64, 16);
@@ -377,6 +383,7 @@ public class MainFrame extends JFrame {
 		waitList.setOpaque(false);
 		waitList.setBounds(0, 169, 487, 70);
 		procPanel.add(waitList);
+		waitList.setLayout(null);
 		
 		JPanel blockList = new JPanel();
 		blockList.setOpaque(false);
