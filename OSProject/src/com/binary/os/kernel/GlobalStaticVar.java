@@ -24,14 +24,14 @@ public class GlobalStaticVar {
 	
 	public static FileManager fm = null;
 	
-	public static byte ProcessStartNo = 0;//页表块号
-	public static byte ProcessOffSet = 0;//占用内存块数
-	public static byte ProcessPagePeek = 0;//页表游标
+	public static byte ProcessStartNo = -1;//页表块号
+	public static byte ProcessOffSet = -1;//占用内存块数
+	public static byte ProcessPagePeek = -1;//页表游标
 	
 	public static void ResetGlobalStaticVar(){
-		ProcessStartNo = 0;
-		ProcessOffSet = 0;
-		ProcessPagePeek = 0;
+		ProcessStartNo = -1;
+		ProcessOffSet = -1;
+		ProcessPagePeek = -1;
 	}
 	
 	public static int ProcessCreateListener = -4;

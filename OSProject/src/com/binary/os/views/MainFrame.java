@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
 
 	public FileManager fm;
 	
-	private JPanel contentPane;
+	private MyPanel contentPane;
 	public  TreePanel dirTreePanel;
 //	public CmdPanelold cmdPanel;
 	public CmdPanel cmdPanel;
@@ -67,7 +67,8 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(43, 0, 1280, 768);
 		setResizable(false);
-		contentPane = new MyPanel("backgrounds.png");
+		contentPane = new MyPanel("bg.jpg");
+	//	contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

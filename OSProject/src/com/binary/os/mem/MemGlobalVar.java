@@ -11,11 +11,11 @@ public class MemGlobalVar {
 	
 	public static int LimitBlock = 16;
 	
-	public static byte MemStartNo = 0;//页表块号
-	public static byte MemOffSet = 0;//占用内存块数
+	public static byte MemStartNo = -1;//页表块号
+	public static byte MemOffSet = -1;//占用内存块数
 	
 	public static void ResetMemStaticVar(){
-		MemStartNo = 0;
-		MemOffSet = 0;
+		MemStartNo = -1;
+		MemOffSet = -1;
 	}
 }
