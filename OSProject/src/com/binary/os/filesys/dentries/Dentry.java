@@ -166,7 +166,7 @@ public class Dentry {
 	}
 	
 	public String getStringAttri(){
-		if(attribute == D_H_R | attribute == F_H_R){
+		if(attribute == D_H_R || attribute == F_H_R){
 			return "隐藏与只读";
 		}else if(attribute == D_H_W || attribute == F_H_W){
 			return "隐藏与可写";
@@ -181,6 +181,13 @@ public class Dentry {
 
 	public void setAttribute(int attribute) {
 		this.attribute = attribute;
+	}
+	
+	public boolean isHide(){
+		if(attribute == D_H_R || attribute == D_H_W || attribute == F_H_R || attribute == F_H_W){
+			return true;
+		}
+		return false;
 	}
 
 	public int getSize() {

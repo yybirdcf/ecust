@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -21,11 +22,24 @@ import com.binary.os.kernel.ClockControl;
 
 public class MainFrame extends JFrame {
 
-	private FileManager fm;
+	public FileManager fm;
 	
 	private JPanel contentPane;
 	public  TreePanel dirTreePanel;
-	private CmdPanel cmdPanel;
+//	public CmdPanelold cmdPanel;
+	public CmdPanel cmdPanel;
+	public DetailItemPanel[] devDetail = new DetailItemPanel[6];
+	public JLabel nameLabel;
+	public JLabel sizeLabel;
+	public JLabel typeLabel;
+	public JLabel attributeLabel;
+	public JLabel directAddr1Label;
+	public JLabel directAddr2Label;
+	public JLabel lev1IndexLabel;
+	public JLabel lev2IndexLabel;
+	public DiskUsagePanel diskUsagePanel;
+	public JPanel currProcPanel;
+	public MemPanel memPanel;
 
 	/**
 	 * Launch the application.
@@ -47,7 +61,7 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		
-		fm = new FileManager();
+		this.fm = new FileManager();
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,37 +74,38 @@ public class MainFrame extends JFrame {
 		
 		JPanel sysClockPanel = new JPanel();
 		sysClockPanel.setBorder(new LineBorder(Color.WHITE, 2, true));
-		sysClockPanel.setBounds(10, 10, 438, 44);
+		sysClockPanel.setBounds(10, 20, 438, 34);
 		contentPane.add(sysClockPanel);
 		sysClockPanel.setOpaque(false);
 		sysClockPanel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(265, 0, 173, 44);
+		lblNewLabel.setBounds(265, 0, 173, 34);
 		lblNewLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 18));
 		sysClockPanel.add(lblNewLabel);
 		
 		JLabel sysClockLabel = new JLabel("New label");
 		sysClockLabel.setForeground(Color.RED);
 		sysClockLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 18));
-		sysClockLabel.setBounds(165, 0, 90, 44);
+		sysClockLabel.setBounds(165, 0, 90, 34);
 		sysClockPanel.add(sysClockLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("ÀŒÃÂ", Font.BOLD, 18));
-		lblNewLabel_1.setBounds(5, 0, 160, 44);
+		lblNewLabel_1.setBounds(5, 0, 160, 34);
 		sysClockPanel.add(lblNewLabel_1);
 		
 		dirTreePanel = new TreePanel(fm, this);
 		dirTreePanel.setBounds(10, 54, 212, 666);
 		contentPane.add(dirTreePanel);
-		dirTreePanel.setOpaque(false);
+		dirTreePanel.setBackground(null);
+//		dirTreePanel.setOpaque(false);
 		
 		JPanel detailInfoPanel = new JPanel();
 		detailInfoPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE, 2, true), "œÍœ∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
-		detailInfoPanel.setBounds(222, 54, 226, 231);
+		detailInfoPanel.setBounds(222, 54, 226, 241);
 		contentPane.add(detailInfoPanel);
 		detailInfoPanel.setOpaque(false);
 		detailInfoPanel.setLayout(null);
@@ -104,116 +119,100 @@ public class MainFrame extends JFrame {
 		JLabel label = new JLabel("\u5927\u5C0F\uFF1A");
 		label.setForeground(Color.WHITE);
 		label.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label.setBounds(10, 53, 54, 16);
+		label.setBounds(10, 55, 54, 16);
 		detailInfoPanel.add(label);
-		
-		JLabel label_1 = new JLabel("\u7236\u76EE\u5F55\uFF1A");
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_1.setBounds(10, 75, 68, 16);
-		detailInfoPanel.add(label_1);
 		
 		JLabel label_2 = new JLabel("\u5C5E\u6027\uFF1A");
 		label_2.setForeground(Color.WHITE);
 		label_2.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_2.setBounds(10, 119, 54, 16);
+		label_2.setBounds(10, 103, 54, 16);
 		detailInfoPanel.add(label_2);
 		
 		JLabel label_3 = new JLabel("\u76F4\u63A5\u5730\u57401\uFF1A");
 		label_3.setForeground(Color.WHITE);
 		label_3.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_3.setBounds(10, 141, 94, 16);
+		label_3.setBounds(10, 127, 94, 16);
 		detailInfoPanel.add(label_3);
 		
 		JLabel label_4 = new JLabel("\u76F4\u63A5\u5730\u57402\uFF1A");
 		label_4.setForeground(Color.WHITE);
 		label_4.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_4.setBounds(10, 163, 94, 16);
+		label_4.setBounds(10, 151, 94, 16);
 		detailInfoPanel.add(label_4);
 		
 		JLabel label_5 = new JLabel("\u4E00\u7EA7\u7D22\u5F15\uFF1A");
 		label_5.setForeground(Color.WHITE);
 		label_5.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_5.setBounds(10, 185, 85, 16);
+		label_5.setBounds(10, 175, 85, 16);
 		detailInfoPanel.add(label_5);
 		
 		JLabel label_6 = new JLabel("\u4E8C\u7EA7\u7D22\u5F15\uFF1A");
 		label_6.setForeground(Color.WHITE);
 		label_6.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_6.setBounds(10, 208, 85, 16);
+		label_6.setBounds(10, 199, 85, 16);
 		detailInfoPanel.add(label_6);
 		
-		JLabel nameLabel = new JLabel("New label");
+		nameLabel = new JLabel("");
 		nameLabel.setForeground(Color.WHITE);
-		nameLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		nameLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
 		nameLabel.setBounds(105, 31, 111, 16);
 		detailInfoPanel.add(nameLabel);
 		
-		JLabel sizeLabel = new JLabel("New label");
+		sizeLabel = new JLabel("");
 		sizeLabel.setForeground(Color.WHITE);
-		sizeLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		sizeLabel.setBounds(105, 53, 111, 16);
+		sizeLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		sizeLabel.setBounds(105, 55, 111, 16);
 		detailInfoPanel.add(sizeLabel);
 		
-		JLabel fatherDirLabel = new JLabel("New label");
-		fatherDirLabel.setForeground(Color.WHITE);
-		fatherDirLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		fatherDirLabel.setBounds(105, 75, 111, 16);
-		detailInfoPanel.add(fatherDirLabel);
-		
-		JLabel attributeLabel = new JLabel("New label");
+		attributeLabel = new JLabel("");
 		attributeLabel.setForeground(Color.WHITE);
-		attributeLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		attributeLabel.setBounds(105, 119, 111, 16);
+		attributeLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		attributeLabel.setBounds(105, 103, 111, 16);
 		detailInfoPanel.add(attributeLabel);
 		
-		JLabel directAddr1Label = new JLabel("New label");
+		directAddr1Label = new JLabel("");
 		directAddr1Label.setForeground(Color.WHITE);
-		directAddr1Label.setFont(new Font("Arial", Font.BOLD, 15));
-		directAddr1Label.setBounds(105, 141, 111, 16);
+		directAddr1Label.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		directAddr1Label.setBounds(105, 127, 111, 16);
 		detailInfoPanel.add(directAddr1Label);
 		
-		JLabel directAddr2Label = new JLabel("New label");
+		directAddr2Label = new JLabel("");
 		directAddr2Label.setForeground(Color.WHITE);
-		directAddr2Label.setFont(new Font("Arial", Font.BOLD, 15));
-		directAddr2Label.setBounds(105, 163, 111, 16);
+		directAddr2Label.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		directAddr2Label.setBounds(105, 151, 111, 16);
 		detailInfoPanel.add(directAddr2Label);
 		
-		JLabel lev1IndexLabel = new JLabel("New label");
+		lev1IndexLabel = new JLabel("");
 		lev1IndexLabel.setForeground(Color.WHITE);
-		lev1IndexLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		lev1IndexLabel.setBounds(105, 185, 111, 16);
+		lev1IndexLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		lev1IndexLabel.setBounds(105, 175, 111, 16);
 		detailInfoPanel.add(lev1IndexLabel);
 		
-		JLabel lev2IndexLabel = new JLabel("New label");
+		lev2IndexLabel = new JLabel("");
 		lev2IndexLabel.setForeground(Color.WHITE);
-		lev2IndexLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		lev2IndexLabel.setBounds(105, 208, 111, 16);
+		lev2IndexLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		lev2IndexLabel.setBounds(105, 199, 111, 16);
 		detailInfoPanel.add(lev2IndexLabel);
 		
 		JLabel label_7 = new JLabel("\u7C7B\u578B\uFF1A");
 		label_7.setForeground(Color.WHITE);
 		label_7.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_7.setBounds(10, 97, 68, 16);
+		label_7.setBounds(10, 79, 68, 16);
 		detailInfoPanel.add(label_7);
 		
-		JLabel typeLabel = new JLabel("New label");
+		typeLabel = new JLabel("");
 		typeLabel.setForeground(Color.WHITE);
-		typeLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		typeLabel.setBounds(105, 97, 111, 16);
+		typeLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		typeLabel.setBounds(105, 79, 111, 16);
 		detailInfoPanel.add(typeLabel);
 		
 		cmdPanel = new CmdPanel(fm, this);
-		cmdPanel.cmdText.setBounds(0, 412, 554, 21);
-		cmdPanel.currDirLabel.setBounds(81, 394, 473, 18);
-		cmdPanel.resultScrolPane.setBounds(0, 0, 554, 392);
-		cmdPanel.setBounds(222, 287, 554, 433);
 		contentPane.add(cmdPanel);
 		cmdPanel.setOpaque(false);
 		cmdPanel.setLayout(null);
 		
-		JPanel diskUsagePanel = new JPanel();
-		diskUsagePanel.setBounds(449, 10, 327, 275);
+		diskUsagePanel = new DiskUsagePanel(fm);
+		diskUsagePanel.setBounds(449, 10, 327, 285);
 		contentPane.add(diskUsagePanel);
 		diskUsagePanel.setLayout(null);
 		diskUsagePanel.setOpaque(false);
@@ -224,15 +223,16 @@ public class MainFrame extends JFrame {
 		contentPane.add(devicePanel);
 		devicePanel.setOpaque(false);
 		devicePanel.setLayout(null);
+		devicePanel.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, new Color(240, 240, 240)), "…Ë±∏–≈œ¢", TitledBorder.LEADING, TitledBorder.TOP,new Font("ÀŒÃÂ",Font.BOLD,18), Color.WHITE));
 		
 		JPanel devDetailPanel = new JPanel();
-		devDetailPanel.setBounds(0, 0, 487, 193);
+		devDetailPanel.setBounds(0, 25, 487, 168);
 		devicePanel.add(devDetailPanel);
 		devDetailPanel.setOpaque(false);
 		devDetailPanel.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 487, 24);
+		panel.setBounds(14, 0, 460, 24);
 		devDetailPanel.add(panel);
 		panel.setOpaque(false);
 		panel.setLayout(null);
@@ -240,56 +240,54 @@ public class MainFrame extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("\u8BBE\u5907\u540D");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		lblNewLabel_3.setBounds(0, 0, 121, 24);
+		lblNewLabel_3.setBounds(0, 0, 115, 24);
 		panel.add(lblNewLabel_3);
+		lblNewLabel_3.setForeground(Color.WHITE);
+		lblNewLabel_3.setBorder(new MatteBorder(2, 2, 1, 1, Color.WHITE));
 		
 		JLabel label_8 = new JLabel("\u8BBE\u5907\u7C7B\u578B");
 		label_8.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
 		label_8.setHorizontalAlignment(SwingConstants.CENTER);
-		label_8.setBounds(121, 0, 121, 24);
+		label_8.setBounds(115, 0, 115, 24);
 		panel.add(label_8);
+		label_8.setForeground(Color.WHITE);
+		label_8.setBorder(new MatteBorder(2, 1, 1, 1, Color.WHITE));
 		
 		JLabel label_9 = new JLabel("\u72B6\u6001");
 		label_9.setHorizontalAlignment(SwingConstants.CENTER);
 		label_9.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_9.setBounds(242, 0, 121, 24);
+		label_9.setBounds(230, 0, 115, 24);
 		panel.add(label_9);
+		label_9.setForeground(Color.WHITE);
+		label_9.setBorder(new MatteBorder(2, 1, 1, 1, Color.WHITE));
 		
 		JLabel label_10 = new JLabel("\u5F53\u524D\u8FDB\u7A0B");
 		label_10.setHorizontalAlignment(SwingConstants.CENTER);
 		label_10.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		label_10.setBounds(363, 0, 124, 24);
+		label_10.setBounds(345, 0, 115, 24);
 		panel.add(label_10);
+		label_10.setForeground(Color.WHITE);
+		label_10.setBorder(new MatteBorder(2, 1, 1, 2, Color.WHITE));
 		
-		JPanel detailItemPanel = new JPanel();
-		detailItemPanel.setLayout(null);
-		detailItemPanel.setOpaque(false);
-		detailItemPanel.setBounds(0, 24, 487, 24);
-		devDetailPanel.add(detailItemPanel);
-		
-		JLabel devNameLabel = new JLabel("New Label");
-		devNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		devNameLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		devNameLabel.setBounds(0, 0, 121, 24);
-		detailItemPanel.add(devNameLabel);
-		
-		JLabel devTypeLabel = new JLabel("New Label");
-		devTypeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		devTypeLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		devTypeLabel.setBounds(121, 0, 121, 24);
-		detailItemPanel.add(devTypeLabel);
-		
-		JLabel devStatusLabel = new JLabel("New Label");
-		devStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		devStatusLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		devStatusLabel.setBounds(242, 0, 121, 24);
-		detailItemPanel.add(devStatusLabel);
-		
-		JLabel currPidLabel = new JLabel("New Label");
-		currPidLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		currPidLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
-		currPidLabel.setBounds(363, 0, 124, 24);
-		detailItemPanel.add(currPidLabel);
+		for(int i=0; i<6; i++){
+			devDetail[i] = new DetailItemPanel();
+			devDetail[i].setBounds(14, 24*(i+1), 460, 24);
+			devDetailPanel.add(devDetail[i]);
+		}
+		devDetail[5].setBorder(new MatteBorder(0, 0, 2, 0, Color.WHITE));
+		for(int i=0; i<3; i++){
+			devDetail[i].devNameLabel.setText("A" + i);
+			devDetail[i].devTypeLabel.setText("A");
+			devDetail[i].devStatusLabel.setText("œ–");
+		}
+		for(int i=0; i<2; i++){
+			devDetail[i+3].devNameLabel.setText("B" + i);
+			devDetail[i+3].devTypeLabel.setText("B");
+			devDetail[i+3].devStatusLabel.setText("œ–");
+		}
+		devDetail[5].devNameLabel.setText("C0");
+		devDetail[5].devTypeLabel.setText("C");
+		devDetail[5].devStatusLabel.setText("œ–");
 		
 		JPanel devAListPanel = new JPanel();
 		devAListPanel.setBounds(0, 193, 487, 70);
@@ -312,7 +310,7 @@ public class MainFrame extends JFrame {
 		procPanel.setLayout(null);
 		procPanel.setOpaque(false);
 		
-		JPanel currProcPanel = new JPanel();
+		currProcPanel = new JPanel();
 		currProcPanel.setBounds(0, 0, 163, 167);
 		procPanel.add(currProcPanel);
 		currProcPanel.setOpaque(false);
@@ -343,7 +341,31 @@ public class MainFrame extends JFrame {
 		label_14.setBounds(10, 128, 80, 16);
 		currProcPanel.add(label_14);
 		
-		JPanel memPanel = new JPanel();
+		JLabel procNameLabel = new JLabel("");
+		procNameLabel.setForeground(Color.WHITE);
+		procNameLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		procNameLabel.setBounds(89, 35, 64, 16);
+		currProcPanel.add(procNameLabel);
+		
+		JLabel currInstructLabel = new JLabel("");
+		currInstructLabel.setForeground(Color.WHITE);
+		currInstructLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		currInstructLabel.setBounds(89, 66, 64, 16);
+		currProcPanel.add(currInstructLabel);
+		
+		JLabel tempResultLabel = new JLabel("");
+		tempResultLabel.setForeground(Color.WHITE);
+		tempResultLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		tempResultLabel.setBounds(89, 97, 64, 16);
+		currProcPanel.add(tempResultLabel);
+		
+		JLabel remainTLabel = new JLabel("");
+		remainTLabel.setForeground(Color.WHITE);
+		remainTLabel.setFont(new Font("ÀŒÃÂ", Font.BOLD, 15));
+		remainTLabel.setBounds(89, 128, 64, 16);
+		currProcPanel.add(remainTLabel);
+		
+		memPanel = new MemPanel();
 		memPanel.setBounds(163, 0, 314, 167);
 		procPanel.add(memPanel);
 		memPanel.setOpaque(false);
@@ -363,5 +385,51 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 		
 		ClockControl.SystemStart(fm, this);
+	}
+}
+
+class DetailItemPanel extends JPanel {
+	
+	public JLabel devNameLabel;
+	public JLabel devTypeLabel;
+	public JLabel devStatusLabel;
+	public JLabel currPidLabel;
+	
+	public DetailItemPanel(){
+		setLayout(null);
+		setOpaque(false);
+//		setBounds(14, 24, 460, 24);
+		
+		devNameLabel = new JLabel("New Label");
+		devNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		devNameLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		devNameLabel.setBounds(0, 0, 115, 24);
+		add(devNameLabel);
+		devNameLabel.setForeground(Color.WHITE);
+		devNameLabel.setBorder(new MatteBorder(1, 2, 1, 1, Color.WHITE));
+		
+		devTypeLabel = new JLabel("New Label");
+		devTypeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		devTypeLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		devTypeLabel.setBounds(115, 0, 115, 24);
+		add(devTypeLabel);
+		devTypeLabel.setForeground(Color.WHITE);
+		devTypeLabel.setBorder(new LineBorder(Color.WHITE, 1));
+		
+		devStatusLabel = new JLabel("New Label");
+		devStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		devStatusLabel.setFont(new Font("Œ¢»Ì—≈∫⁄", Font.BOLD, 15));
+		devStatusLabel.setBounds(230, 0, 115, 24);
+		add(devStatusLabel);
+		devStatusLabel.setForeground(Color.WHITE);
+		devStatusLabel.setBorder(new LineBorder(Color.WHITE, 1));
+		
+		currPidLabel = new JLabel("");
+		currPidLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		currPidLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		currPidLabel.setBounds(345, 0, 115, 24);
+		add(currPidLabel);
+		currPidLabel.setForeground(Color.WHITE);
+		currPidLabel.setBorder(new MatteBorder(1, 1, 1, 2, Color.WHITE));
 	}
 }

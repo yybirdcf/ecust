@@ -18,7 +18,7 @@ public class CurDirFile extends SFile{
 	}
 	
 	public String getTypeString(){
-		return "当前目录";
+		return "此级目录";
 	}
 	
 	public String toString(){
