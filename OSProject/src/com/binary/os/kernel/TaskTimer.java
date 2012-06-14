@@ -38,7 +38,7 @@ public class TaskTimer extends TimerTask {
 			IOControl.IORun();
 		
 		//¸üÐÂÃæ°å
-		UpdateInformation.update(GlobalStaticVar.mf);
+		UpdateInformation.update();
 	}
 
 }
