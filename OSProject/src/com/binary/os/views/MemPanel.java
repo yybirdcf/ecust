@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 public class MemPanel extends JPanel{
 
 	public int[][] bitMap = new int[4][8];
-	public int bit = 4;
+	public int bit = -1;
 	
 	public void paintComponent(Graphics g){
 		paintTable(25,25,60,120,g);
@@ -21,6 +21,12 @@ public class MemPanel extends JPanel{
 				}
 			}
 		}
+		if(bit == -1){
+			return;
+		}
+		int i= bit/8;
+		int j=bit%8;
+		fillTable(j*25,i*25,25,25,g, Color.BLUE, true);
 		
 	}
 	
