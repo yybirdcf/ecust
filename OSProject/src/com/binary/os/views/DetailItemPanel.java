@@ -11,6 +11,10 @@ import javax.swing.border.MatteBorder;
 
 public class DetailItemPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public JLabel devNameLabel;
 	public JLabel devTypeLabel;
 	public JLabel devStatusLabel;

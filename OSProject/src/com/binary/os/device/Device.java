@@ -45,7 +45,6 @@ public class Device //设备进程控制类
 		return 0;
     }
     
-	@SuppressWarnings("unused")
 	public static boolean allocDevToProcess(int deviceType, int pid, int time){
 		
 		for(int i=0; i < DeviceGlobalVar.totalDev[deviceType]; i++){

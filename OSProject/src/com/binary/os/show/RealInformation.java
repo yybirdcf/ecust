@@ -8,7 +8,6 @@ import com.binary.os.device.DeviceGlobalVar;
 import com.binary.os.kernel.Clock;
 import com.binary.os.kernel.GlobalStaticVar;
 import com.binary.os.kernel.PCBManager;
-import com.binary.os.mem.MemGlobalVar;
 import com.binary.os.mem.SystemMem;
 import com.binary.os.mem.UserMem;
 

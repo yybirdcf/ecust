@@ -35,6 +35,7 @@ public class GlobalStaticVar {
 	}
 	
 	public static int ProcessCreateListener = -4;
+	@SuppressWarnings("rawtypes")
 	public static LinkedList createApply = new LinkedList();
 	
 	public static MainFrame mf = null;

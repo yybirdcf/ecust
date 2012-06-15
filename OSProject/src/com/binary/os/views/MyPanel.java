@@ -5,12 +5,16 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
+//import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String imageLoc;
 	
 	public MyPanel(String imageLoc){
@@ -20,7 +24,7 @@ public class MyPanel extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		URL image = getClass().getResource(imageLoc);
-		ImageIcon background = new ImageIcon(image);//º”‘ÿÕº∆¨
+		//ImageIcon background = new ImageIcon(image);//º”‘ÿÕº∆¨
 		Image im=Toolkit.getDefaultToolkit().getImage(image);
 		g.drawImage(im, 0, 0, null);
 	}

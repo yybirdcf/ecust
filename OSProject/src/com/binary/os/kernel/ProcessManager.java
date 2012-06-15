@@ -2,7 +2,6 @@ package com.binary.os.kernel;
 
 import com.binary.os.mem.MemGlobalVar;
 import com.binary.os.mem.SystemMem;
-import com.binary.os.mem.UserMem;
 
 
 public class ProcessManager {
@@ -97,6 +96,7 @@ public class ProcessManager {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void Create(byte[] data){
 		//建立一个阻塞队列防止影响原子操作
 		GlobalStaticVar.createApply.add(data);

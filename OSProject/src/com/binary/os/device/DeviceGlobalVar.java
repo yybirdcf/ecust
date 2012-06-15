@@ -12,12 +12,16 @@ public class DeviceGlobalVar {
 	public static final int totalDev[] = {3, 2, 1};
 	@SuppressWarnings("rawtypes")
 	public static LinkedList devAWaitList = new LinkedList();
+	@SuppressWarnings("rawtypes")
 	public static LinkedList devBWaitList = new LinkedList();
+	@SuppressWarnings("rawtypes")
 	public static LinkedList devCWaitList = new LinkedList();
 	
 	@SuppressWarnings("rawtypes")
 	public static LinkedList devAWaitTime = new LinkedList();
+	@SuppressWarnings("rawtypes")
 	public static LinkedList devBWaitTime = new LinkedList();
+	@SuppressWarnings("rawtypes")
 	public static LinkedList devCWaitTime = new LinkedList();
 	
 	public static int devCurrPid[][] = {{-1,-1,-1}, {-1,-1}, {-1}};

@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 
 public class MemPanel extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int[][] bitMap = new int[4][8];
 	public int bit = -1;
 	
