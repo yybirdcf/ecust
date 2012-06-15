@@ -2,7 +2,7 @@ package com.binary.os.filesys.dentries;
 
 import com.binary.os.utils.ByteHelper;
 
-public class Dentry {
+public abstract class Dentry {
 	public static final int D_H_R = 1;
 	public static final int D_H_W = 3;
 	public static final int D_S_R = 5;

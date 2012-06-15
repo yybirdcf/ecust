@@ -73,6 +73,16 @@ public class Directory extends Dentry{
 	public boolean removeDentry(Dentry dentry){
 		return dentryList.remove(dentry);
 	}
+	
+	public boolean removeDentryByName(String name){
+		for(Dentry d:dentryList){
+			if(d.getFullName().equals(name)){
+				dentryList.remove(d);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public int getSize() {
 		return (16*dentryList.size());

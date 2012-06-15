@@ -1044,6 +1044,10 @@ public class FileManager {
 	//保存当前路径到根目录的所有目录，倒着保存
 	private void saveAllDirs(){
 		for(int i=currentPath.size()-1; i>0; i--){//保存除root目录外
+			if(i<currentPath.size()-1){
+				currentPath.get(i).removeDentryByName(currentPath.get(i+1).getFullName());
+				currentPath.get(i).addDentry(currentPath.get(i+1));
+			}
 			disk.saveDentry(currentPath.get(i));//保存目录
 		}
 		disk.saveRoot((RootDirectory)currentPath.get(0));//第一个一定是root目录
