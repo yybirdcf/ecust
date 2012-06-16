@@ -83,7 +83,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(43, 0, 1280, 768);
 		setResizable(false);
-		contentPane = new MyPanel("1.jpg");
+		contentPane = new MyPanel("3.jpg");
 	//	contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
