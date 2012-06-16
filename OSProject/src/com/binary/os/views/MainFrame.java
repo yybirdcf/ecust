@@ -20,11 +20,6 @@ import com.binary.os.kernel.GlobalStaticVar;
 
 public class MainFrame extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public FileManager fm;
 	
 	private MyPanel contentPane;
@@ -61,7 +56,7 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new MainFrame();
+					MainFrame frame = new MainFrame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
